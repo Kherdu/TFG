@@ -4,8 +4,8 @@ Introducción: Para mostrar la interacción básica de python haremos unos pocos
 Lecciones:
 -Leccion: 
  Numero: 1
- Titulo_Leccion: operaciones con numeros
- Explicacion: El intérprete funciona como una simple calculadora: Tú tecleas una expresión y él muestra el resultado. La sintaxis de las expresiones es bastante intuitiva: Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). Se puede usar paréntesis para agrupar operaciones. El simbolo de igualdad sirve para asignar valores a variables.
+ TituloLeccion: operaciones con numeros
+ Explicacion: El intérprete funciona como una simple calculadora, Tú tecleas una expresión y él muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). Se puede usar paréntesis para agrupar operaciones. El simbolo de igualdad sirve para asignar valores a variables.
  Imagen_asociada: null
  Preguntas:
  -Pregunta: 
@@ -31,14 +31,14 @@ Lecciones:
 -Leccion:
  Numero: 2
  Titulo_Leccion: Cadenas
- Explicacion: Además de los números, Python también sabe manipular cadenas, que se pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles:
+ Explicacion: Además de los números, Python también sabe manipular cadenas, que se pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles.
  Preguntas:
  -Pregunta:
   Enunciado: 1.- Asigna a la variable ‘cadena’ el valor ‘Hola Mundo’ 
   Tipo: Codigo
   Resultado: cadena = ’Hola Mundo’
  -Pregunta: 
-  Enunciado: 2.- Introduce las siguientes palabras en la variable lista_animales separadas por un salto de linea: gato, perro, burro
+  Enunciado: 2.- Introduce las siguientes palabras en la variable lista_animales separadas por un salto de linea. gato, perro, burro
   Tipo: Codigo
   Resultado: animales= “gato /nperro /nburro”
  -Pregunta:
