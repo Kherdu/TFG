@@ -55,7 +55,7 @@ public class MainpruebaYAML {
 		ArrayList<String> value = new ArrayList<String>();
 		InputStream input = null;
 		try {
-			input = new FileInputStream("Tema1.yml");
+			input = new FileInputStream("Tema2.yml");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

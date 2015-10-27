@@ -8,10 +8,10 @@ Introduccion: >
  TituloLeccion: operaciones con numeros
  Explicacion: >
   El intérprete funciona como una simple calculadora, Tú tecleas una expresión 
-  y él muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
-  Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). 
-  Se puede usar paréntesis para agrupar operaciones. El simbolo de igualdad sirve 
-  para asignar valores a variables. ![alt text](/image.jpg "titulo_imagen")
+  * y él muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
+  * Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). 
+  * Se puede usar paréntesis para agrupar operaciones. El simbolo de igualdad sirve 
+  * para asignar valores a variables. ![alt text](/image.jpg "titulo_imagen")
  -Pregunta:
   Enunciado: 1.- Asigna a la variable i el valor 4
   Tipo: Codigo
@@ -37,7 +37,7 @@ Introduccion: >
  Titulo_Leccion: Cadenas
  Explicacion: >
   Además de los números, Python también sabe manipular cadenas, que se 
-  pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles.
+  * pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles.
  -Pregunta:
   Enunciado: 1.- Asigna a la variable ‘cadena’ el valor ‘Hola Mundo’
   Tipo: Codigo
@@ -49,10 +49,10 @@ Introduccion: >
  -Pregunta:
   Enunciado: >
    3.- Asigna a la variable palabra la cadena ‘paco’ 3 veces, 
-   el resultado debería ser ‘pacopacopaco’ (sin inicializar palabra de la forma palabra = ’pacopacopaco’).
+   * el resultado debería ser ‘pacopacopaco’ (sin inicializar palabra de la forma palabra = ’pacopacopaco’).
   Explicacion: >
    En python, se puede concatenar una cadena multiples 
-   veces con el operador ‘*’ y el numero de veces que queremos repetir la palabra.
+   * veces con el operador ‘*’ y el numero de veces que queremos repetir la palabra.
   Pista: variable= “cadena” * n
   Tipo: Sintaxis
   Gramatica: por definir

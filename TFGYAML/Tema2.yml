@@ -2,32 +2,30 @@ Tema: 2
 Titulo: Listas
 Introducción: >
  Python utiliza varios tipos de datos compuestos, que se utilizan para agrupar otros valores. 
- El más versátil es la lista, que se puede escribir como una lista de valores (elementos) 
- separada por comas entre corchetes. 
-Lecciones:
--Leccion: 
- Numero: 1
- Titulo_Leccion: Listas
- Explicacion: Los elementos de una lista no tienen por qué ser todos del mismo tipo. 
- Preguntas:
- -Pregunta: 
-  Enunciado: 1.-Crea una lista 'l' con los nombres de los creadores de la aplicación, y los numeros 32 y 27
-  Tipo: Codigo
-  Resultado: llamada(string codigo)#lista=["Rafael", "Carlos", 32, 27] 
- -Pregunta: 
-  Enunciado: 2.-¿que opción es correcta para extraer los dos nombres de la lista l=["Rafael", "Carlos", 32, 27]? 
-  Tipo: Opciones
-  Pista: los elementos de una lista se tratan como los de un array
+ * El más versátil es la lista, que se puede escribir como una lista de valores (elementos) 
+ * separada por comas entre corchetes. 
+ -Leccion: 
+  Numero: 1
+  Titulo_Leccion: Listas
+  Explicacion: Los elementos de una lista no tienen por qué ser todos del mismo tipo. 
+  -Pregunta: 
+   Enunciado: 1.-Crea una lista 'l' con los nombres de los creadores de la aplicación, y los numeros 32 y 27
+   Tipo: Codigo
+   Resultado: llamada(string codigo)#lista=["Rafael", "Carlos", 32, 27] 
+  -Pregunta: 
+   Enunciado: 2.-¿que opción es correcta para extraer los dos nombres de la lista l=["Rafael", "Carlos", 32, 27]? 
+   Tipo: Opciones
+   Pista: los elementos de una lista se tratan como los de un array
   #para el tipo opciones
-  Opcion_correcta: 1,2,3
-  -Opcion: 1) l[0:2]
-  -Opcion: 2) l[:2]
-  -Opcion: 3) l[0:-2]
-  -Opcion: 4) l[1:3]
- -Pregunta:
-  Enunciado: 3.- Escribe el código para introducir en la lista 'l' los numeros del 1 al 5 utilizando un bucle
-  Pista: Consulta el tema de bucles si tienes problemas
-  Tipo: Sintaxis
-  Gramática: ‘Gramática adecuada a la pregunta’
-  Resultado: l=[1,2,3,4,5]
+   Opcion_correcta: 1,2,3
+   -Opcion: 1) l[0:2]
+   -Opcion: 2) l[:2]
+   -Opcion: 3) l[0:-2]
+   -Opcion: 4) l[1:3]
+  -Pregunta:
+   Enunciado: 3.- Escribe el código para introducir en la lista 'l' los numeros del 1 al 5 utilizando un bucle
+   Pista: Consulta el tema de bucles si tienes problemas
+   Tipo: Sintaxis
+   Gramática: ‘Gramática adecuada a la pregunta’
+   Resultado: l=[1,2,3,4,5]
 #faltan preguntas de reemplazar, anidar, borrar y añadir elementos
