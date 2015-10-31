@@ -12,8 +12,6 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
 
-import net.sourceforge.yamlbeans.YamlConfig;
-
 /*
 import net.sourceforge.yamlbeans.YamlConfig;
 import net.sourceforge.yamlbeans.YamlException;
