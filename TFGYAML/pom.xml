@@ -29,5 +29,10 @@
   		<artifactId>txtmark</artifactId>
   		<version>0.13</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.esotericsoftware.yamlbeans</groupId>
+  		<artifactId>yamlbeans</artifactId>
+  		<version>1.09</version>
+  	</dependency>
   </dependencies>
 </project>
