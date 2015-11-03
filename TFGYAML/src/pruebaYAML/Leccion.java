@@ -1,5 +1,6 @@
 package pruebaYAML;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Leccion 
@@ -7,7 +8,7 @@ public class Leccion
 	private int numero;
 	private String titulo;
 	private String explicacion;
-	private ArrayList<Pregunta> preguntas;
+	private List<Pregunta> preguntas;
 
 	public Leccion(int numero, String titulo, String explicacion){
 		this.numero=numero;
@@ -40,11 +41,11 @@ public class Leccion
 		this.explicacion = explicacion;
 	}
 
-	public ArrayList<Pregunta> getPreguntas() {
+	public List<Pregunta> getPreguntas() {
 		return preguntas;
 	}
 
-	public void setPreguntas(ArrayList<Pregunta> preguntas) {
+	public void setPreguntas(List<Pregunta> preguntas) {
 		this.preguntas = preguntas;
 	}
 	

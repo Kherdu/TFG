@@ -1,11 +1,12 @@
 package pruebaYAML;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Opciones extends Pregunta
 {
-	private ArrayList<Integer> solucion;
-	private ArrayList<String> opciones;
+	private List<Integer> solucion;
+	private List<String> opciones;
 	
 	public Opciones(String enunciado, String tipo) {
 		super(enunciado, tipo);
@@ -13,19 +14,19 @@ public class Opciones extends Pregunta
 		this.opciones = new ArrayList<String>();
 	}
 
-	public ArrayList<Integer> getSolucion() {
+	public List<Integer> getSolucion() {
 		return solucion;
 	}
 
-	public void setSolucion(ArrayList<Integer> solucion) {
+	public void setSolucion(List<Integer> solucion) {
 		this.solucion = solucion;
 	}
 
-	public ArrayList<String> getOpciones() {
+	public List<String> getOpciones() {
 		return opciones;
 	}
 
-	public void setOpciones(ArrayList<String> opciones) {
+	public void setOpciones(List<String> opciones) {
 		this.opciones = opciones;
 	}
 	

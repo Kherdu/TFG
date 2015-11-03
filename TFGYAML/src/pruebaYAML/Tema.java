@@ -1,15 +1,16 @@
 package pruebaYAML;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Tema {
 	private int numero;
 	private String titulo;
 	private String introduccion;
-	private Map<String, Leccion> lecciones;
+	private List <Leccion> lecciones;
 	
-	public Tema(int numero, String titulo, String introduccion, Map<String,Leccion> lecciones) {
+	public Tema(int numero, String titulo, String introduccion, List<Leccion> lecciones) {
 		this.numero = numero;
 		this.titulo = titulo;
 		this.introduccion = introduccion;
@@ -40,13 +41,14 @@ public class Tema {
 		this.introduccion = introduccion;
 	}
 
-	public Map<String, Leccion> getLecciones() {
+	public List<Leccion> getLecciones() {
 		return lecciones;
 	}
 
-	public void setLecciones(Map<String, Leccion> lecciones) {
+	public void setLecciones(List<Leccion> lecciones) {
 		this.lecciones = lecciones;
 	}
+
 
 	
 	

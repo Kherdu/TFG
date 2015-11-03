@@ -71,7 +71,7 @@ public class Main {
 		*/
 		
 		//yamlbeans
-		YamlReader reader = null;
+	/*	YamlReader reader = null;
 		Tema tema= null;
 		try {
 			reader = new YamlReader(new FileReader("Tema1.yml"));
@@ -94,8 +94,28 @@ public class Main {
 		}
 		System.out.println(object);
 		Map map = (Map)object;
-		
+		*/
+		Yaml yaml = new Yaml();
+		ArrayList<String> key = new ArrayList<String>();
+		ArrayList<String> value = new ArrayList<String>();
+		InputStream input = null;
+		try {
+			input = new FileInputStream("Tema1.yml");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		@SuppressWarnings("unchecked")
+		Map<String, Object> yamlParsers = (Map<String, Object>) yaml.load(input);
+		for (Object name : yamlParsers.keySet()){
+			
+			key.add(name.toString());
+			value.add(yamlParsers.get(name).toString());
+			
+		}
+		
+		System.out.println(key + " " + value);
 	}
 
 }
