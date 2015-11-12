@@ -8,8 +8,8 @@ public class Opciones extends Pregunta
 	private List<Integer> solucion;
 	private List<String> opciones;
 	
-	public Opciones(String enunciado, String tipo) {
-		super(enunciado, tipo);
+	public Opciones(String enunciado, String tipo, String pista) {
+		super(enunciado, tipo, pista);
 		this.solucion = new ArrayList<Integer>();
 		this.opciones = new ArrayList<String>();
 	}
