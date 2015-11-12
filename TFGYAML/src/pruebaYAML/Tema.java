@@ -10,11 +10,11 @@ public class Tema {
 	private String introduccion;
 	private List <Leccion> lecciones;
 	
-	public Tema(int numero, String titulo, String introduccion, List<Leccion> lecciones) {
+	public Tema(int numero, String titulo, String introduccion) {
 		this.numero = numero;
 		this.titulo = titulo;
 		this.introduccion = introduccion;
-		this.lecciones = lecciones;
+		this.lecciones = new ArrayList<Leccion>();
 	}
 
 	public int getNumero() {

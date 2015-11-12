@@ -1,15 +1,24 @@
 package pruebaYAML;
 
-public class Pregunta 
+import java.util.ArrayList;
+
+public abstract class Pregunta 
 {
+	protected int numero;
 	protected String enunciado;
-	protected String tipo;
+	
 	protected String pista;
 	
-	public Pregunta(String enunciado, String tipo, String pista) {
+	public Pregunta(){
+		this.numero=0;
+		this.enunciado=null;
+	}
+	
+	public Pregunta(int numero, String enunciado,  String pista) {
 		super();
+		this.numero = numero;
 		this.enunciado = enunciado;
-		this.tipo = tipo;
+		
 		this.pista = pista;
 	}
 
@@ -21,14 +30,6 @@ public class Pregunta
 		this.enunciado = enunciado;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getPista() {
 		return pista;
 	}
@@ -36,7 +37,10 @@ public class Pregunta
 	public void setPista(String pista) {
 		this.pista = pista;
 	}
-	
+
+	public abstract void setCorrectas(String[] correctas);
+
+	public abstract void setOpciones(ArrayList<String> opciones);
 	
 	
 }

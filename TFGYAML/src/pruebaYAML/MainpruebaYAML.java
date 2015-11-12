@@ -12,6 +12,9 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
 
+import com.esotericsoftware.yamlbeans.YamlException;
+import com.esotericsoftware.yamlbeans.YamlReader;
+
 /*
 import net.sourceforge.yamlbeans.YamlConfig;
 import net.sourceforge.yamlbeans.YamlException;
@@ -22,8 +25,8 @@ public class MainpruebaYAML {
 
 	public static void main(String[] args) {
 		
-		/*
-		 * Con yamlbeans
+		
+		//Con yamlbeans
 		YamlReader reader = null;
 		try {
 			reader = new YamlReader(new FileReader("Tema2.yml"));
@@ -38,17 +41,17 @@ public class MainpruebaYAML {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println(object);
+		System.out.println(object);
 		if (object == null)
 			System.out.println("No hay objeto");
 		 if (object instanceof Map) {
 			    object=(Map<String,Object>)object;
 			  }
 		Map map = (Map)object;
-		System.out.println(map.get("Introducción"));*/
+		System.out.println(map.get("Introducción"));
 		
 		///Con snakeyaml
-		Yaml yaml = new Yaml();
+		/*Yaml yaml = new Yaml();
 		ArrayList<String> key = new ArrayList<String>();
 		ArrayList<String> value = new ArrayList<String>();
 		InputStream input = null;
@@ -71,7 +74,7 @@ public class MainpruebaYAML {
 		System.out.println(key + " " + value);
 		//System.out.println(yamlParsers.get("Introduccion"));
 		
-		
+		*/
 	}
 
 }

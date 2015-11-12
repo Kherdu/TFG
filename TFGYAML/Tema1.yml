@@ -20,7 +20,7 @@ Lecciones:
       Tipo: Opciones
       Pista: las operaciones enteras tienen resultado entero
 #para el tipo opciones
-      Opcion_correcta: 1
+      Opcion_correcta: "1"
       Opciones: 
        - Opcion: 1) 3
        - Opcion: 2) 4
@@ -59,7 +59,7 @@ Lecciones:
       Enunciado: Como sacarias la subcadena ‘ca’ de la palabra recamara?
       Explicacion: Las cadenas en python se pueden tratar como si fueran un array de elementos, siendo el 0 el primer caracter.
       Tipo: Opciones
-      Opcion_correcta: 3
+      Opcion_correcta: "3"
       Opciones: 
        - Opcion: 1) recamara[2:3]
        - Opcion: 2) recamara[1:3]

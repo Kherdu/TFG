@@ -8,8 +8,8 @@ public class Opciones extends Pregunta
 	private List<Integer> solucion;
 	private List<String> opciones;
 	
-	public Opciones(String enunciado, String tipo, String pista) {
-		super(enunciado, tipo, pista);
+	public Opciones(int numero, String enunciado, String pista) {
+		super(numero, enunciado, pista);
 		this.solucion = new ArrayList<Integer>();
 		this.opciones = new ArrayList<String>();
 	}
@@ -26,8 +26,17 @@ public class Opciones extends Pregunta
 		return opciones;
 	}
 
-	public void setOpciones(List<String> opciones) {
-		this.opciones = opciones;
+	@Override
+	public void setCorrectas(String[] correctas) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void setOpciones(ArrayList<String> opciones) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }
