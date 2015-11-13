@@ -3,13 +3,13 @@ Titulo: "#Primera toma de contacto"
 Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
-   Titulo_Leccion: operaciones con numeros
+   Titulo_Leccion: "##Operaciones con numeros"
    Explicacion: >
-    '''El intÃ©rprete funciona como una simple calculadora, TÃº tecleas una expresiÃ³n 
-    * y Ã©l muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
+    '''El interprete funciona como una simple calculadora, Tu tecleas una expresion 
+    * y el muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
     * Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). 
-    * Se puede usar parÃ©ntesis para agrupar operaciones. El simbolo de igualdad sirve 
-    * para asignar valores a variables. ![alt text](/image.jpg "titulo_imagen")'''
+    * Se puede usar parentesis para agrupar operaciones. El simbolo de igualdad sirve 
+    * para asignar valores a variables.'''
    Preguntas:
     - Pregunta: 1 
       Enunciado: Asigna a la variable i el valor 4
@@ -27,11 +27,11 @@ Lecciones:
        - Opcion: 3) 3.5
        - Opcion: 4) ninguna de las anteriores
     - Pregunta: 3
-      Enunciado: "calcula el area de este triangulo ![alt text](/image.jpg 'titulo_imagen')"
+      Enunciado: "###Calcula el area de este triangulo ![alt text](images/triangulo.png)"
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
-      Gramatica: â€˜GramÃ¡tica adecuada a la preguntaâ€™
-      Resultado: a= area triangulo
+      Gramatica: Gramatica adecuada a la pregunta
+      Resultado: a= 30
  - Leccion: 2
    Titulo_Leccion: Cadenas
    Explicacion: >

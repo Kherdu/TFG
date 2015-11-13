@@ -17,6 +17,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import org.pegdown.Parser;
+import org.pegdown.PegDownProcessor;
+
 import com.github.rjeschke.txtmark.*;
 import javafx.scene.web.*;
 
@@ -32,6 +35,7 @@ public class Main extends Application {
 			Controller c= new Controller();
 			c.cargaModelo("Tema1");
 			Tema t= c.getTema();
+			PegDownProcessor processor= new PegDownProcessor();
 			// Este objeto se deberia pasar a la vista para que lo muestre
 			//temporal para pruebas
 			
@@ -42,13 +46,31 @@ public class Main extends Application {
 			String tituloProcesado= Processor.process(tituloPreProcesado);
 			String introProcesado= Processor.process(introPreProcesado);
 			
+			//otro
+			String tituloLeccionPreProc = t.getLecciones().get(0).getTitulo();
+			String explicacionLeccionPreProc= t.getLecciones().get(0).getExplicacion();
+			
+			String tituloLeccionProc= Processor.process(tituloLeccionPreProc);
+			String explicacionLeccionProc= Processor.process(explicacionLeccionPreProc);
+			//html ejemplos varios
 			String htmlProcesado= tituloProcesado+introProcesado;
+			String htmlProcesado2= tituloLeccionProc+explicacionLeccionProc;
+			
+			//pregunta con imagen
+			String preguntaPreProc = t.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
+			
+			// String current = new java.io.File( "." ).getCanonicalPath();
+		    //    System.out.println("Current dir:"+current);
+			
+			String preguntaProc = processor.markdownToHtml(preguntaPreProc);
+			
 			//fin temporal para pruebas
 			this.primaryStage=primaryStage;
 			this.primaryStage.setTitle("Prueba");
+			
 			//initLayout();
 			//showTemas();
-			showIntroTema(htmlProcesado);
+			showIntroTema(preguntaProc);
 			
 			
 			int num= new File("resources").list().length;
