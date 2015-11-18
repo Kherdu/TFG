@@ -33,7 +33,7 @@ public class Main extends Application {
 		try {
 			
 			Controller c= new Controller();
-			c.cargaModelo("Tema1");
+			c.cargaModelo("paGuarrearPreguntas");
 			Tema t= c.getTema();
 			PegDownProcessor processor= new PegDownProcessor();
 			// Este objeto se deberia pasar a la vista para que lo muestre
@@ -82,7 +82,7 @@ public class Main extends Application {
 	}
 	
 	private void showIntroTema(String html) {
-		
+		System.out.println(html);
 		Scene scene= new Scene(new Group());
 		root= new VBox();
 		WebView browser= new WebView();
