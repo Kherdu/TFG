@@ -4,7 +4,7 @@ Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos
 Lecciones:
  - Leccion: 1 
    Titulo_Leccion: "##Operaciones con numeros"
-   Explicacion: >
+   Explicacion: |
     El interprete funciona como una simple calculadora, Tu tecleas una expresion 
     y el muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
     Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). 
@@ -29,14 +29,26 @@ Lecciones:
     - Pregunta: 3
       Enunciado: |
        
-       El comienzo de la lista
+       El **comienzo** de la lista
        
         * El primero
         * El segundo 
         * El tercero
        
        Y esto el final de la lista
-       ![Alt text](/triangulo.jpg)
+       
+       <section class="excerpt" markdown="1">
+          <img src=""/images/triangulo.png"" alt="alt text" />
+          <table>
+          <tr>
+            <td>Hola</td><td>Tabla</td>
+          </tr>
+          <tr>
+            <td>Uno</td><td>dos</td>
+          </tr>
+          </table>
+        </section>
+      
        
         
          

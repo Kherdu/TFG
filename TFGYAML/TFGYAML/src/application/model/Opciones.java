@@ -38,5 +38,23 @@ public class Opciones extends Pregunta
 		
 	}
 	
+	public boolean corrige(List<Integer> marcadas)
+	{
+		boolean sol = true;
+		int tam = marcadas.size();
+		int i = 0;
+		
+		if (i == tam)//Se comprueba que haya el mismo numero de opciones marcadas como opciones correctas
+		{
+			do{
+				if(!this.solucion.contains(marcadas.get(i)))
+					sol = false;
+				i++;
+			}while(sol && i<tam);
+		}
+		
+		return sol;
+	}
+	
 	
 }
