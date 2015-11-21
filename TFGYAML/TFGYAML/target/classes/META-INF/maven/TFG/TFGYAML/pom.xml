@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>TFG</groupId>
+  <artifactId>TFGYAML</artifactId>
+  <version>0.1</version>
+  <name>TFG</name>
+  <description>Trabajo fin de Grado Rafael Caturla-Carlos Congosto	</description>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.yaml</groupId>
+  		<artifactId>snakeyaml</artifactId>
+  		<version>1.16</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.github.rjeschke</groupId>
+  		<artifactId>txtmark</artifactId>
+  		<version>0.13</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.esotericsoftware.yamlbeans</groupId>
+  		<artifactId>yamlbeans</artifactId>
+  		<version>1.09</version>
+  	</dependency>
+  </dependencies>
+</project>
