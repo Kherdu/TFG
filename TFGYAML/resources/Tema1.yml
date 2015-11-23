@@ -1,20 +1,16 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
-Introduccion: 
-  ' Tables  |      Are      | Cool 
-  ----------|:-------------:|-----
-   col 1 is |  left-aligned | $100 
-   col 2 is |    centered   |  $52 
-   col 3 is | right-aligned |   $9 '
+Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
    Titulo_Leccion: "##Operaciones con numeros"
-   Explicacion: |
-    El interprete funciona como una simple calculadora, Tu tecleas una expresion 
+   Explicacion: >
+    El interprete funciona como una **simple calculadora**, Tu tecleas una expresion 
     y el muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
     Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). 
     Se puede usar parentesis para agrupar operaciones. El simbolo de igualdad sirve 
     para asignar valores a variables.
+    
    Preguntas:
     - Pregunta: 1 
       Enunciado: Asigna a la variable i el valor 4
@@ -32,31 +28,10 @@ Lecciones:
        - Opcion: 3) 3.5
        - Opcion: 4) ninguna de las anteriores
     - Pregunta: 3
-      Enunciado: |
-       
-       El **comienzo** de la lista
-       
-        * El primero
-        * El segundo 
-        * El tercero
-       
-       Y esto el final de la lista
-       
-       <section class="excerpt" markdown="1">
-          <img src=""/images/triangulo.png"" alt="alt text" />
-          <table>
-          <tr>
-            <td>Hola</td><td>Tabla</td>
-          </tr>
-          <tr>
-            <td>Uno</td><td>dos</td>
-          </tr>
-          </table>
-        </section>
-      
-       
-        
-         
+    
+      Enunciado: "###Calcula el area de este triangulo ![alt text](/triangulo.png)"
+      : cosa
+      : otracosa
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
@@ -64,8 +39,8 @@ Lecciones:
  - Leccion: 2
    Titulo_Leccion: Cadenas
    Explicacion: >
-    Ademas de los nUmeros, Python tambiEn sabe manipular cadenas, que se 
-    pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles.
+    AdemÃ¡s de los nÃºmeros, Python tambiÃ©n sabe manipular cadenas, que se 
+    * pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles.
    Preguntas:
     - Pregunta: 1
       Enunciado: Asigna a la variable â€˜cadenaâ€™ el valor â€˜Hola Mundoâ€™
@@ -83,7 +58,7 @@ Lecciones:
       Pista: variable= â€œcadenaâ€� * n
       Tipo: Sintaxis
       Gramatica: por definir
-      Resultado: cad=pacopacopaco
+      Resultado: cad=â€™pacopacopacoâ€™
     - Pregunta: 4
       Enunciado: Como sacarias la subcadena â€˜caâ€™ de la palabra recamara?
       Explicacion: Las cadenas en python se pueden tratar como si fueran un array de elementos, siendo el 0 el primer caracter.

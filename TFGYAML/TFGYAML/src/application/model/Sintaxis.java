@@ -10,10 +10,11 @@ public class Sintaxis extends Pregunta<String>
 		super(numero, enunciado, pista, solucion);
 		this.sintaxis = sintaxis;
 	}
+	
 
 	@Override
 	public void setOpciones(ArrayList<String> opciones) {
-		// TODO Auto-generated method stub
+		this.solucion = solucion;
 		
 	}
 
@@ -23,12 +24,9 @@ public class Sintaxis extends Pregunta<String>
 		return false;
 	}
 
-	@Override
 	public void setSolucion(String solucion) {
-		// TODO Auto-generated method stub
 		this.solucion = solucion;
 	}
-
 	
 	
 	

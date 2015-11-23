@@ -15,7 +15,7 @@ public abstract class Pregunta<T>
 		this.enunciado=null;
 	}
 	
-	public Pregunta(int numero, String enunciado,  String pista, T solucion) {
+	public Pregunta(int numero, String enunciado, String pista, T solucion) {
 		super();
 		this.numero = numero;
 		this.enunciado = enunciado;
@@ -50,16 +50,11 @@ public abstract class Pregunta<T>
 	public T getSolucion() {
 		return solucion;
 	}
-
-	public abstract void setSolucion(T solucion);/* {
-		this.solucion = solucion;
-	}*/
+	public abstract void setSolucion(T solucion);
 
 	public abstract void setOpciones(ArrayList<String> opciones);
 	
 	public abstract boolean corrige(T respuesta);
-
-	
 	
 	
 }

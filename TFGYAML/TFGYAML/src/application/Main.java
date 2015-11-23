@@ -1,6 +1,8 @@
 package application;
 	
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -59,14 +62,26 @@ public class Main extends Application {
 			//html ejemplos varios
 			String htmlProcesado= tituloProcesado+introProcesado;
 			String htmlProcesado2= tituloLeccionProc+explicacionLeccionProc;
-			
+	
 			//pregunta con imagen
 			String preguntaPreProc = t.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
 			
 			// String current = new java.io.File( "." ).getCanonicalPath();
 		    //    System.out.println("Current dir:"+current);
 			
-			String preguntaProc = processor.markdownToHtml(preguntaPreProc);
+			BufferedReader reader = new BufferedReader( new FileReader ("test.txt"));
+		    String         line = null;
+		    StringBuilder  stringBuilder = new StringBuilder();
+		    String         ls = System.getProperty("line.separator");
+
+		    while( ( line = reader.readLine() ) != null ) {
+		        stringBuilder.append( line );
+		        stringBuilder.append( ls );
+		    }
+
+		    String moretest= stringBuilder.toString();
+			
+			String preguntaProc = processor.markdownToHtml(moretest);
 			
 			//fin temporal para pruebas
 			this.primaryStage=primaryStage;
@@ -74,18 +89,10 @@ public class Main extends Application {
 			
 			//initLayout();
 			//showTemas();
-			showIntroTema(preguntaProc);
 			
+			Pregunta p= t.getLecciones().get(0).getPreguntas().get(1)  ;
+			showOptions(p);
 			
-			/*Prueba para la funcion de corregir las preguntas de opciones
-			Opciones o = (Opciones) t.getLecciones().get(0).getPreguntas().get(1);
-			
-			List<Integer> i = new ArrayList<Integer>();
-			i.add(1);
-			i.add(4);
-			
-			System.out.println(o.corrige(i));
-			*/
 			
 			int num= new File("resources").list().length;
 			
@@ -94,6 +101,35 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	private void showOptions(Pregunta p){
+		Opciones o= (Opciones) p;
+		Scene scene= new Scene(new Group());
+		root= new VBox();
+		WebView browser= new WebView();
+		WebEngine engine= browser.getEngine();
+		
+		ScrollPane panelTexto = new ScrollPane();
+		panelTexto.setContent(browser);
+		int i=0;
+		List<RadioButton> l= new ArrayList <RadioButton>();
+		List<String> opciones= o.getOpciones();
+		for(Object op: opciones){
+			RadioButton rb= new RadioButton();
+			
+			rb.setText(op.toString());
+			l.add(rb);
+		}
+		
+		engine.loadContent(p.getEnunciado());
+		root.getChildren().addAll(panelTexto);
+		root.getChildren().addAll(l);
+		scene.setRoot(root);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
 	
 	private void showIntroTema(String html) {
 		System.out.println(html);

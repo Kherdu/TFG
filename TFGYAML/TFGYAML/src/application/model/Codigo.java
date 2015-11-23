@@ -16,7 +16,6 @@ public class Codigo extends Pregunta <String>
 		return true;
 	}
 
-	
 
 	@Override
 	public void setOpciones(ArrayList<String> opciones) {
@@ -33,7 +32,7 @@ public class Codigo extends Pregunta <String>
 	@Override
 	public void setSolucion(String solucion) {
 		// TODO Auto-generated method stub
-		this.solucion = solucion;
+		
 	}
 	
 }
