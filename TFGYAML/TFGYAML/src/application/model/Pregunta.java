@@ -39,11 +39,27 @@ public abstract class Pregunta<T>
 		this.pista = pista;
 	}
 
-	public abstract void setCorrectas(String[] correctas);
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public T getSolucion() {
+		return solucion;
+	}
+
+	public abstract void setSolucion(T solucion);/* {
+		this.solucion = solucion;
+	}*/
 
 	public abstract void setOpciones(ArrayList<String> opciones);
 	
 	public abstract boolean corrige(T respuesta);
+
+	
 	
 	
 }

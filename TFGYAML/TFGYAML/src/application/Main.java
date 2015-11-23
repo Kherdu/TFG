@@ -2,8 +2,12 @@ package application;
 	
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import application.controller.Controller;
+import application.model.Opciones;
+import application.model.Pregunta;
 import application.model.Tema;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -72,6 +76,16 @@ public class Main extends Application {
 			//showTemas();
 			showIntroTema(preguntaProc);
 			
+			
+			/*Prueba para la funcion de corregir las preguntas de opciones
+			Opciones o = (Opciones) t.getLecciones().get(0).getPreguntas().get(1);
+			
+			List<Integer> i = new ArrayList<Integer>();
+			i.add(1);
+			i.add(4);
+			
+			System.out.println(o.corrige(i));
+			*/
 			
 			int num= new File("resources").list().length;
 			

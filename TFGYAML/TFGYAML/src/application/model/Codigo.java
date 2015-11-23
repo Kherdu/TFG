@@ -16,11 +16,7 @@ public class Codigo extends Pregunta <String>
 		return true;
 	}
 
-	@Override
-	public void setCorrectas(String[] correctas) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void setOpciones(ArrayList<String> opciones) {
@@ -32,6 +28,12 @@ public class Codigo extends Pregunta <String>
 	public boolean corrige(String respuesta) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void setSolucion(String solucion) {
+		// TODO Auto-generated method stub
+		this.solucion = solucion;
 	}
 	
 }

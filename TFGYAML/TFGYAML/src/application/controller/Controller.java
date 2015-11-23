@@ -81,7 +81,8 @@ public class Controller {
 					pregunta= new Opciones(num,enunciado,pista);
 					String opcorrecta= (String) pre.get("Opcion_correcta");
 					String[] correctas = opcorrecta.split(",");
-					pregunta.setCorrectas(correctas);
+					ArrayList<Integer> correctasAux = this.StringToInt(correctas);
+					pregunta.setSolucion(correctasAux);
 					ArrayList<String> opc= new ArrayList<String>();
 					opc= (ArrayList<String>) pre.get("Opciones");
 					pregunta.setOpciones(opc);
@@ -112,6 +113,19 @@ public class Controller {
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+	}
+	
+	private ArrayList<Integer> StringToInt(String[] sol)
+	{
+		ArrayList<Integer> ret = new ArrayList<Integer>();
+		
+		for (String s : sol)
+		{
+			ret.add(Integer.parseInt(s));
+		}
+		return ret;
+		
+		
 	}
 	
 }

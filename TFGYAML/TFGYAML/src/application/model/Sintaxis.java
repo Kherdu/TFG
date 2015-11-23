@@ -12,12 +12,6 @@ public class Sintaxis extends Pregunta<String>
 	}
 
 	@Override
-	public void setCorrectas(String[] correctas) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setOpciones(ArrayList<String> opciones) {
 		// TODO Auto-generated method stub
 		
@@ -27,6 +21,12 @@ public class Sintaxis extends Pregunta<String>
 	public boolean corrige(String respuesta) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void setSolucion(String solucion) {
+		// TODO Auto-generated method stub
+		this.solucion = solucion;
 	}
 
 	

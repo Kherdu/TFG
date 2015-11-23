@@ -1,5 +1,6 @@
 package application.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +19,14 @@ public class Opciones extends Pregunta<List<Integer>>
 		return solucion;
 	}
 
-	public void setSolucion(List<Integer> solucion) {
-		this.solucion = solucion;
-	}
-
 	public List<String> getOpciones() {
 		return opciones;
 	}
 
 	@Override
-	public void setCorrectas(String[] correctas) {
+	public void setSolucion(List<Integer> solucion) {
 		// TODO Auto-generated method stub
-		
+		this.solucion = solucion;
 	}
 
 	@Override
@@ -44,7 +41,7 @@ public class Opciones extends Pregunta<List<Integer>>
 		int tam = respuesta.size();
 		int i = 0;
 		
-		if (i == tam)//Se comprueba que haya el mismo numero de opciones marcadas como opciones correctas
+		if (this.solucion.size() == tam)//Se comprueba que haya el mismo numero de opciones marcadas como opciones correctas
 		{
 			do{
 				if(!this.solucion.contains(respuesta.get(i)))
@@ -52,9 +49,13 @@ public class Opciones extends Pregunta<List<Integer>>
 				i++;
 			}while(sol && i<tam);
 		}
+		else
+			sol = false;
 		
 		return sol;
 	}
+
+	
 	
 	
 }
