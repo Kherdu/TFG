@@ -12,12 +12,17 @@ import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Tema;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -69,7 +74,7 @@ public class Main extends Application {
 			// String current = new java.io.File( "." ).getCanonicalPath();
 		    //    System.out.println("Current dir:"+current);
 			
-			BufferedReader reader = new BufferedReader( new FileReader ("test.txt"));
+		/*	BufferedReader reader = new BufferedReader( new FileReader ("test.txt"));
 		    String         line = null;
 		    StringBuilder  stringBuilder = new StringBuilder();
 		    String         ls = System.getProperty("line.separator");
@@ -81,7 +86,7 @@ public class Main extends Application {
 
 		    String moretest= stringBuilder.toString();
 			
-			String preguntaProc = processor.markdownToHtml(moretest);
+			String preguntaProc = processor.markdownToHtml(moretest);*/
 			
 			//fin temporal para pruebas
 			this.primaryStage=primaryStage;
@@ -112,7 +117,9 @@ public class Main extends Application {
 		
 		ScrollPane panelTexto = new ScrollPane();
 		panelTexto.setContent(browser);
+		panelTexto.setMaxHeight(50);
 		int i=0;
+		
 		List<RadioButton> l= new ArrayList <RadioButton>();
 		List<String> opciones= o.getOpciones();
 		for(Object op: opciones){
@@ -120,11 +127,23 @@ public class Main extends Application {
 			
 			rb.setText(op.toString());
 			l.add(rb);
+			
+			
 		}
+		
+		Button envio = new Button("ENVIAR");
+		envio.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+                
+                
+            }
+        });
 		
 		engine.loadContent(p.getEnunciado());
 		root.getChildren().addAll(panelTexto);
 		root.getChildren().addAll(l);
+		root.getChildren().addAll(envio);
 		scene.setRoot(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
