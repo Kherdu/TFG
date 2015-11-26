@@ -27,10 +27,10 @@ Lecciones:
 #para el tipo opciones
       Opcion_correcta: "1"
       Opciones: 
-       - Opcion: 1) 3
-       - Opcion: 2) 4
-       - Opcion: 3) 3.5
-       - Opcion: 4) ninguna de las anteriores
+       - 1) 3
+       - 2) 4
+       - 3) 3.5
+       - 4) ninguna de las anteriores
     - Pregunta: 3
       Enunciado: |
        
@@ -43,7 +43,7 @@ Lecciones:
        Y esto el final de la lista
        
        <section class="excerpt" markdown="1">
-          <img src=""/images/triangulo.png"" alt="alt text" />
+          <img src="C:\Users\Rafa\Desktop\cosas de la uni\workspace\TFG\resources\images\triangulo.jpg" alt="alt text" /> ## maldito gatete http://www.espaciomadrid.es/wp-content/uploads/2013/11/gatete.jpg
           <table>
           <tr>
             <td>Hola</td><td>Tabla</td>
@@ -53,10 +53,6 @@ Lecciones:
           </tr>
           </table>
         </section>
-      
-       
-        
-         
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
@@ -90,7 +86,7 @@ Lecciones:
       Tipo: Opciones
       Opcion_correcta: "3"
       Opciones: 
-       - Opcion: 1) recamara[2:3]
-       - Opcion: 2) recamara[1:3]
-       - Opcion: 3) recamara[2:4]
-       - Opcion: 4) recamara[1:4]
+       - 1) recamara[2:3]
+       - 2) recamara[1:3]
+       - 3) recamara[2:4]
+       - 4) recamara[1:4]

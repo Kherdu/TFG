@@ -23,15 +23,12 @@ Lecciones:
 #para el tipo opciones
       Opcion_correcta: "1"
       Opciones: 
-       - 1) 3
-       - 2) 4
-       - 3) 3.5
-       - 4) ninguna de las anteriores
-
+       - Opcion: 1) 3
+       - Opcion: 2) 4
+       - Opcion: 3) 3.5
+       - Opcion: 4) ninguna de las anteriores
     - Pregunta: 3
       Enunciado: "###Calcula el area de este triangulo ![alt text](/triangulo.png)"
-      : cosa
-      : otracosa
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
@@ -65,7 +62,7 @@ Lecciones:
       Tipo: Opciones
       Opcion_correcta: "3"
       Opciones: 
-       - 1) recamara[2:3]
-       - 2) recamara[1:3]
-       - 3) recamara[2:4]
-       - 4) recamara[1:4]
+       - Opcion: 1) recamara[2:3]
+       - Opcion: 2) recamara[1:3]
+       - Opcion: 3) recamara[2:4]
+       - Opcion: 4) recamara[1:4]
