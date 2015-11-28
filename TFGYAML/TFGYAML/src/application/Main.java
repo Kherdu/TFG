@@ -44,12 +44,13 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private TilePane root;
 	private VBox buttons;
+	private Controller c;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
-			Controller c = new Controller();
+			c = new Controller();
 			c.cargaModelo("yaml/paGuarrearPreguntas");
 			Tema t = c.getTema();
 			PegDownProcessor processor = new PegDownProcessor();
@@ -107,7 +108,7 @@ public class Main extends Application {
 	}
 
 	private void showOptions(Pregunta p) {
-		Opciones o = (Opciones) p;
+		final Opciones o = (Opciones) p;
 		Scene scene = new Scene(new Group());
 		root();
 		buttons = new VBox();
@@ -127,15 +128,22 @@ public class Main extends Application {
 		envio.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				buttons.getChildren();
+				ArrayList<Integer> resp = new ArrayList<Integer>();
+				
+				int i = 0;
 				for (Node o : buttons.getChildren()) {
+					i++;
 					if (((RadioButton) o).isSelected()) {
 						// o instanceof RadioButton && /lo quité porque en este
 						// contenedor solo puede haber radiobuttons
+						resp.add(i);
 						System.out.println(o.toString());
 						// meter respuestas elegidas en array
 					}
 				}
+				System.out.println(o.corrige(resp));
 				// comprobar respuestas correctas y escribir en ventana
+				
 			}
 		});
 
