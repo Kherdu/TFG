@@ -53,7 +53,7 @@ public class Main extends Application {
 			c = new Controller();
 			c.cargaModelo("yaml/paGuarrearPreguntas");
 			Tema t = c.getTema();
-			PegDownProcessor processor = new PegDownProcessor();
+			PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
 			// Este objeto se deberia pasar a la vista para que lo muestre
 			// temporal para pruebas
 
@@ -73,11 +73,18 @@ public class Main extends Application {
 			// html ejemplos varios
 			String htmlProcesado = tituloProcesado + introProcesado;
 			String htmlProcesado2 = tituloLeccionProc + explicacionLeccionProc;
-
+			String preguntaPreProc = t.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
+			
+			String tab= "First Header  | Second Header"+ "\n"+
+                        "------------- | ------------- 	\n"+
+                        "Content Cell  | Content Cell\n"+
+                        "Content Cell  | Content Cell\n";
+			String img= "![cosa](images/triangulo.png)";
+			System.out.println(System.getProperty("user.dir"));
 			// pregunta con imagen
 			String preguntaPreProc = t.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
 			String preguntaProc = processor.markdownToHtml(preguntaPreProc);
-
+			String imgProc= processor.markdownToHtml(img);
 			// String current = new java.io.File( "." ).getCanonicalPath();
 			// System.out.println("Current dir:"+current);
 
@@ -93,12 +100,13 @@ public class Main extends Application {
 			// fin temporal para pruebas
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("Prueba");
+			showIntroTema(imgProc);
 			// showIntroTema(preguntaProc);
 			// initLayout();
 			// showTemas();
 
-			Pregunta p = t.getLecciones().get(0).getPreguntas().get(1);
-			showOptions(p);
+			//Pregunta p = t.getLecciones().get(0).getPreguntas().get(1);
+			//showOptions(p);
 
 			// int num = new File("resources").list().length;
 
