@@ -107,7 +107,7 @@ public class Main extends Application {
 		}
 	}
 
-	private void showOptions(Pregunta p) {
+	private void showOptions(final Pregunta p) {
 		final Opciones o = (Opciones) p;
 		Scene scene = new Scene(new Group());
 		root();
@@ -141,7 +141,7 @@ public class Main extends Application {
 						// meter respuestas elegidas en array
 					}
 				}
-				System.out.println(o.corrige(resp));
+				System.out.println(c.corrige(resp,p));
 				// comprobar respuestas correctas y escribir en ventana
 				
 			}

@@ -119,9 +119,9 @@ public class Controller {
 
 	}
 
-	public void corrige(ArrayList<Integer> resp) {
+	public boolean corrige(ArrayList<Integer> resp, Pregunta p ) {
 		// TODO Auto-generated method stub
-		
+		return p.corrige(resp);
 		
 	}
 
