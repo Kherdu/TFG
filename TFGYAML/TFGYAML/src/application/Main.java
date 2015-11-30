@@ -24,6 +24,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -33,6 +35,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
+import org.pegdown.Extensions;
 import org.pegdown.Parser;
 import org.pegdown.PegDownProcessor;
 
@@ -44,13 +47,12 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private TilePane root;
 	private VBox buttons;
-	private Controller c;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
-			c = new Controller();
+			Controller c = new Controller();
 			c.cargaModelo("yaml/paGuarrearPreguntas");
 			Tema t = c.getTema();
 			PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
@@ -61,30 +63,29 @@ public class Main extends Application {
 			String tituloPreProcesado = t.getTitulo();
 			String introPreProcesado = t.getIntroduccion();
 			// pasamos txtmark
-			String tituloProcesado = Processor.process(tituloPreProcesado);
-			String introProcesado = Processor.process(introPreProcesado);
+			String tituloProcesado = processor.markdownToHtml(tituloPreProcesado);
+			String introProcesado = processor.markdownToHtml(introPreProcesado);
 
 			// otro
 			String tituloLeccionPreProc = t.getLecciones().get(0).getTitulo();
 			String explicacionLeccionPreProc = t.getLecciones().get(0).getExplicacion();
 
-			String tituloLeccionProc = Processor.process(tituloLeccionPreProc);
-			String explicacionLeccionProc = Processor.process(explicacionLeccionPreProc);
+			String tituloLeccionProc = processor.markdownToHtml(tituloLeccionPreProc);
+			String explicacionLeccionProc = processor.markdownToHtml(explicacionLeccionPreProc);
 			// html ejemplos varios
 			String htmlProcesado = tituloProcesado + introProcesado;
 			String htmlProcesado2 = tituloLeccionProc + explicacionLeccionProc;
-			String preguntaPreProc = t.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
-			
-			String tab= "First Header  | Second Header"+ "\n"+
-                        "------------- | ------------- 	\n"+
-                        "Content Cell  | Content Cell\n"+
-                        "Content Cell  | Content Cell\n";
-			String img= "![cosa](images/triangulo.png)";
-			System.out.println(System.getProperty("user.dir"));
+
 			// pregunta con imagen
 			String preguntaPreProc = t.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
+
+			String tab = "First Header  | Second Header" + "\n" + "------------- | ------------- 	\n"
+					+ "Content Cell  | Content Cell\n" + "Content Cell  | Content Cell\n";
+			Image img = new Image("images/triangulo.png");
+			// String img= "![cosa](images/triangulo.png)";
+			System.out.println(System.getProperty("user.dir"));
 			String preguntaProc = processor.markdownToHtml(preguntaPreProc);
-			String imgProc= processor.markdownToHtml(img);
+			// String imgProc= processor.markdownToHtml(img);
 			// String current = new java.io.File( "." ).getCanonicalPath();
 			// System.out.println("Current dir:"+current);
 
@@ -100,13 +101,12 @@ public class Main extends Application {
 			// fin temporal para pruebas
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("Prueba");
-			showIntroTema(imgProc);
 			// showIntroTema(preguntaProc);
 			// initLayout();
 			// showTemas();
-
-			//Pregunta p = t.getLecciones().get(0).getPreguntas().get(1);
-			//showOptions(p);
+			// showImg(img);
+			Pregunta p = t.getLecciones().get(0).getPreguntas().get(1);
+			showOptions(p, processor);
 
 			// int num = new File("resources").list().length;
 
@@ -115,8 +115,22 @@ public class Main extends Application {
 		}
 	}
 
-	private void showOptions(final Pregunta p) {
-		final Opciones o = (Opciones) p;
+	private void showImg(Image img) {
+
+		Scene scene = new Scene(new Group());
+		root();
+		StackPane sp = new StackPane();
+		ImageView imgView = new ImageView(img);
+		sp.getChildren().add(imgView);
+
+		scene.setRoot(root);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+
+	}
+
+	private void showOptions(Pregunta p, PegDownProcessor proc) {
+		Opciones o = (Opciones) p;
 		Scene scene = new Scene(new Group());
 		root();
 		buttons = new VBox();
@@ -132,33 +146,26 @@ public class Main extends Application {
 		}
 		buttons.getChildren().addAll(l);
 
-		Button envio = new Button("ENVIAR");
+		Button envio = new Button("Resolver");
 		envio.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				buttons.getChildren();
-				ArrayList<Integer> resp = new ArrayList<Integer>();
-				
-				int i = 0;
 				for (Node o : buttons.getChildren()) {
-					i++;
 					if (((RadioButton) o).isSelected()) {
 						// o instanceof RadioButton && /lo quité porque en este
 						// contenedor solo puede haber radiobuttons
-						resp.add(i);
 						System.out.println(o.toString());
 						// meter respuestas elegidas en array
 					}
 				}
-				System.out.println(c.corrige(resp,p));
 				// comprobar respuestas correctas y escribir en ventana
-				
 			}
 		});
 
-		engine.loadContent(p.getEnunciado());
-		root.setPrefSize(600, 400);
+		engine.loadContent(proc.markdownToHtml(p.getEnunciado()));
+		root.setPrefSize(200, 200);
 		// root.set
-
+		root.setMaxWidth(200);
 		browser.setMaxHeight(100);
 		root.getChildren().addAll(browser);
 		root.getChildren().addAll(buttons);

@@ -1,11 +1,10 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
-Introduccion: 
-  ' Tables  |      Are      | Cool 
-  ----------|:-------------:|-----
-   col 1 is |  left-aligned | $100 
-   col 2 is |    centered   |  $52 
-   col 3 is | right-aligned |   $9 '
+Introduccion: |
+  First Header | Second Header |         Third Header   
+  :----------- | :-----------: | -------------------:    
+  First row    |      Data     | Very long data entry    
+  Second row   |    **Cell**   |               *Cell*   
 Lecciones:
  - Leccion: 1 
    Titulo_Leccion: "##Operaciones con numeros"
@@ -21,7 +20,7 @@ Lecciones:
       Tipo: Codigo
       Resultado: llamada(String codigo)#i=4
     - Pregunta: 2
-      Enunciado: si hacemos la operacion 7 / 2 que sale por pantalla?
+      Enunciado: ¿Si hacemos la operacion **7/2** que resultado obtenemos?
       Tipo: Opciones
       Pista: las operaciones enteras tienen resultado entero
 #para el tipo opciones
@@ -42,17 +41,12 @@ Lecciones:
        
        Y esto el final de la lista
        
-       <section class="excerpt" markdown="1">
-          <img src="C:\Users\Rafa\Desktop\cosas de la uni\workspace\TFG\resources\images\triangulo.jpg" alt="alt text" /> ## maldito gatete http://www.espaciomadrid.es/wp-content/uploads/2013/11/gatete.jpg
-          <table>
-          <tr>
-            <td>Hola</td><td>Tabla</td>
-          </tr>
-          <tr>
-            <td>Uno</td><td>dos</td>
-          </tr>
-          </table>
-        </section>
+       First Header | Second Header |         Third Header   
+       :----------- | :-----------: | -------------------:    
+       First row    |      Data     | Very long data entry    
+       Second row   |    **Cell**   |               *Cell* 
+       
+       Calcula el area de este triangulo ![triangulo](images/triangulo.png)
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta

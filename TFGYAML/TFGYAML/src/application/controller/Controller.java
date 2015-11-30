@@ -19,7 +19,6 @@ import application.model.Tema;
 public class Controller {
 
 	private Tema tema;
-	
 
 	public Controller() {
 		this.tema = null;
@@ -117,12 +116,6 @@ public class Controller {
 		}
 		return ret;
 
-	}
-
-	public boolean corrige(ArrayList<Integer> resp, Pregunta p ) {
-		// TODO Auto-generated method stub
-		return p.corrige(resp);
-		
 	}
 
 }

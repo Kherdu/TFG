@@ -20,10 +20,10 @@ Lecciones:
   #para el tipo opciones
       Opcion_correcta: 1,2,3
       Opciones:
-       - 1) l[0:2]
-       - 2) l[:2]
-       - 3) l[0:-2]
-       - 4) l[1:3]
+       - Opcion: 1) l[0:2]
+       - Opcion: 2) l[:2]
+       - Opcion: 3) l[0:-2]
+       - Opcion: 4) l[1:3]
     - Pregunta: 3
       Enunciado: Escribe el código para introducir en la lista 'l' los numeros del 1 al 5 utilizando un bucle
       Pista: Consulta el tema de bucles si tienes problemas
