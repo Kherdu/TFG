@@ -33,20 +33,31 @@ Lecciones:
     - Pregunta: 3
       Enunciado: |
        
+       # Nivel 1
+       ## Nivel 2
+       ### Nivel 3
        El **comienzo** de la lista
        
-        * El primero
-        * El segundo 
-        * El tercero
+       * El primero
+       * El segundo 
+       * El tercero  
+           1. 3.1
+           1. 3.2
+           
+       Y esto el final de la lista   
+           
+           x = 1
+           while True:
+              print "To infinity and beyond! We're getting close, on %d now!" % (x)
+              x += 1
        
-       Y esto el final de la lista
        
-       First Header | Second Header |         Third Header   
+       First Header | Second Header |        Third Header   
        :----------- | :-----------: | -------------------:    
        First row    |      Data     | Very long data entry    
        Second row   |    **Cell**   |               *Cell* 
        
-       Calcula el area de este triangulo ![triangulo](images/triangulo.png)
+       Calcula el area de este triangulo ![triangulo](/images/triangulo.png)
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta

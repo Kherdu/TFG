@@ -47,12 +47,13 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private TilePane root;
 	private VBox buttons;
+	private Controller c;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
-			Controller c = new Controller();
+			c = new Controller();
 			c.cargaModelo("yaml/paGuarrearPreguntas");
 			Tema t = c.getTema();
 			PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
@@ -81,8 +82,7 @@ public class Main extends Application {
 
 			String tab = "First Header  | Second Header" + "\n" + "------------- | ------------- 	\n"
 					+ "Content Cell  | Content Cell\n" + "Content Cell  | Content Cell\n";
-			Image img = new Image("images/triangulo.png");
-			// String img= "![cosa](images/triangulo.png)";
+			
 			System.out.println(System.getProperty("user.dir"));
 			String preguntaProc = processor.markdownToHtml(preguntaPreProc);
 			// String imgProc= processor.markdownToHtml(img);
@@ -101,12 +101,13 @@ public class Main extends Application {
 			// fin temporal para pruebas
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("Prueba");
-			// showIntroTema(preguntaProc);
+			// 
 			// initLayout();
 			// showTemas();
 			// showImg(img);
-			Pregunta p = t.getLecciones().get(0).getPreguntas().get(1);
-			showOptions(p, processor);
+			//Pregunta p = t.getLecciones().get(0).getPreguntas().get(1);
+			//showOptions(p, processor);
+			showIntroTema(preguntaProc);
 
 			// int num = new File("resources").list().length;
 
@@ -129,14 +130,14 @@ public class Main extends Application {
 
 	}
 
-	private void showOptions(Pregunta p, PegDownProcessor proc) {
+	private void showOptions(final Pregunta p, PegDownProcessor proc) {
 		Opciones o = (Opciones) p;
 		Scene scene = new Scene(new Group());
 		root();
 		buttons = new VBox();
 		WebView browser = new WebView();
 		WebEngine engine = browser.getEngine();
-
+		
 		List<RadioButton> l = new ArrayList<RadioButton>();
 		List<String> opciones = o.getOpciones();
 		for (Object op : opciones) {
@@ -150,21 +151,26 @@ public class Main extends Application {
 		envio.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				buttons.getChildren();
+				ArrayList<Integer> resp = new ArrayList<Integer>();
+				
+				int i = 0;
 				for (Node o : buttons.getChildren()) {
+					i++;
 					if (((RadioButton) o).isSelected()) {
 						// o instanceof RadioButton && /lo quité porque en este
 						// contenedor solo puede haber radiobuttons
-						System.out.println(o.toString());
+						resp.add(i);
 						// meter respuestas elegidas en array
 					}
 				}
+				System.out.println(c.corrige(resp,p));
 				// comprobar respuestas correctas y escribir en ventana
 			}
 		});
 
 		engine.loadContent(proc.markdownToHtml(p.getEnunciado()));
 		root.setPrefSize(200, 200);
-		// root.set
+		
 		root.setMaxWidth(200);
 		browser.setMaxHeight(100);
 		root.getChildren().addAll(browser);
