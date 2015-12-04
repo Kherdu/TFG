@@ -56,7 +56,7 @@ public class Main extends Application {
 			c = new Controller();
 			c.cargaModelo("yaml/paGuarrearPreguntas");
 			Tema t = c.getTema();
-			PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
+			PegDownProcessor processor = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
 			// Este objeto se deberia pasar a la vista para que lo muestre
 			// temporal para pruebas
 
