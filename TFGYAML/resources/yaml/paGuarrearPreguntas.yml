@@ -22,6 +22,7 @@ Lecciones:
     - Pregunta: 2
       Enunciado: ¿Si hacemos la operacion **7/2** que resultado obtenemos?
       Tipo: Opciones
+      Multiple: no
       Pista: las operaciones enteras tienen resultado entero
 #para el tipo opciones
       Opcion_correcta: "1"
@@ -89,6 +90,7 @@ Lecciones:
       Enunciado: Como sacarias la subcadena â€˜caâ€™ de la palabra recamara?
       Explicacion: Las cadenas en python se pueden tratar como si fueran un array de elementos, siendo el 0 el primer caracter.
       Tipo: Opciones
+      Multiple: no
       Opcion_correcta: "3"
       Opciones: 
        - 1) recamara[2:3]

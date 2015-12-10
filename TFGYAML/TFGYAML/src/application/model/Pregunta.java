@@ -55,6 +55,8 @@ public abstract class Pregunta<T>
 	public abstract void setOpciones(ArrayList<String> opciones);
 	
 	public abstract boolean corrige(T respuesta);
+
+	public abstract void setMulti(Boolean is);
 	
 	
 }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Opciones extends Pregunta<List<Integer>> {
 	// private List<Integer> solucion;
 	private List<String> opciones;
-
+	private Boolean multi;
 	public Opciones(int numero, String enunciado, String pista) {
 		super(numero, enunciado, pista, new ArrayList());
 		// this.solucion = new ArrayList<Integer>();
@@ -49,6 +49,16 @@ public class Opciones extends Pregunta<List<Integer>> {
 			sol = false;
 
 		return sol;
+	}
+
+	@Override
+	public void setMulti(Boolean is) {
+		this.multi=is;
+		
+	}
+
+	public Boolean getMulti() {
+		return multi;
 	}
 
 }

@@ -28,7 +28,7 @@ Lecciones:
        - Opcion: 3) 3.5
        - Opcion: 4) ninguna de las anteriores
     - Pregunta: 3
-      Enunciado: "###Calcula el area de este triangulo ![alt text](/triangulo.png)"
+      Enunciado: "###Calcula el area de este triangulo ![ ](triangulo.png)"
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta

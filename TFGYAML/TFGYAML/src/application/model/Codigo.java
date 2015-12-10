@@ -34,5 +34,11 @@ public class Codigo extends Pregunta <String>
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setMulti(Boolean is) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
