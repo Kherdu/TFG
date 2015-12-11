@@ -50,18 +50,22 @@ public class Main extends Application{
 	private static Controller c;
 
 	public static void main(String[] args) {
-
-		
+		launch(args);
 		
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		c = new Controller();
+		this.primaryStage=primaryStage;
+		this.primaryStage.setTitle("Prueba");
+		c = new Controller(primaryStage);
 		c.cargaModelo("yaml/paGuarrearPreguntas");
 		c.launch();
 		
+		
 	}
+
+	
 
 	
 }

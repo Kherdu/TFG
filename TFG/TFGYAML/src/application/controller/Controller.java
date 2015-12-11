@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +51,9 @@ public class Controller {
 	private VBox buttons;
 	
 	
-	public Controller() {
+	public Controller(Stage primaryStage) {
 		this.tema = null;
+		this.primaryStage=primaryStage;
 	}
 
 	public void cargaModelo(String cargaTema) {
@@ -110,9 +112,12 @@ public class Controller {
 		// showTemas();
 		// showImg(img);
 		Pregunta p = tema.getLecciones().get(0).getPreguntas().get(1);
+		
 		showOptions(p, processor);
 		// showIntroTema(preguntaProc);
 		// int num = new File("resources").list().length;
+		
+		// TODO llamar a la vista de intro.fxml, y esta tiene listeners que indicaran al controlador que escena sustituir
 	}
 	private void showImg(Image img) {
 
