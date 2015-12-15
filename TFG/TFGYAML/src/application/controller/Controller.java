@@ -212,7 +212,12 @@ public class Controller {
 
 		ScrollPane panelTexto = new ScrollPane();
 		panelTexto.setContent(browser);
+		//preprocesar string en vez de html para añadir la ruta relativa
+		String img_prueba= "<img src='" + getClass().getResource("/triangulo.png") + "' />";
+		//System.out.println(img_prueba);
+		//engine.loadContent(img_prueba);
 		engine.loadContent(html);
+		
 		root.getChildren().addAll(panelTexto);
 		scene.setRoot(root);
 		primaryStage.setScene(scene);
