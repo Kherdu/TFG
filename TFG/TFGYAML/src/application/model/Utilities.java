@@ -17,21 +17,19 @@ import javafx.scene.web.WebView;
 public class Utilities {
 	
 	public static String  modifyImg(String html){
-		String        pattern = "(<img src=\")(file:)(.*?)(\".*?>)"; //Patron de la cadena a buscar
+		String        pattern = "(<img src=\"file:///)(.*?)(\".*?>)"; //Patron de la cadena a buscar. 
+		//En el yaml el formato ha de ser "file:///"+ ruta relativa a la imagen
 		
 		 
 		// Compilar el patron ignorando si esta en mayusculas o minusculas
 		Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(html);
 		
-		
-		
-		System.out.println("ENCONTRADOS: ");
 		while(matcher.find()){
 			System.out.println(matcher.group());
-			File im = new File(matcher.group(3));//Me quedo con la ruta de la imagen
+			File im = new File(matcher.group(2));//Me quedo con la ruta de la imagen
 			System.out.println("La ruta es: "+im.getAbsolutePath());
-			html = html.replace(matcher.group(), matcher.group(1)+im.getAbsolutePath()+matcher.group(4));
+			html = html.replace(matcher.group(), matcher.group(1)+im.getAbsolutePath()+matcher.group(3));
 		
 		}
 		return html;

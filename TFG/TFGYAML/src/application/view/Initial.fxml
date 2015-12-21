@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="308.0" prefWidth="311.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Pane layoutY="-8.0" prefHeight="218.0" prefWidth="207.0" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-8.0">
+         <children>
+            <ComboBox layoutX="45.0" layoutY="146.0" prefHeight="31.0" prefWidth="221.0" promptText="Selecciona un tema" visibleRowCount="14" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
