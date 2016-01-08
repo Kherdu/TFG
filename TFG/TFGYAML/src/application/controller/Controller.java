@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,6 @@ import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
 import application.model.Tema;
-import application.model.Utilities;
 import application.model.YamlReaderClass;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -51,8 +51,9 @@ public class Controller {
 	private VBox buttons;
 	
 	
-	public Controller() {
+	public Controller(Stage primaryStage) {
 		this.tema = null;
+		this.primaryStage=primaryStage;
 	}
 
 	public void cargaModelo(String cargaTema) {
@@ -101,19 +102,22 @@ public class Controller {
 		// pregunta con imagen
 		String preguntaPreProc = tema.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
 
-		/*String tab = "First Header  | Second Header" + "\n" + "------------- | ------------- 	\n"
+		String tab = "First Header  | Second Header" + "\n" + "------------- | ------------- 	\n"
 				+ "Content Cell  | Content Cell\n" + "Content Cell  | Content Cell\n";
 
-		System.out.println(System.getProperty("user.dir"));*/
+		System.out.println(System.getProperty("user.dir"));
 		String preguntaProc = processor.markdownToHtml(preguntaPreProc);
-		Utilities.modifyImg(preguntaProc);
+		
 		// initLayout();
 		// showTemas();
 		// showImg(img);
 		Pregunta p = tema.getLecciones().get(0).getPreguntas().get(1);
+		
 		showOptions(p, processor);
 		// showIntroTema(preguntaProc);
 		// int num = new File("resources").list().length;
+		
+		// TODO llamar a la vista de intro.fxml, y esta tiene listeners que indicaran al controlador que escena sustituir
 	}
 	private void showImg(Image img) {
 
@@ -208,7 +212,12 @@ public class Controller {
 
 		ScrollPane panelTexto = new ScrollPane();
 		panelTexto.setContent(browser);
+		//preprocesar string en vez de html para añadir la ruta relativa
+		String img_prueba= "<img src='" + getClass().getResource("/triangulo.png") + "' />";
+		//System.out.println(img_prueba);
+		//engine.loadContent(img_prueba);
 		engine.loadContent(html);
+		
 		root.getChildren().addAll(panelTexto);
 		scene.setRoot(root);
 		primaryStage.setScene(scene);
