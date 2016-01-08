@@ -22,7 +22,7 @@ public final class YamlReaderClass {
 		try {
 			input = new FileInputStream("resources/" + cargar + ".yml");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		// mapa lectura del yaml
@@ -30,57 +30,66 @@ public final class YamlReaderClass {
 		Map<String, Object> mapaObjeto = (Map<String, Object>) yaml.load(input);
 		// auxiliares
 		ArrayList<Map> l = new ArrayList<Map>();
-		ArrayList<Map> p = new ArrayList<Map>();
+		ArrayList<Map> e = new ArrayList<Map>();
 		l = (ArrayList<Map>) mapaObjeto.get("Lecciones");
 		Integer nTema = (Integer) mapaObjeto.get("Tema");
 		String tTema = (String) mapaObjeto.get("Titulo");
 		String iTema = (String) mapaObjeto.get("Introduccion");
 
 		// objetos a rellenar para el tema
-		List<Pregunta> preguntas = new ArrayList<Pregunta>();
+		List<Elemento> elementos = new ArrayList<Elemento>();
 		List<Leccion> lecciones = new ArrayList<Leccion>();
-
+		
 		for (Map leccion : l) {
-			preguntas = new ArrayList<Pregunta>();
-			p = (ArrayList<Map>) leccion.get("Preguntas");
-			Pregunta pregunta = new Codigo(1, null, null, null);
-			for (Map pre : p) {
-				int num = (Integer) pre.get("Pregunta");
-
-				String enunciado = (String) pre.get("Enunciado");
-				String pista = (String) pre.get("Pista");
-
-				if (pre.get("Tipo").equals("Codigo")) {
-					String respuesta = (String) pre.get("Respuesta");
-					pregunta = new Codigo(num, enunciado, pista, respuesta);
-
-				} else if (pre.get("Tipo").equals("Sintaxis")) {
-					String sintaxis = (String) pre.get("Gramatica");
-					String resultado = (String) pre.get("Resultado");
-					pregunta = new Sintaxis(num, enunciado, pista, sintaxis, resultado);
-				} else if (pre.get("Tipo").equals("Opciones")) {
-					Boolean is = false;
-					pregunta = new Opciones(num, enunciado, pista);
-					if ((Boolean) pre.get("Multiple")) {
-						is = true;
+			elementos = new ArrayList<Elemento>();
+			e = (ArrayList<Map>) leccion.get("Elementos");
+			
+			Elemento elem = new Explicacion(null);
+			for (Map pre : e) {
+				if (pre.get("Elem").equals("pregunta"))
+				{
+					int num = (Integer) pre.get("Numero");
+	
+					String enunciado = (String) pre.get("Enunciado");
+					String pista = (String) pre.get("Pista");
+	
+					if (pre.get("Tipo").equals("Codigo")) {
+						String respuesta = (String) pre.get("Respuesta");
+						elem = new Codigo(num, enunciado, pista, respuesta);
+	
+					} else if (pre.get("Tipo").equals("Sintaxis")) {
+						String sintaxis = (String) pre.get("Gramatica");
+						String resultado = (String) pre.get("Resultado");
+						elem = new Sintaxis(num, enunciado, pista, sintaxis, resultado);
+					} else if (pre.get("Tipo").equals("Opciones")) {
+						Boolean is = false;
+						elem = new Opciones(num, enunciado, pista);
+						if ((Boolean) pre.get("Multiple")) {
+							is = true;
+						}
+						String opcorrecta = (String) pre.get("Opcion_correcta");
+						String[] correctas = opcorrecta.split(",");
+						ArrayList<Integer> correctasAux = StringToInt(correctas);
+						elem.setSolucion(correctasAux);
+						ArrayList<String> opc = new ArrayList<String>();
+						opc = (ArrayList<String>) pre.get("Opciones");
+						elem.setOpciones(opc);
+						elem.setMulti(is);
 					}
-					String opcorrecta = (String) pre.get("Opcion_correcta");
-					String[] correctas = opcorrecta.split(",");
-					ArrayList<Integer> correctasAux = StringToInt(correctas);
-					pregunta.setSolucion(correctasAux);
-					ArrayList<String> opc = new ArrayList<String>();
-					opc = (ArrayList<String>) pre.get("Opciones");
-					pregunta.setOpciones(opc);
-					pregunta.setMulti(is);
 				}
-				preguntas.add(pregunta);
+				else
+				{
+					String explicacion = (String) pre.get("Contenido");
+					elem.setTexto(explicacion);
+				}
+				elementos.add(elem);
 
 			}
 			int nLeccion = (Integer) leccion.get("Leccion");
 			String tLeccion = (String) leccion.get("Titulo_Leccion");
-			//String eLeccion = (String) leccion.get("Explicacion");
-			Leccion lec = new Leccion(nLeccion, tLeccion);
-			lec.setElementos(preguntas);
+			String eLeccion = (String) leccion.get("Intro_leccion");
+			Leccion lec = new Leccion(nLeccion, tLeccion, eLeccion);
+			lec.setElementos(elementos);
 			lecciones.add(lec);
 
 		}

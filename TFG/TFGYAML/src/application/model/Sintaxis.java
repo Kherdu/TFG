@@ -34,6 +34,20 @@ public class Sintaxis extends Pregunta<String>
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void setSolucion(ArrayList<Integer> correctasAux) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setTexto(String explicacion) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

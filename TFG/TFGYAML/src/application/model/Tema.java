@@ -2,7 +2,6 @@ package application.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Tema {
 	private int numero;

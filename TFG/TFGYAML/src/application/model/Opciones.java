@@ -61,4 +61,16 @@ public class Opciones extends Pregunta<List<Integer>> {
 		return multi;
 	}
 
+	@Override
+	public void setSolucion(ArrayList<Integer> correctasAux) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setTexto(String explicacion) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

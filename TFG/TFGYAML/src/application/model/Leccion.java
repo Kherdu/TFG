@@ -1,21 +1,21 @@
 package application.model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Leccion 
 {
 	private int numero;
 	private String titulo;
 	private List<Elemento> elementos;
-	//private String explicacion;
+	private String explicacion;
 	//private List<Pregunta> preguntas;
 
-	public Leccion(int numero, String titulo){//, String explicacion){
+	public Leccion(int numero, String titulo, String explicacion){
 		this.numero=numero;
 		this.titulo=titulo;
 		this.elementos = new ArrayList<Elemento>();
-		//this.explicacion=explicacion;
+		this.explicacion=explicacion;
 		//this.preguntas= new ArrayList<Pregunta>();
 	}
 
@@ -35,14 +35,14 @@ public class Leccion
 		this.titulo = titulo;
 	}
 
-	/*public String getExplicacion() {
+	public String getExplicacion() {
 		return explicacion;
 	}
 
 	public void setExplicacion(String explicacion) {
 		this.explicacion = explicacion;
 	}
-*/
+
 	public List<Elemento> getElementos() {
 		return this.elementos;
 	}

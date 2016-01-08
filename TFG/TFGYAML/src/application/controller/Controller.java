@@ -100,20 +100,20 @@ public class Controller {
 		String htmlProcesado2 = tituloLeccionProc + explicacionLeccionProc;
 
 		// pregunta con imagen
-		String preguntaPreProc = tema.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
+		//String preguntaPreProc = tema.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
 
 		String tab = "First Header  | Second Header" + "\n" + "------------- | ------------- 	\n"
 				+ "Content Cell  | Content Cell\n" + "Content Cell  | Content Cell\n";
 
 		System.out.println(System.getProperty("user.dir"));
-		String preguntaProc = processor.markdownToHtml(preguntaPreProc);
+		//String preguntaProc = processor.markdownToHtml(preguntaPreProc);
 		
 		// initLayout();
 		// showTemas();
 		// showImg(img);
-		Pregunta p = tema.getLecciones().get(0).getPreguntas().get(1);
+		//Pregunta p = tema.getLecciones().get(0).getPreguntas().get(1);
 		
-		showOptions(p, processor);
+		//showOptions(p, processor);
 		// showIntroTema(preguntaProc);
 		// int num = new File("resources").list().length;
 		
