@@ -3,7 +3,7 @@ package application.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Pregunta<T> 
+public abstract class Pregunta<T> extends Elemento
 {
 	protected int numero;
 	protected String enunciado;

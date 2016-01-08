@@ -7,14 +7,16 @@ public class Leccion
 {
 	private int numero;
 	private String titulo;
-	private String explicacion;
-	private List<Pregunta> preguntas;
+	private List<Elemento> elementos;
+	//private String explicacion;
+	//private List<Pregunta> preguntas;
 
-	public Leccion(int numero, String titulo, String explicacion){
+	public Leccion(int numero, String titulo){//, String explicacion){
 		this.numero=numero;
 		this.titulo=titulo;
-		this.explicacion=explicacion;
-		this.preguntas= new ArrayList<Pregunta>();
+		this.elementos = new ArrayList<Elemento>();
+		//this.explicacion=explicacion;
+		//this.preguntas= new ArrayList<Pregunta>();
 	}
 
 	public int getNumero() {
@@ -33,20 +35,25 @@ public class Leccion
 		this.titulo = titulo;
 	}
 
-	public String getExplicacion() {
+	/*public String getExplicacion() {
 		return explicacion;
 	}
 
 	public void setExplicacion(String explicacion) {
 		this.explicacion = explicacion;
 	}
-
-	public List<Pregunta> getPreguntas() {
-		return preguntas;
+*/
+	public List<Elemento> getElementos() {
+		return this.elementos;
 	}
 
-	public void setPreguntas(List<Pregunta> preguntas) {
-		this.preguntas = preguntas;
+	public void setElementos(List<Elemento> elementos) {
+		this.elementos = elementos;
+	}
+	
+	public void addElemento(Elemento elem)
+	{
+		this.elementos.add(elem);
 	}
 	
 }

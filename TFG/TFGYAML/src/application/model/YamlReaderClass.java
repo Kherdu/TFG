@@ -78,9 +78,9 @@ public final class YamlReaderClass {
 			}
 			int nLeccion = (Integer) leccion.get("Leccion");
 			String tLeccion = (String) leccion.get("Titulo_Leccion");
-			String eLeccion = (String) leccion.get("Explicacion");
-			Leccion lec = new Leccion(nLeccion, tLeccion, eLeccion);
-			lec.setPreguntas(preguntas);
+			//String eLeccion = (String) leccion.get("Explicacion");
+			Leccion lec = new Leccion(nLeccion, tLeccion);
+			lec.setElementos(preguntas);
 			lecciones.add(lec);
 
 		}
