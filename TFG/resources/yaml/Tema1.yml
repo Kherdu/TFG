@@ -25,12 +25,13 @@ Lecciones:
       Tipo: Codigo
       Resultado: llamada(String codigo)#i=4
     - Elem: pregunta
-      Pregunta: 2
+      Numero: 2
       Enunciado: si hacemos la operacion '7 / 2' que sale por pantalla?
       Tipo: Opciones
       Pista: las operaciones enteras tienen resultado entero
 #para el tipo opciones
       Opcion_correcta: "1"
+      Multiple: no
       Opciones: 
        - Opcion: 1) 3
        - Opcion: 2) 4
@@ -45,7 +46,7 @@ Lecciones:
             area = altura * ancho   
        "
     - Elem: pregunta
-      Pregunta: 3
+      Numero: 3
       Enunciado: "Calcula el area de este triangulo ![triangulo](/images/triangulo.png)"
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
@@ -64,12 +65,12 @@ Lecciones:
         * Con comillas dobles
        " 
     - Elem: pregunta
-      Pregunta: 1
+      Numero: 1
       Enunciado: Asigna a la variable **˜cadena** el valor "Hola Mundo"
       Tipo: Codigo
       Resultado: llamada(string codigo)#cadena = â€™Hola Mundoâ€™
     - Elem: pregunta
-      Pregunta: 2
+      Numero: 2
       Enunciado:  Introduce las siguientes palabras en la variable lista_animales separadas por un salto de linea. gato, perro, burro
       Tipo: Codigo
       Resultado: llamada(string codigo)#animales= â€œgato /nperro /nburroâ€�
@@ -83,7 +84,7 @@ Lecciones:
         * cadena = "holahola"
         * cadena = "hola" * 2        
     - Elem: pregunta
-      Pregunta: 3
+      Numero: 3
       Enunciado: Asigna a la variable *palabra* la cadena "paco" 3 veces, el resultado deberá ser "pacopacopaco" (sin inicializar palabra de la forma palabra ="pacopacopaco").
       Explicacion: >
        En python, se puede concatenar una cadena multiples 
@@ -104,10 +105,11 @@ Lecciones:
        cadena[2] es t
        cadena[3] es e
     - Elem: pregunta
-      Pregunta: 4
+      Numero: 4
       Enunciado: Como sacarias la subcadena "ca" de la palabra recamara?
       Explicacion: Las cadenas en python se pueden tratar como si fueran un array de elementos, siendo el 0 el primer caracter.
       Tipo: Opciones
+      Multiple: no
       Opcion_correcta: "3"
       Opciones: 
        - Opcion: 1) recamara[2:3]
