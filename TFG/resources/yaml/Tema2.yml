@@ -20,16 +20,17 @@ Lecciones:
        * Lista combinada ["hola", 123, 3.6, "g"]
        "   
     - Elem: pregunta
-      Pregunta: 1 
+      Numero: 1 
       Enunciado: Crea una lista 'l' con los nombres de los creadores de la aplicación, y los numeros 32 y 27
       Tipo: Codigo
       Resultado: llamada(string codigo)#lista=["Rafael", "Carlos", 32, 27] 
     - Elem: pregunta
-      Pregunta: 2
+      Numero: 2
       Enunciado: ¿que opción es correcta para extraer los dos nombres de la lista l=["Rafael", "Carlos", 32, 27]? 
       Tipo: Opciones
       Pista: los elementos de una lista se tratan como los de un array
   #para el tipo opciones
+      Multiple: yes
       Opcion_correcta: 1,2,3
       Opciones:
        - Opcion: 1) l[0:2]
@@ -67,7 +68,7 @@ Lecciones:
        Reemplazamos "hola" por [1,2,3]
            lista[0:1] = [1,2,3]"
     - Elem: pregunta
-      Pregunta: 3
+      Numero: 3
       Enunciado: Escribe el código para introducir en la lista 'l' los numeros del 1 al 5 utilizando un bucle
       Pista: Consulta el tema de bucles si tienes problemas
       Tipo: Sintaxis
