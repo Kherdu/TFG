@@ -1,10 +1,11 @@
 package application.view;
 
-import java.awt.TextArea;
+
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTextArea;
+
 
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
@@ -21,10 +22,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
@@ -53,13 +58,9 @@ public class Contenido extends Application
 		WebEngine engine = texto.getEngine();
 		engine.loadContent(proc.markdownToHtml("Texto del enunciado de la pregunta o la explicacion"));
 		
-		/*Falta Añadir un area de texto para las preguntas de codigo. No se me ocurre como hacerlo
-		 * 
-		 * AnchorPane anchor = new AnchorPane();
-		final TextArea textArea = new TextArea();
-		anchor.getChildren().addAll(textArea);
-		HBox buttons = new HBox();*/
-		
+		TextArea codigo = new TextArea("patajhsdvd  dhjvdjc");
+	     
+		HBox buttons = new HBox();
 		//Botones
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
@@ -74,8 +75,9 @@ public class Contenido extends Application
 		
 		texto.setMaxHeight(100);
 		box.getChildren().addAll(texto);
-		
+		box.getChildren().addAll(codigo);
 		box.getChildren().addAll(buttons);
+		
 		scene.setRoot(box);
 		primaryStage.setScene(scene);
 		primaryStage.show();
