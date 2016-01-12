@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,12 +16,17 @@ import org.yaml.snakeyaml.Yaml;
 
 import application.Main;
 import application.model.Codigo;
+import application.model.Elemento;
+import application.model.Explicacion;
 import application.model.Leccion;
 import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
 import application.model.Tema;
 import application.model.YamlReaderClass;
+import application.view.Contenido;
+import application.view.MenuLeccion;
+import application.view.MenuTema;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,6 +42,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -47,9 +54,11 @@ public class Controller {
 
 	private Tema tema;
 	private Stage primaryStage;
-	private TilePane root;
+	private Pane root;
 	private VBox buttons;
-	
+	private Scene scene;
+	private ArrayList<Elemento> elems;
+	private int actual; //contador de el elemento del contenido en el que estamos
 	
 	public Controller(Stage primaryStage) {
 		this.tema = null;
@@ -78,66 +87,74 @@ public class Controller {
 
 	public void launch() {
 
-		PegDownProcessor processor = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
-		// Este objeto se deberia pasar a la vista para que lo muestre
-		// temporal para pruebas
-
-		// obtenemos los atributos
-		String tituloPreProcesado = tema.getTitulo();
-		String introPreProcesado = tema.getIntroduccion();
-		// pasamos txtmark
-		String tituloProcesado = processor.markdownToHtml(tituloPreProcesado);
-		String introProcesado = processor.markdownToHtml(introPreProcesado);
-
-		// otro
-		String tituloLeccionPreProc = tema.getLecciones().get(0).getTitulo();
-		String explicacionLeccionPreProc = tema.getLecciones().get(0).getExplicacion();
-
-		String tituloLeccionProc = processor.markdownToHtml(tituloLeccionPreProc);
-		String explicacionLeccionProc = processor.markdownToHtml(explicacionLeccionPreProc);
-		// html ejemplos varios
-		String htmlProcesado = tituloProcesado + introProcesado;
-		String htmlProcesado2 = tituloLeccionProc + explicacionLeccionProc;
-
-		// pregunta con imagen
-		//String preguntaPreProc = tema.getLecciones().get(0).getPreguntas().get(2).getEnunciado();
-
-		String tab = "First Header  | Second Header" + "\n" + "------------- | ------------- 	\n"
-				+ "Content Cell  | Content Cell\n" + "Content Cell  | Content Cell\n";
-
-		System.out.println(System.getProperty("user.dir"));
-		//String preguntaProc = processor.markdownToHtml(preguntaPreProc);
 		
-		// initLayout();
-		// showTemas();
-		// showImg(img);
-		//Pregunta p = tema.getLecciones().get(0).getPreguntas().get(1);
+		ArrayList<String> files = new ArrayList<String>();
 		
-		//showOptions(p, processor);
-		// showIntroTema(preguntaProc);
-		// int num = new File("resources").list().length;
+		File folder = new File("resources/yaml");
+		File[] listOfFiles = folder.listFiles();
+
+		    for (int i = 0; i < listOfFiles.length; i++) {
+		      if (listOfFiles[i].isFile()) {
+		        files.add(listOfFiles[i].getName());
+		      }
+		    }
+		showStart(files);
 		
-		// TODO llamar a la vista de intro.fxml, y esta tiene listeners que indicaran al controlador que escena sustituir
 	}
+	
+	private void showStart(ArrayList<String> files) {
+		
+		
+		primaryStage.setTitle("Python"); //el titulo se podria poner de la app, o del lenguaje, pero obteniendo en la primera lectura de ficheros...
+		//este es el encargado de hacer el setroot que tiene los contenidos necesarios
+		Pane p = new MenuTema();
+		
+		changeView(p, files, 0);
+		
+	}
+
+	private void changeView(Pane p, ArrayList<String> files, int selected){
+		scene = new Scene(new Group());
+		root= new Pane();
+		if (p instanceof MenuTema){
+			root.getChildren().addAll(((MenuTema) p).menuTema(files, this));
+		}else if (p instanceof MenuLeccion){
+			root.getChildren().addAll(((MenuLeccion) p).menuLeccion(tema, this));
+		}else if (p instanceof Contenido){
+			Elemento e;
+			//TODO añadir preguntas de ambos tipos aquí
+			if (actual==-1){
+				e= new Explicacion(tema.getLecciones().get(selected).getExplicacion());
+				
+			}else e= elems.get(actual);
+			
+			root.getChildren().addAll(((Contenido) p).contenido( e, this));
+		}
+		scene.setRoot(root);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	//TODO borrar
 	private void showImg(Image img) {
 
 		Scene scene = new Scene(new Group());
+		
 		StackPane sp = new StackPane();
 		ImageView imgView = new ImageView(img);
 		sp.getChildren().add(imgView);
-
+		
 		scene.setRoot(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 	}
-
+	//TODO borrar
 	private void showOptions(final Pregunta p, PegDownProcessor proc) {
 		final Opciones o = (Opciones) p;
 		Scene scene = new Scene(new Group());
 		//scene.getStylesheets().add("resources/css/prueba");
 		
-		root();
+		//root();
 		buttons = new VBox();
 		
 		WebView browser = new WebView();
@@ -202,11 +219,11 @@ public class Controller {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-
+	//TODO borrar
 	private void showIntroTema(String html) {
 		System.out.println(html);
 		Scene scene = new Scene(new Group());
-		root();
+		//root();
 		WebView browser = new WebView();
 		WebEngine engine = browser.getEngine();
 
@@ -224,7 +241,7 @@ public class Controller {
 		primaryStage.show();
 
 	}
-
+	//TODO borrar
 	private void showTemas() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -236,11 +253,25 @@ public class Controller {
 		}
 
 	}
-	public TilePane root() {
+	
 
-		root = new TilePane();
-		root.setPrefColumns(1);
-		return root;
+	public void selectedTema(String selectedItem) {
+		
+		this.tema= YamlReaderClass.cargaTema(selectedItem);
+		changeView(new MenuLeccion(), null, 0);
+	}
 
+	public void selectedLeccion(int selectedItem) {
+		this.elems=(ArrayList<Elemento>) tema.getLecciones().get(selectedItem).getElementos();
+		actual=-1;
+		changeView(new Contenido(), null, selectedItem);
+		
+	}
+	private void nextElem(){
+		//TODO ojo, hay que desactivar y activar botones para que esto no pete
+		actual++;
+	}
+	private void prevElem(){
+		actual--;
 	}
 }

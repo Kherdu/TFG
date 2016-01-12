@@ -3,6 +3,8 @@ package application.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.util.Callback;
+
 public class Tema {
 	private int numero;
 	private String titulo;
@@ -47,6 +49,24 @@ public class Tema {
 
 	public void setLecciones(List<Leccion> lecciones) {
 		this.lecciones = lecciones;
+	}
+
+	public ArrayList<String> getNameLecciones() {
+		//devuelve arraylist de nombres de lecciones
+		ArrayList<String> names= new ArrayList<String>();
+		for (Leccion l: lecciones){
+			names.add(l.getTitulo());
+		}
+		
+		return names;
+	}
+
+	public ArrayList<Elemento> getLeccion(String selectedItem) {
+		
+		int i = 0;
+		while (!this.lecciones.get(i).getTitulo().equals(selectedItem))
+			i++;
+		return (ArrayList<Elemento>) this.lecciones.get(i).getElementos();
 	}
 
 

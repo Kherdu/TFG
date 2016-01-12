@@ -1,16 +1,16 @@
-package application.view;
+﻿package application.view;
 
-
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.pegdown.ast.TextNode;
 
+import application.controller.Controller;
+import application.model.Elemento;
+import application.model.Explicacion;
 import application.model.Opciones;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -25,43 +25,42 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-public class Contenido extends Application
-{
-	public static void main(String[] args) {
-		launch(args);
+public class Contenido extends Pane{
+	
+	private Elemento e;
+	private Controller c;
+	
+	public Contenido(){
 		
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		PegDownProcessor proc = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
+	public Pane contenido(Elemento e, Controller c){
+		this.e=e;
+		this.c=c;
 		VBox box = new VBox();
 		
 		//El grupo que se desea agregar, y el tamaño ancho y alto
 		Scene scene = new Scene( box, 300, 300 );
-		//Titulo de la ventana
-		primaryStage.setTitle("Leccion");
-		//Se agrega la scena
-		primaryStage.setScene( scene );
-		WebView texto = new WebView();
-		WebEngine engine = texto.getEngine();
-		engine.loadContent(proc.markdownToHtml("Texto del enunciado de la pregunta o la explicacion"));
+		PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
+		String content=null;
+		// TODO Falta Añadir un area de texto para las preguntas de codigo. No se me ocurre como hacerlo
+		if (e instanceof Explicacion){
+			content = pro.markdownToHtml(((Explicacion) e).getTexto()); 
+		}
 		
-		TextArea codigo = new TextArea("patajhsdvd  dhjvdjc");
-	     
+		TextArea codigo = new TextArea("pene");
 		HBox buttons = new HBox();
-		//Botones
+		
+		//TODO listeners
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
 		Button help = new Button("Ayuda");
@@ -72,15 +71,16 @@ public class Contenido extends Application
 		buttons.getChildren().addAll(help);
 		buttons.getChildren().addAll(resolve);
 		
-		
-		texto.setMaxHeight(100);
-		box.getChildren().addAll(texto);
+		WebView text=new WebView();
+		WebEngine engine= text.getEngine();
+		engine.loadContent(content);
+		text.setMaxHeight(100);
+		box.getChildren().addAll(text);
 		box.getChildren().addAll(codigo);
 		box.getChildren().addAll(buttons);
-		
 		scene.setRoot(box);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		return box;
+		
 		
 	}
 

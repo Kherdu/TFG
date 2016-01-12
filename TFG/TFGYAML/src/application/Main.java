@@ -59,7 +59,6 @@ public class Main extends Application{
 		this.primaryStage=primaryStage;
 		this.primaryStage.setTitle("Prueba");
 		c = new Controller(primaryStage);
-		c.cargaModelo("yaml/Tema1");
 		c.launch();
 		
 		

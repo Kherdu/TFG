@@ -20,7 +20,8 @@ public final class YamlReaderClass {
 		ArrayList<String> value = new ArrayList<String>();
 		InputStream input = null;
 		try {
-			input = new FileInputStream("resources/" + cargar + ".yml");
+			String path= "resources/yaml/" + cargar;
+			input = new FileInputStream(path);
 		} catch (FileNotFoundException e) {
 			
 			e.printStackTrace();
@@ -44,8 +45,8 @@ public final class YamlReaderClass {
 			elementos = new ArrayList<Elemento>();
 			e = (ArrayList<Map>) leccion.get("Elementos");
 			
-			Elemento elem = new Explicacion(null);
 			for (Map pre : e) {
+				Elemento elem = new Explicacion(null);
 				if (pre.get("Elem").equals("pregunta"))
 				{
 					int num = (Integer) pre.get("Numero");
@@ -76,9 +77,7 @@ public final class YamlReaderClass {
 						elem.setOpciones(opc);
 						elem.setMulti(is);
 					}
-				}
-				else
-				{
+				}else{
 					String explicacion = (String) pre.get("Contenido");
 					elem.setTexto(explicacion);
 				}
