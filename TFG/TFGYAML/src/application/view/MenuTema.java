@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 
 public class MenuTema extends Pane{
@@ -31,11 +32,10 @@ public class MenuTema extends Pane{
 		
 		this.c=c;
 		this.temas=f;
-		VBox box = new VBox();
+		VBox box = new VBox(10);
 		//El grupo que se desea agregar, y el tamaño ancho y alto
 		Scene scene = new Scene( box, 300, 300 );
 				
-		scene.getStylesheets().add("/TFG/TFGYAML/src/application/view/tema.css");
 		
 		///Elementos 
 		Label leng = new Label("PYTHON");
@@ -44,15 +44,20 @@ public class MenuTema extends Pane{
 		temasList.setItems(obsTemas);
 		Button comenzar = new Button("Comenzar");
 		comenzar.setOnAction(new EventHandler<ActionEvent>(){
-		MultipleSelectionModel<String> s;
-			@Override
+		
 			public void handle(ActionEvent event) {
+				//TODO Controlar que alguna opcion esté marcada si no, explota
+				MultipleSelectionModel<String> s;
 				s= temasList.getSelectionModel();
 				c.selectedTema(s.getSelectedItem());
 				
 			}
 			
 		});
+		box.setPadding(new Insets(20));
+		
+		comenzar.getStyleClass().add("comenzar");
+		box.getStylesheets().add("/application/view/css/tema.css");
 		
 		///Añadir elementos a la vista
 		box.getChildren().addAll(leng);

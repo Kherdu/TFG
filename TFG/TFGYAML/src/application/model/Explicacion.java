@@ -1,6 +1,9 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.Node;
 
 public class Explicacion extends Elemento{
 	
@@ -39,5 +42,7 @@ public class Explicacion extends Elemento{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

@@ -35,6 +35,8 @@ public class Utilities {
 		return html;
 	}
 	
+	//TODO cambiar este metodo para que devuelva el codigo HTML
+	// 	Permitir llamar a esta funcion y modificar el html que se le pasa o modificar el webview desde donde se hae la llamada
 	public static WebView creaBrowser(String html) {
 		InputStream file;
 		String aux="";

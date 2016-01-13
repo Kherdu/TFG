@@ -1,6 +1,9 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.Node;
 
 public abstract class Elemento {
 	
@@ -16,5 +19,8 @@ public abstract class Elemento {
 	public abstract void setSolucion(ArrayList<Integer> correctasAux);
 
 	public abstract void setTexto(String explicacion);
+
+	
+		
 
 }

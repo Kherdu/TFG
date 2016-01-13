@@ -1,6 +1,9 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.Node;
 
 public abstract class Pregunta<T> extends Elemento
 {
@@ -46,9 +49,7 @@ public abstract class Pregunta<T> extends Elemento
 		this.numero = numero;
 	}
 
-	public T getSolucion() {
-		return solucion;
-	}
+	
 	public abstract void setSolucion(T solucion);
 
 	public abstract void setOpciones(ArrayList<String> opciones);

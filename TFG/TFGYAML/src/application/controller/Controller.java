@@ -128,26 +128,13 @@ public class Controller {
 				
 			}else e= elems.get(actual);
 			
-			root.getChildren().addAll(((Contenido) p).contenido( e, this));
+			root.getChildren().addAll(((Contenido) p).contenido( e, this,selected));
 		}
 		scene.setRoot(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	//TODO borrar
-	private void showImg(Image img) {
-
-		Scene scene = new Scene(new Group());
-		
-		StackPane sp = new StackPane();
-		ImageView imgView = new ImageView(img);
-		sp.getChildren().add(imgView);
-		
-		scene.setRoot(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
-	}
+	
 	//TODO borrar
 	private void showOptions(final Pregunta p, PegDownProcessor proc) {
 		final Opciones o = (Opciones) p;
@@ -219,41 +206,7 @@ public class Controller {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	//TODO borrar
-	private void showIntroTema(String html) {
-		System.out.println(html);
-		Scene scene = new Scene(new Group());
-		//root();
-		WebView browser = new WebView();
-		WebEngine engine = browser.getEngine();
 
-		ScrollPane panelTexto = new ScrollPane();
-		panelTexto.setContent(browser);
-		//preprocesar string en vez de html para añadir la ruta relativa
-		String img_prueba= "<img src='" + getClass().getResource("/triangulo.png") + "' />";
-		//System.out.println(img_prueba);
-		//engine.loadContent(img_prueba);
-		engine.loadContent(html);
-		
-		root.getChildren().addAll(panelTexto);
-		scene.setRoot(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
-	}
-	//TODO borrar
-	private void showTemas() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/Initial.fxml"));
-			AnchorPane initial = loader.load();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
 
 	public void selectedTema(String selectedItem) {
 		
@@ -267,11 +220,13 @@ public class Controller {
 		changeView(new Contenido(), null, selectedItem);
 		
 	}
-	private void nextElem(){
+	public void nextElem(int l){
 		//TODO ojo, hay que desactivar y activar botones para que esto no pete
 		actual++;
+		changeView(new Contenido(), null, l);
 	}
-	private void prevElem(){
+	public void prevElem(int l){
 		actual--;
+		changeView(new Contenido(), null, l);
 	}
 }
