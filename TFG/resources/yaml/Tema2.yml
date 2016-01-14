@@ -1,5 +1,6 @@
 Tema: 2
 Titulo: Listas
+Archivo: archivo de correccion
 Introduccion: >
  Python utiliza varios tipos de datos compuestos, que se utilizan para agrupar otros valores. 
  El más versátil es la lista.
@@ -13,11 +14,13 @@ Lecciones:
        Los elementos de una lista no tienen por qué ser todos del mismo tipo.
        Una lista puede contener numeros enteros y cadenas en la misma.
     - Elem: explicacion
-      Contenido: >
-       "Unos ejemplos de lista:
+      Contenido: |
+       "Unos ejemplos de lista: 
+       
        * Lista de enteros [23, 63, 9, 34]
        * Lista de cadenas ["hola", "adios", "buenos dias"]
        * Lista combinada ["hola", 123, 3.6, "g"]
+       
        "   
     - Elem: pregunta
       Numero: 1 
@@ -41,14 +44,14 @@ Lecciones:
       Contenido: >
         En una lista se pueden añadir, borrar y sustituir elementos
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
        Hay varias formas de agregar elementos a una lista      
        
        * apend(elemento): Inserta el elemento al final de la lista
        * insert(i, elemento): Inserta el elemento en la posición *i* de la lista
        * extend(lista2): Concatena lista2 a lista
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
        Para eliminar elementos de una lista
        
        * remove(elem): elimina la primera aparición del elemento en la lista
@@ -57,7 +60,7 @@ Lecciones:
          
        En la función *remove* si elem no existe, se lanza una excepción
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
        "Para reemplazar elementos dentro de una lista
        
        * lista[rango] [lista_de_elementos]

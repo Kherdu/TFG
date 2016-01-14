@@ -7,13 +7,15 @@ import javafx.util.Callback;
 
 public class Tema {
 	private int numero;
+	private String archivo;
 	private String titulo;
 	private String introduccion;
 	private List <Leccion> lecciones;
 	
-	public Tema(int numero, String titulo, String introduccion) {
+	public Tema(int numero, String titulo, String introduccion, String archivo) {
 		this.numero = numero;
 		this.titulo = titulo;
+		this.archivo = archivo;
 		this.introduccion = introduccion;
 		this.lecciones = new ArrayList<Leccion>();
 	}

@@ -23,6 +23,7 @@ import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
 import application.model.Tema;
+import application.model.Utilities;
 import application.model.YamlReaderClass;
 import application.view.Contenido;
 import application.view.MenuLeccion;
@@ -67,8 +68,6 @@ public class Controller {
 
 	public void cargaModelo(String cargaTema) {
 		tema=YamlReaderClass.cargaTema(cargaTema);
-	
-			
 	}
 
 	public Tema getTema() {
@@ -195,7 +194,7 @@ public class Controller {
 			}
 		});
 
-		engine.loadContent(proc.markdownToHtml(p.getEnunciado()));
+	//	engine.loadContent(proc.markdownToHtml(p.getEnunciado()));
 		root.setPrefSize(200, 200);
 		root.setMaxWidth(200);
 		browser.setMaxHeight(100);
@@ -222,11 +221,18 @@ public class Controller {
 	}
 	public void nextElem(int l){
 		//TODO ojo, hay que desactivar y activar botones para que esto no pete
-		actual++;
+		if(actual<this.elems.size()-1)
+			actual++;
 		changeView(new Contenido(), null, l);
 	}
 	public void prevElem(int l){
-		actual--;
+		if(actual>-1)
+			actual--;
 		changeView(new Contenido(), null, l);
+	}
+	
+	public String markToHtml(String mark)
+	{
+		return Utilities.parserMarkDown(mark);
 	}
 }

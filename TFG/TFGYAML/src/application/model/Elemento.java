@@ -7,9 +7,15 @@ import javafx.scene.Node;
 
 public abstract class Elemento {
 	
-	public Elemento()
+	protected String texto; //Enunciado en preguntas o explicacion en explicacion
+	
+	public Elemento(String texto)
 	{
-		
+		this.texto = texto;
+	}
+	
+	public String getTexto(){
+		return this.texto;
 	}
 
 	public abstract void setOpciones(ArrayList<String> opc);
@@ -19,7 +25,7 @@ public abstract class Elemento {
 	public abstract void setSolucion(ArrayList<Integer> correctasAux);
 
 	public abstract void setTexto(String explicacion);
-
+	
 	
 		
 

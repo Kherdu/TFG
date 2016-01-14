@@ -9,6 +9,7 @@ import org.pegdown.PegDownProcessor;
 import application.controller.Controller;
 import application.model.Leccion;
 import application.model.Tema;
+import application.model.Utilities;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,10 +47,9 @@ public class MenuLeccion extends Pane{
 		
 		box.setMaxSize(600, 600);
 		///Elementos 
-		PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
 		WebView titulo = new WebView();
 		WebEngine engine = titulo.getEngine();
-		engine.loadContent(pro.markdownToHtml(t.getTitulo() + "\n" + t.getIntroduccion()));
+		engine.loadContent(c.markToHtml(t.getTitulo() + "\n" + t.getIntroduccion()));
 		
 		ListView<String> leccionList = new ListView<String>();
 		ObservableList<String> obsLecciones =FXCollections.observableArrayList (t.getNameLecciones());

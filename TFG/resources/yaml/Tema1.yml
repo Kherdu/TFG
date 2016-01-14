@@ -1,9 +1,10 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
+Archivo: aqui se especifica el archivo
 Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
-   Titulo_Leccion: "##Operaciones con numeros"
+   Titulo_Leccion: "Operaciones con numeros"
    Intro_leccion: >
     El interprete funciona como una **simple calculadora**, Tu tecleas una expresion 
     y el muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
@@ -38,7 +39,7 @@ Lecciones:
        - Opcion: 3) 3.5
        - Opcion: 4) ninguna de las anteriores
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
        "En el entorno de Python se pueden crear pequeños programas como hayar el área de un polígono
         ej:
             altura = 7
@@ -47,7 +48,9 @@ Lecciones:
        "
     - Elem: pregunta
       Numero: 3
-      Enunciado: "Calcula el area de este triangulo ![triangulo](/images/triangulo.png)"
+      Enunciado: |
+       Calcula el area de este triangulo 
+       ![triangulo](file:///resources/images/triangulo.jpg)
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
@@ -58,7 +61,7 @@ Lecciones:
     Además de los números, Python también sabe manipular cadenas.
    Elementos:
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
        "Las cadenas se pueden expresar de diversas formas:
         
         * Con comillas simples
@@ -79,8 +82,9 @@ Lecciones:
        Para contruir una cadena a base de la repetición de varias subcadenas,
        se puede llevar a cabo mediante un operador '*'
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
         Por ejemplo, la cadena "holahola" se puede obtener de las siguientes formas
+        
         * cadena = "holahola"
         * cadena = "hola" * 2        
     - Elem: pregunta
@@ -96,7 +100,7 @@ Lecciones:
     - Elem: explicacion
       Contenido: "En *python*, las cadenas se pueden tratar como arrays de elementos"
     - Elem: explicacion
-      Contenido: >
+      Contenido: |
        El primer caracter de la cadena es el elemento 0.
        Por tanto,
        cadena = bote

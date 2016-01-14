@@ -36,6 +36,7 @@ public final class YamlReaderClass {
 		Integer nTema = (Integer) mapaObjeto.get("Tema");
 		String tTema = (String) mapaObjeto.get("Titulo");
 		String iTema = (String) mapaObjeto.get("Introduccion");
+		String aTema = (String) mapaObjeto.get("Archivo");
 
 		// objetos a rellenar para el tema
 		List<Elemento> elementos = new ArrayList<Elemento>();
@@ -94,7 +95,7 @@ public final class YamlReaderClass {
 		}
 
 		// rellenado de objetos final
-		Tema t = new Tema(nTema, tTema, iTema);
+		Tema t = new Tema(nTema, tTema, iTema, aTema);
 		t.setLecciones(lecciones);
 		return t;
 	}

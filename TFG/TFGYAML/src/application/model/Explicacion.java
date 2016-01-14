@@ -7,14 +7,14 @@ import javafx.scene.Node;
 
 public class Explicacion extends Elemento{
 	
-	private String texto;
+	//private String texto;
 	
 	public Explicacion(String texto)
 	{
-		this.texto = texto;
+		super(texto);
 	}
 	
-	public void setTexto(String texto)
+	/*public void setTexto(String texto)
 	{
 		this.texto = texto;
 	}
@@ -22,7 +22,7 @@ public class Explicacion extends Elemento{
 	public String getTexto()
 	{
 		return this.texto;
-	}
+	}*/
 	
 
 	@Override
@@ -40,6 +40,12 @@ public class Explicacion extends Elemento{
 	@Override
 	public void setSolucion(ArrayList<Integer> correctasAux) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setTexto(String explicacion) {
+		this.texto = explicacion;
 		
 	}
 

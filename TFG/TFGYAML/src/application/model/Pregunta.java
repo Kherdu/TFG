@@ -8,30 +8,31 @@ import javafx.scene.Node;
 public abstract class Pregunta<T> extends Elemento
 {
 	protected int numero;
-	protected String enunciado;
+	//protected String enunciado;
 	protected T solucion;
 	protected String pista;
 	
 	public Pregunta(){
+		super(null);
 		this.numero=0;
-		this.enunciado=null;
+		//this.enunciado=null;
 	}
 	
 	public Pregunta(int numero, String enunciado, String pista, T solucion) {
-		super();
+		super(enunciado);
 		this.numero = numero;
-		this.enunciado = enunciado;
+		//this.enunciado = enunciado;
 		this.solucion = solucion;
 		this.pista = pista;
 	}
 
-	public String getEnunciado() {
+	/*public String getEnunciado() {
 		return enunciado;
 	}
 
 	public void setEnunciado(String enunciado) {
 		this.enunciado = enunciado;
-	}
+	}*/
 
 	public String getPista() {
 		return pista;

@@ -14,6 +14,7 @@ import application.model.Elemento;
 import application.model.Explicacion;
 import application.model.Opciones;
 import application.model.Pregunta;
+import application.model.Tema;
 import application.model.Utilities;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -44,6 +45,7 @@ public class Contenido extends Pane{
 	private Controller c;
 	private int leccion;
 	
+	
 	public Contenido(){
 		
 	}
@@ -52,24 +54,19 @@ public class Contenido extends Pane{
 		this.e=e;
 		this.c=c;
 		this.leccion = leccion;
+		
 		VBox box = new VBox();
 		
 		//El grupo que se desea agregar, y el tamaño ancho y alto
 		Scene scene = new Scene( box, 300, 300 );
-		PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
+		//PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
 		String content=null;
 		box.setMaxSize(600, 600);
 		
-		if (e instanceof Explicacion){
-			content = pro.markdownToHtml(((Explicacion) e).getTexto()); 
-			content = Utilities.modifyImg(content);
-		}
-		if (e instanceof Pregunta)
-		{
-			content = pro.markdownToHtml(((Pregunta) e).getEnunciado());
-			content = Utilities.modifyImg(content);
 		
-		}
+		/*content = pro.markdownToHtml(e.getTexto()); 
+		content = Utilities.modifyImg(content);*/
+		content = c.markToHtml(e.getTexto());//Utilities.parserMarkDown(e.getTexto());
 		WebView text=new WebView();
 		WebEngine engine= text.getEngine();
 		engine.loadContent(content);
@@ -121,6 +118,8 @@ public class Contenido extends Pane{
 		Button next = new Button("Siguiente");
 		Button help = new Button("Ayuda");
 		Button resolve = new Button("Resolver");
+		Button menu = new Button("Menu principal");
+		
 		
 		
 		///listeners
@@ -144,11 +143,23 @@ public class Contenido extends Pane{
 		
 		
 		
+		menu.setOnAction(new EventHandler<ActionEvent>(){
+			
+			public void handle(ActionEvent event) {
+				c.launch();
+				
+			}
+			
+		});
+		
+		
+		
 		//poner botones en el panel
 		buttons.getChildren().addAll(prior);
 		buttons.getChildren().addAll(next);
 		buttons.getChildren().addAll(help);
 		buttons.getChildren().addAll(resolve);
+		buttons.getChildren().addAll(menu);
 		
 		box.getChildren().addAll(buttons);
 		scene.setRoot(box);

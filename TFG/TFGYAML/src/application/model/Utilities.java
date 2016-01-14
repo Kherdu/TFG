@@ -8,6 +8,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.pegdown.Extensions;
+import org.pegdown.PegDownProcessor;
 import org.w3c.dom.Document;
 
 import javafx.concurrent.Worker.State;
@@ -26,9 +28,7 @@ public class Utilities {
 		Matcher matcher = p.matcher(html);
 		
 		while(matcher.find()){
-			System.out.println(matcher.group());
 			File im = new File(matcher.group(2));//Me quedo con la ruta de la imagen
-			System.out.println("La ruta es: "+im.getAbsolutePath());
 			html = html.replace(matcher.group(), matcher.group(1)+im.getAbsolutePath()+matcher.group(3));
 		
 		}
@@ -81,6 +81,15 @@ public class Utilities {
 		sc.close();
 		
 		return style;
+	}
+	
+	public static String parserMarkDown(String mark)
+	{
+		String html;
+		PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
+		html = pro.markdownToHtml(mark); 
+		html = Utilities.modifyImg(html);
+		return html;
 	}
 
 }
