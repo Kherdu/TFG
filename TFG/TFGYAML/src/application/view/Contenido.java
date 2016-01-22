@@ -146,7 +146,7 @@ public class Contenido extends Pane{
 		menu.setOnAction(new EventHandler<ActionEvent>(){
 			
 			public void handle(ActionEvent event) {
-				c.launch();
+				c.refresh();
 				
 			}
 			

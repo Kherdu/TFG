@@ -60,10 +60,12 @@ public class Controller {
 	private Scene scene;
 	private ArrayList<Elemento> elems;
 	private int actual; //contador de el elemento del contenido en el que estamos
+	private ArrayList<String> files;//temas del lenguaje
 	
 	public Controller(Stage primaryStage) {
 		this.tema = null;
 		this.primaryStage=primaryStage;
+		this.files= new ArrayList<String>();
 	}
 
 	public void cargaModelo(String cargaTema) {
@@ -86,8 +88,7 @@ public class Controller {
 
 	public void launch() {
 
-		
-		ArrayList<String> files = new ArrayList<String>();
+		//ArrayList<String> files = new ArrayList<String>();
 		
 		File folder = new File("resources/yaml");
 		File[] listOfFiles = folder.listFiles();
@@ -101,7 +102,12 @@ public class Controller {
 		
 	}
 	
-	private void showStart(ArrayList<String> files) {
+	public void refresh()
+	{
+		showStart();
+	}
+	
+	private void showStart() {
 		
 		
 		primaryStage.setTitle("Python"); //el titulo se podria poner de la app, o del lenguaje, pero obteniendo en la primera lectura de ficheros...
