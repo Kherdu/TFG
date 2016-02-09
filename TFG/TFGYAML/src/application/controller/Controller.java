@@ -51,6 +51,11 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+/**
+ * Clase controlador. Ejecuta todas las variaciones de la aplicación
+ * @author Carlos
+ *
+ */
 public class Controller {
 
 	private Tema tema;
@@ -67,15 +72,27 @@ public class Controller {
 		this.primaryStage=primaryStage;
 		this.files= new ArrayList<String>();
 	}
-
+	
+	/**
+	 * Llama a la función del modelo encargada de cargar un tema
+	 * @param cargaTema Nombre del fichero
+	 */
 	public void cargaModelo(String cargaTema) {
 		tema=YamlReaderClass.cargaTema(cargaTema);
 	}
 
+	/**
+	 * Devuelve el tema que está abierto
+	 * @return tema
+	 */
 	public Tema getTema() {
 		return tema;
 	}
 
+	/**
+	 * Modifica el tema
+	 * @param tema
+	 */
 	public void setTema(Tema tema) {
 		this.tema = tema;
 	}
@@ -85,7 +102,10 @@ public class Controller {
 		return p.corrige(resp);
 		
 	}
-
+	
+	/**
+	 * Lanza la ejecucion de las ventanas
+	 */
 	public void launch() {
 
 		//ArrayList<String> files = new ArrayList<String>();
@@ -98,18 +118,22 @@ public class Controller {
 		        files.add(listOfFiles[i].getName());
 		      }
 		    }
-		showStart(files);
+		showStart();
 		
 	}
 	
+	/**
+	 * Vuelve a mostrar el menú de temas
+	 */
 	public void refresh()
 	{
 		showStart();
 	}
 	
+	/**
+	 * Muestra la primera ventana de la aplicación
+	 */
 	private void showStart() {
-		
-		
 		primaryStage.setTitle("Python"); //el titulo se podria poner de la app, o del lenguaje, pero obteniendo en la primera lectura de ficheros...
 		//este es el encargado de hacer el setroot que tiene los contenidos necesarios
 		Pane p = new MenuTema();
@@ -117,7 +141,13 @@ public class Controller {
 		changeView(p, files, 0);
 		
 	}
-
+	
+	/**
+	 * Modifica la vista que se muestra en el momento
+	 * @param p Panel a mostrar
+	 * @param files Lista de los ficheros que componen el temario 
+	 * @param selected Lección seleccionada
+	 */
 	private void changeView(Pane p, ArrayList<String> files, int selected){
 		scene = new Scene(new Group());
 		root= new Pane();
@@ -200,7 +230,7 @@ public class Controller {
 			}
 		});
 
-	//	engine.loadContent(proc.markdownToHtml(p.getEnunciado()));
+	
 		root.setPrefSize(200, 200);
 		root.setMaxWidth(200);
 		browser.setMaxHeight(100);
@@ -212,33 +242,62 @@ public class Controller {
 		primaryStage.show();
 	}
 
-
+	/**
+	 * Caraga el tema seleccionado y carga el menu de seleccion de temas
+	 * @param selectedItem
+	 */
 	public void selectedTema(String selectedItem) {
 		
 		this.tema= YamlReaderClass.cargaTema(selectedItem);
 		changeView(new MenuLeccion(), null, 0);
 	}
 
+	/**
+	 * Carga los componenetes del tema, y muestra la ventana con la primera explicación
+	 * @param selectedItem
+	 */
 	public void selectedLeccion(int selectedItem) {
 		this.elems=(ArrayList<Elemento>) tema.getLecciones().get(selectedItem).getElementos();
 		actual=-1;
 		changeView(new Contenido(), null, selectedItem);
-		
 	}
+	
+	/**
+	 * Carga el siguiente elemento(pregunta,explicacion) del Tema
+	 * @param l Leccion seleccionada
+	 */
 	public void nextElem(int l){
 		//TODO ojo, hay que desactivar y activar botones para que esto no pete
 		if(actual<this.elems.size()-1)
 			actual++;
 		changeView(new Contenido(), null, l);
 	}
+	
+	/**
+	 * Carga el anterior elemento(pregunta,explicacion) del Tema
+	 * @param l Leccion seleccionada
+	 */
 	public void prevElem(int l){
 		if(actual>-1)
 			actual--;
 		changeView(new Contenido(), null, l);
 	}
 	
+	/**
+	 * Parseaa el texto en markdown y lo transforma en texto HTML
+	 * @param mark
+	 * @return texto en formato HTML
+	 */
 	public String markToHtml(String mark)
 	{
 		return Utilities.parserMarkDown(mark);
+	}
+
+	public String muestraPista() {
+		String pista = this.elems.get(this.actual).getPista();
+		if (null == pista) 
+			pista = "No hay pistas para esta pregunta";
+		
+		return pista;
 	}
 }

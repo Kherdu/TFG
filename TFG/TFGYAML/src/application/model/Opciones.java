@@ -3,10 +3,16 @@ package application.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Pregunta de tipo opciones
+ * @author Carlos
+ *
+ */
 public class Opciones extends Pregunta<List<Integer>> {
-	// private List<Integer> solucion;
-	private List<String> opciones;
-	private Boolean multi;
+	private List<String> opciones; //Lista de las opciones a la pregunta
+	private Boolean multi; //La pregunta es multipocion o no
+	
+	
 	public Opciones(int numero, String enunciado, String pista) {
 		super(numero, enunciado, pista, new ArrayList());
 		// this.solucion = new ArrayList<Integer>();

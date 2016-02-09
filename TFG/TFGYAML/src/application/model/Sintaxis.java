@@ -2,6 +2,11 @@ package application.model;
 
 import java.util.ArrayList;
 
+/**
+ * Pregunta de tipo Sintaxis
+ * @author Carlos
+ *
+ */
 public class Sintaxis extends Pregunta<String>
 {
 	private String sintaxis;
@@ -14,7 +19,7 @@ public class Sintaxis extends Pregunta<String>
 
 	@Override
 	public void setOpciones(ArrayList<String> opciones) {
-		this.solucion = solucion;
+		
 		
 	}
 

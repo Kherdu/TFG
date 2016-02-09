@@ -3,41 +3,26 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
-import org.pegdown.ast.TextNode;
-
 import application.controller.Controller;
-import application.model.Codigo;
 import application.model.Elemento;
-import application.model.Explicacion;
 import application.model.Opciones;
 import application.model.Pregunta;
-import application.model.Tema;
-import application.model.Utilities;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 public class Contenido extends Pane{
 	
@@ -46,8 +31,8 @@ public class Contenido extends Pane{
 	private int leccion;
 	
 	
-	public Contenido(){
-		
+	
+	public Contenido(){	
 	}
 
 	public Pane contenido(Elemento e, Controller c, int leccion){
@@ -55,26 +40,28 @@ public class Contenido extends Pane{
 		this.c=c;
 		this.leccion = leccion;
 		
-		VBox box = new VBox();
+		VBox box = new VBox(10);//Contenido de toda la ventana
+		VBox contenedor = new VBox(5); //Texto y campo de respuesta si es una pregunta
 		
 		//El grupo que se desea agregar, y el tamaño ancho y alto
 		Scene scene = new Scene( box, 300, 300 );
-		//PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
 		String content=null;
 		box.setMaxSize(600, 600);
 		
 		
-		/*content = pro.markdownToHtml(e.getTexto()); 
-		content = Utilities.modifyImg(content);*/
-		content = c.markToHtml(e.getTexto());//Utilities.parserMarkDown(e.getTexto());
+		content = c.markToHtml(e.getTexto());
 		WebView text=new WebView();
 		WebEngine engine= text.getEngine();
 		engine.loadContent(content);
 		text.setMaxHeight(100);
 		
-		box.getChildren().addAll(text);
+		contenedor.getChildren().addAll(text);
 		
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
+		
+		Label pista = new Label("pista");
+		
+		
 		VBox opciones = new VBox();
 		
 		if (e instanceof Opciones)
@@ -90,8 +77,8 @@ public class Contenido extends Pane{
 					cb.setText(op.toString());
 					cb.setToggleGroup(group);
 					l.add(cb);
-					
 				}
+				
 				opciones.getChildren().addAll(l);
 				
 			} else {
@@ -104,16 +91,21 @@ public class Contenido extends Pane{
 				}
 				opciones.getChildren().addAll(l);
 			}
-			box.getChildren().addAll(opciones);
+			contenedor.getChildren().addAll(opciones);
+			contenedor.getChildren().addAll(pista);
 		}
 		else{
-			box.getChildren().addAll(codigo);
+			if (e instanceof Pregunta)
+			{
+				contenedor.getChildren().addAll(codigo);
+				contenedor.getChildren().addAll(pista);
+			}
 		}
 			
-			
-		HBox buttons = new HBox();
+		box.getChildren().addAll(contenedor);
+		HBox buttons = new HBox(10);
 		
-		//TODO listeners ayuda y resolver
+		//TODO listener resolver
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
 		Button help = new Button("Ayuda");
@@ -147,13 +139,47 @@ public class Contenido extends Pane{
 			
 			public void handle(ActionEvent event) {
 				c.refresh();
-				
 			}
 			
 		});
 		
+		help.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				pista.setText(c.muestraPista());				
+			}
+		});
 		
-		
+		resolve.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if (e instanceof Opciones){
+					buttons.getChildren();
+					ArrayList<Integer> resp = new ArrayList<Integer>();
+
+					int i = 0;
+					for (Node n : buttons.getChildren()) {
+						i++;
+						if (!((Opciones) e).getMulti()) {
+							if (((RadioButton) n).isSelected()) {
+								resp.add(i);
+								// meter respuestas elegidas en array
+							}
+						}else if (((CheckBox) n).isSelected()) {
+
+							resp.add(i);
+							// meter respuestas elegidas en array
+						}
+					}
+					System.out.println(c.corrige(resp, (Pregunta)e));
+					// comprobar respuestas correctas y escribir en ventana
+				}
+				
+			}
+		});
+				
 		//poner botones en el panel
 		buttons.getChildren().addAll(prior);
 		buttons.getChildren().addAll(next);
@@ -161,11 +187,10 @@ public class Contenido extends Pane{
 		buttons.getChildren().addAll(resolve);
 		buttons.getChildren().addAll(menu);
 		
+		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
 		scene.setRoot(box);
-		return box;
-		
-		
+		return box;		
 	}
 
 }

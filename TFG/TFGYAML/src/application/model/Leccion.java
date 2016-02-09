@@ -3,20 +3,24 @@ package application.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase con los elementos de leccion
+ * @author Carlos
+ *
+ */
 public class Leccion 
 {
-	private int numero;
-	private String titulo;
-	private List<Elemento> elementos;
-	private String explicacion;
-	//private List<Pregunta> preguntas;
+	private int numero; //Numero de la leccion
+	private String titulo; //Titulo de la leccion
+	private List<Elemento> elementos; //Array con los elementos de la leccion
+	private String explicacion; //Introducción de la lección
+	
 
 	public Leccion(int numero, String titulo, String explicacion){
 		this.numero=numero;
 		this.titulo=titulo;
 		this.elementos = new ArrayList<Elemento>();
 		this.explicacion=explicacion;
-		//this.preguntas= new ArrayList<Pregunta>();
 	}
 
 	public int getNumero() {

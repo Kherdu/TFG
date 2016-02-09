@@ -1,29 +1,18 @@
 package application.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import javafx.scene.Node;
-
+/**
+ * Clase con el elemento Explicación
+ * @author Carlos
+ *
+ */
 public class Explicacion extends Elemento{
-	
-	//private String texto;
 	
 	public Explicacion(String texto)
 	{
 		super(texto);
 	}
-	
-	/*public void setTexto(String texto)
-	{
-		this.texto = texto;
-	}
-	
-	public String getTexto()
-	{
-		return this.texto;
-	}*/
-	
 
 	@Override
 	public void setOpciones(ArrayList<String> opc) {
@@ -49,6 +38,9 @@ public class Explicacion extends Elemento{
 		
 	}
 
-	
-
+	@Override
+	public String getPista() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

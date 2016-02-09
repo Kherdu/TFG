@@ -2,6 +2,11 @@ package application.model;
 
 import java.util.ArrayList;
 
+/**
+ * Pregunta de tipo Codigo
+ * @author Carlos
+ *
+ */
 public class Codigo extends Pregunta <String>
 {
 	//private String respuesta;

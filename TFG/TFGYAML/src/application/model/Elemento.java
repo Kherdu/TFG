@@ -1,10 +1,12 @@
 package application.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import javafx.scene.Node;
-
+/**
+ * Clase abstarcta que representa a los Componentes de una lección
+ * @author Carlos
+ *
+ */
 public abstract class Elemento {
 	
 	protected String texto; //Enunciado en preguntas o explicacion en explicacion
@@ -25,8 +27,8 @@ public abstract class Elemento {
 	public abstract void setSolucion(ArrayList<Integer> correctasAux);
 
 	public abstract void setTexto(String explicacion);
-	
-	
-		
 
+	public abstract String getPista();
+
+	
 }

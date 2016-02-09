@@ -16,13 +16,22 @@ import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+/**
+ * Clase que contiene los metodos de modificaion de elementos dentro de la aplicacion
+ * @author Carlos
+ *
+ */
 public class Utilities {
 	
+	/**
+	 * Modifica el la ruta de la imagen dentro del HTML
+	 * @param html
+	 * @return
+	 */
 	public static String  modifyImg(String html){
-		String        pattern = "(<img src=\"file:///)(.*?)(\".*?>)"; //Patron de la cadena a buscar. 
+		String pattern = "(<img src=\"file:///)(.*?)(\".*?>)"; //Patron de la cadena a buscar. 
 		//En el yaml el formato ha de ser "file:///"+ ruta relativa a la imagen
 		
-		 
 		// Compilar el patron ignorando si esta en mayusculas o minusculas
 		Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(html);
@@ -70,6 +79,11 @@ public class Utilities {
 		return browser;
 	}
 	
+	/**
+	 * Pasa todo el contenido de un fichero a una cadena
+	 * @param file Nomobre del fichero 
+	 * @return
+	 */
 	private static String fileToString(InputStream file)
 	{
 		String style ="";
@@ -83,6 +97,11 @@ public class Utilities {
 		return style;
 	}
 	
+	/**
+	 * Parsea el texto en markdown y lo pasa a texto HTML 
+	 * @param mark
+	 * @return
+	 */
 	public static String parserMarkDown(String mark)
 	{
 		String html;

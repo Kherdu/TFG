@@ -1,16 +1,18 @@
 package application.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import javafx.scene.Node;
-
+/**
+ * Clase generica del elemento pregunta
+ * @author Carlos
+ *
+ * @param <T>
+ */
 public abstract class Pregunta<T> extends Elemento
 {
-	protected int numero;
-	//protected String enunciado;
-	protected T solucion;
-	protected String pista;
+	protected int numero; //Numero de la pregunta
+	protected T solucion; //Solucion a la pregunta
+	protected String pista; //Pista para resolver la pregunta(opcional)
 	
 	public Pregunta(){
 		super(null);
@@ -25,14 +27,6 @@ public abstract class Pregunta<T> extends Elemento
 		this.solucion = solucion;
 		this.pista = pista;
 	}
-
-	/*public String getEnunciado() {
-		return enunciado;
-	}
-
-	public void setEnunciado(String enunciado) {
-		this.enunciado = enunciado;
-	}*/
 
 	public String getPista() {
 		return pista;

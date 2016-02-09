@@ -3,14 +3,17 @@ package application.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.util.Callback;
-
+/**
+ * Tema con el que se trabaja
+ * @author Carlos
+ *
+ */
 public class Tema {
-	private int numero;
-	private String archivo;
-	private String titulo;
-	private String introduccion;
-	private List <Leccion> lecciones;
+	private int numero; //Numero del tema
+	private String archivo; //Nombre del archivo de correccion
+	private String titulo; //Titulo del tema
+	private String introduccion; //Introduccion del Tema
+	private List <Leccion> lecciones; //Lista de las lecciones que componen el tema
 	
 	public Tema(int numero, String titulo, String introduccion, String archivo) {
 		this.numero = numero;
@@ -18,6 +21,14 @@ public class Tema {
 		this.archivo = archivo;
 		this.introduccion = introduccion;
 		this.lecciones = new ArrayList<Leccion>();
+	}
+
+	public String getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(String archivo) {
+		this.archivo = archivo;
 	}
 
 	public int getNumero() {
@@ -53,13 +64,16 @@ public class Tema {
 		this.lecciones = lecciones;
 	}
 
+	/**
+	 * Devuelve un array con solo el nombre de las lecciones
+	 * @return ArrayList<String>
+	 */
 	public ArrayList<String> getNameLecciones() {
 		//devuelve arraylist de nombres de lecciones
 		ArrayList<String> names= new ArrayList<String>();
 		for (Leccion l: lecciones){
 			names.add(l.getTitulo());
 		}
-		
 		return names;
 	}
 
