@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.controller.Controller;
+import application.model.Codigo;
 import application.model.Elemento;
 import application.model.Opciones;
 import application.model.Pregunta;
+import application.model.Sintaxis;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -28,9 +32,8 @@ public class Contenido extends Pane{
 	
 	private Elemento e;
 	private Controller c;
-	private int leccion;
-	
-	
+	//private int leccion;
+	private final ToggleGroup group = new ToggleGroup();
 	
 	public Contenido(){	
 	}
@@ -38,22 +41,21 @@ public class Contenido extends Pane{
 	public Pane contenido(Elemento e, Controller c, int leccion){
 		this.e=e;
 		this.c=c;
-		this.leccion = leccion;
+		//this.leccion = leccion;
 		
 		VBox box = new VBox(10);//Contenido de toda la ventana
 		VBox contenedor = new VBox(5); //Texto y campo de respuesta si es una pregunta
 		
 		//El grupo que se desea agregar, y el tamaño ancho y alto
-		Scene scene = new Scene( box, 300, 300 );
+		//Scene scene = new Scene( box, 300, 300 );
 		String content=null;
-		box.setMaxSize(600, 600);
-		
 		
 		content = c.markToHtml(e.getTexto());
 		WebView text=new WebView();
 		WebEngine engine= text.getEngine();
 		engine.loadContent(content);
-		text.setMaxHeight(100);
+		
+		text.setMaxHeight(150);
 		
 		contenedor.getChildren().addAll(text);
 		
@@ -71,12 +73,12 @@ public class Contenido extends Pane{
 			if (!o.getMulti()) {
 				List<RadioButton> l = new ArrayList<RadioButton>();
 				List<String> opc = o.getOpciones();
-				final ToggleGroup group = new ToggleGroup();
+				
 				for (Object op : opc) {
-					RadioButton cb = new RadioButton();
-					cb.setText(op.toString());
-					cb.setToggleGroup(group);
-					l.add(cb);
+					RadioButton rb = new RadioButton();
+					rb.setText(op.toString());
+					rb.setToggleGroup(group);
+					l.add(rb);
 				}
 				
 				opciones.getChildren().addAll(l);
@@ -87,6 +89,7 @@ public class Contenido extends Pane{
 				for (Object op : opc) {
 					CheckBox cb = new CheckBox();
 					cb.setText(op.toString());
+					
 					l.add(cb);
 				}
 				opciones.getChildren().addAll(l);
@@ -101,18 +104,17 @@ public class Contenido extends Pane{
 				contenedor.getChildren().addAll(pista);
 			}
 		}
-			
+		
+		contenedor.setMinHeight(300);
 		box.getChildren().addAll(contenedor);
 		HBox buttons = new HBox(10);
 		
-		//TODO listener resolver
+		
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
 		Button help = new Button("Ayuda");
 		Button resolve = new Button("Resolver");
 		Button menu = new Button("Menu principal");
-		
-		
 		
 		///listeners
 		prior.setOnAction(new EventHandler<ActionEvent>(){
@@ -151,34 +153,46 @@ public class Contenido extends Pane{
 			}
 		});
 		
+		//TODO faltan las preguntas de tipo codigo y sintaxis
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (e instanceof Opciones){
-					buttons.getChildren();
+				if (e instanceof Opciones)
+				{
 					ArrayList<Integer> resp = new ArrayList<Integer>();
-
-					int i = 0;
-					for (Node n : buttons.getChildren()) {
-						i++;
-						if (!((Opciones) e).getMulti()) {
-							if (((RadioButton) n).isSelected()) {
-								resp.add(i);
-								// meter respuestas elegidas en array
-							}
-						}else if (((CheckBox) n).isSelected()) {
-
-							resp.add(i);
-							// meter respuestas elegidas en array
+					if (!((Opciones)e).getMulti()) //Si la pregunta no es multirespuesta
+					{
+						int i = 0;//Contador de la posicion de la opcion que se analiza
+						for (Node o : opciones.getChildren()) //Recorre el array de RadioButtons
+						{
+							i++;
+							if (((RadioButton) o).isSelected()) //Comprueba si la opcion está seleccionada
+								resp.add(i);//Se añade al array de respuestas
 						}
 					}
-					System.out.println(c.corrige(resp, (Pregunta)e));
-					// comprobar respuestas correctas y escribir en ventana
+					else //La pregunta es multirespuesta
+					{	
+						int i = 0;//Contador de la posicion de la opcion que se analiza
+						for (Node o : opciones.getChildren()) //Recorre el array de CheckBox
+						{
+								i++;
+								if (((CheckBox) o).isSelected()) 
+									resp.add(i);// meter respuestas elegidas en array
+						}			
+					}
+					//TODO cambiar la forma de notificacion
+					System.out.println(c.corrige(resp,(Pregunta)e));//Se corrige la pregunta
+				}//Fin de opciones
+				else if (e instanceof Codigo || e instanceof Sintaxis)
+				{
+					String code = codigo.getText();
+					System.out.println(code);
 				}
-				
 			}
 		});
+		
+		
 				
 		//poner botones en el panel
 		buttons.getChildren().addAll(prior);
@@ -189,8 +203,11 @@ public class Contenido extends Pane{
 		
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
-		scene.setRoot(box);
+		
+		box.setPrefSize(600, 600);
 		return box;		
 	}
+	
+	
 
 }

@@ -1,9 +1,9 @@
 Tema: 2
-Titulo: Listas
+Titulo: #Listas
 Archivo: archivo de correccion
-Introduccion: >
- Python utiliza varios tipos de datos compuestos, que se utilizan para agrupar otros valores. 
- El más versátil es la lista.
+Introduccion: |
+ ##Python utiliza varios tipos de datos compuestos, que se utilizan para agrupar otros valores. 
+ ##El más versátil es la lista.
 Lecciones:
  - Leccion: 1
    Titulo_Leccion: Listas
@@ -36,10 +36,10 @@ Lecciones:
       Multiple: yes
       Opcion_correcta: 1,2,3
       Opciones:
-       - Opcion: 1) l[0:2]
-       - Opcion: 2) l[:2]
-       - Opcion: 3) l[0:-2]
-       - Opcion: 4) l[1:3]
+       - 1) l[0:2]
+       - 2) l[:2]
+       - 3) l[0:-2]
+       - 4) l[1:3]
     - Elem: explicacion
       Contenido: >
         En una lista se pueden añadir, borrar y sustituir elementos

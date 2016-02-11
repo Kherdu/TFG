@@ -65,6 +65,8 @@ public class MenuTema extends Pane{
 		box.getChildren().addAll(leng);
 		box.getChildren().addAll(temasList);
 		box.getChildren().addAll(comenzar);
+		
+		box.setPrefSize(600, 600);
 		return box;
 		
 		

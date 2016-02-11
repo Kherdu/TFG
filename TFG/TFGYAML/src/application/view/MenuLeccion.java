@@ -66,6 +66,8 @@ public class MenuLeccion extends Pane{
 		
 		box.setPadding(new Insets(20));
 		
+		box.setPrefSize(600, 600);
+		
 		return box;
 		
 	}

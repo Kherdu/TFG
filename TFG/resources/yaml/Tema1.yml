@@ -34,10 +34,10 @@ Lecciones:
       Opcion_correcta: "1"
       Multiple: no
       Opciones: 
-       - Opcion: 1) 3
-       - Opcion: 2) 4
-       - Opcion: 3) 3.5
-       - Opcion: 4) ninguna de las anteriores
+       - 1) 3
+       - 2) 4
+       - 3) 3.5
+       - 4) ninguna de las anteriores
     - Elem: explicacion
       Contenido: |
        "En el entorno de Python se pueden crear pequeños programas como hayar el área de un polígono
@@ -116,7 +116,7 @@ Lecciones:
       Multiple: no
       Opcion_correcta: "3"
       Opciones: 
-       - Opcion: 1) recamara[2:3]
-       - Opcion: 2) recamara[1:3]
-       - Opcion: 3) recamara[2:4]
-       - Opcion: 4) recamara[1:4]
+       - 1) recamara[2:3]
+       - 2) recamara[1:3]
+       - 3) recamara[2:4]
+       - 4) recamara[1:4]
