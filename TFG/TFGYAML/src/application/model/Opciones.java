@@ -8,7 +8,7 @@ import java.util.List;
  * @author Carlos
  *
  */
-public class Opciones extends Pregunta<List<Integer>> {
+public class Opciones extends Pregunta<ArrayList<Integer>> {
 	private List<String> opciones; //Lista de las opciones a la pregunta
 	private Boolean multi; //La pregunta es multipocion o no
 	
@@ -23,9 +23,6 @@ public class Opciones extends Pregunta<List<Integer>> {
 		return solucion;
 	}
 
-	public void setSolucion(List<Integer> solucion) {
-		this.solucion = solucion;
-	}
 
 	public List<String> getOpciones() {
 		return opciones;
@@ -37,7 +34,7 @@ public class Opciones extends Pregunta<List<Integer>> {
 
 	}
 
-	public boolean corrige(List<Integer> respuesta) {
+	public boolean corrige(ArrayList<Integer> respuesta) {
 		boolean sol = true;
 		int tam = respuesta.size();
 		int i = 0;
@@ -69,7 +66,7 @@ public class Opciones extends Pregunta<List<Integer>> {
 
 	@Override
 	public void setSolucion(ArrayList<Integer> correctasAux) {
-		// TODO Auto-generated method stub
+		this.solucion = correctasAux;
 		
 	}
 
@@ -78,5 +75,7 @@ public class Opciones extends Pregunta<List<Integer>> {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

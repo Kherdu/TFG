@@ -13,6 +13,7 @@ import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -41,22 +42,30 @@ public class Contenido extends Pane{
 	public Pane contenido(Elemento e, Controller c, int leccion){
 		this.e=e;
 		this.c=c;
-		//this.leccion = leccion;
 		
+		Label tipo = new Label("Explicacion");
+		
+		
+		
+		if (e instanceof Pregunta)
+			tipo.setText("Pregunta");
+		
+		tipo.setAlignment(Pos.TOP_CENTER);
+
 		VBox box = new VBox(10);//Contenido de toda la ventana
 		VBox contenedor = new VBox(5); //Texto y campo de respuesta si es una pregunta
 		
-		//El grupo que se desea agregar, y el tamaño ancho y alto
-		//Scene scene = new Scene( box, 300, 300 );
+		
 		String content=null;
 		
 		content = c.markToHtml(e.getTexto());
-		WebView text=new WebView();
+		WebView text=new WebView();//Campo donde va la explicacion o el enunciado
 		WebEngine engine= text.getEngine();
 		engine.loadContent(content);
 		
-		text.setMaxHeight(150);
+		text.setMaxHeight(300);
 		
+		contenedor.getChildren().addAll(tipo);
 		contenedor.getChildren().addAll(text);
 		
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
@@ -105,7 +114,7 @@ public class Contenido extends Pane{
 			}
 		}
 		
-		contenedor.setMinHeight(300);
+		contenedor.setMinHeight(500);
 		box.getChildren().addAll(contenedor);
 		HBox buttons = new HBox(10);
 		
@@ -149,7 +158,8 @@ public class Contenido extends Pane{
 
 			@Override
 			public void handle(ActionEvent event) {
-				pista.setText(c.muestraPista());				
+				if (e instanceof Pregunta)
+					pista.setText(c.muestraPista());				
 			}
 		});
 		
@@ -192,8 +202,6 @@ public class Contenido extends Pane{
 			}
 		});
 		
-		
-				
 		//poner botones en el panel
 		buttons.getChildren().addAll(prior);
 		buttons.getChildren().addAll(next);
@@ -203,6 +211,10 @@ public class Contenido extends Pane{
 		
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
+		buttons.setAlignment(Pos.BOTTOM_CENTER);
+		
+		tipo.getStyleClass().add("tipo");
+		box.getStylesheets().add("/application/view/css/contenido.css");
 		
 		box.setPrefSize(600, 600);
 		return box;		

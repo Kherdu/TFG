@@ -170,77 +170,7 @@ public class Controller {
 		primaryStage.show();
 	}
 	
-	//TODO borrar
-	private void showOptions(final Pregunta p, PegDownProcessor proc) {
-		final Opciones o = (Opciones) p;
-		Scene scene = new Scene(new Group());
-		//scene.getStylesheets().add("resources/css/prueba");
-		
-		//root();
-		buttons = new VBox();
-		
-		WebView browser = new WebView();
-		WebEngine engine = browser.getEngine();
-		if (!o.getMulti()) {
-			List<RadioButton> l = new ArrayList<RadioButton>();
-			List<String> opciones = o.getOpciones();
-			final ToggleGroup group = new ToggleGroup();
-			for (Object op : opciones) {
-				RadioButton cb = new RadioButton();
-				cb.setText(op.toString());
-				cb.setToggleGroup(group);
-				l.add(cb);
-				
-			}
-			buttons.getChildren().addAll(l);
-			
-		} else {
-			List<CheckBox> l = new ArrayList<CheckBox>();
-			List<String> opciones = o.getOpciones();
-			for (Object op : opciones) {
-				CheckBox cb = new CheckBox();
-				cb.setText(op.toString());
-				l.add(cb);
-			}
-			buttons.getChildren().addAll(l);
-		}
-		Button envio = new Button("Resolver");
-		envio.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				buttons.getChildren();
-				ArrayList<Integer> resp = new ArrayList<Integer>();
-
-				int i = 0;
-				for (Node n : buttons.getChildren()) {
-					i++;
-					if (o.getSolucion().size() == 1) {
-						if (((RadioButton) n).isSelected()) {
-
-							resp.add(i);
-							// meter respuestas elegidas en array
-						}
-					}else if (((CheckBox) n).isSelected()) {
-
-						resp.add(i);
-						// meter respuestas elegidas en array
-					}
-				}
-				System.out.println(corrige(resp, p));
-				// comprobar respuestas correctas y escribir en ventana
-			}
-		});
-
 	
-		root.setPrefSize(200, 200);
-		root.setMaxWidth(200);
-		browser.setMaxHeight(100);
-		root.getChildren().addAll(browser);
-		root.getChildren().addAll(buttons);
-		root.getChildren().addAll(envio);
-		scene.setRoot(root);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-	}
 
 	/**
 	 * Caraga el tema seleccionado y carga el menu de seleccion de temas

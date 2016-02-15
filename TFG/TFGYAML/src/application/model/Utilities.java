@@ -53,7 +53,6 @@ public class Utilities {
 			file = new FileInputStream("resources/css/estilo.css");
 			aux = fileToString(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
