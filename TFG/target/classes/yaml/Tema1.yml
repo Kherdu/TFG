@@ -1,68 +1,122 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
+Archivo: aqui se especifica el archivo
 Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
-   Titulo_Leccion: "##Operaciones con numeros"
-   Explicacion: >
+   Titulo_Leccion: "Operaciones con numeros"
+   Intro_leccion: >
     El interprete funciona como una **simple calculadora**, Tu tecleas una expresion 
     y el muestra el resultado. La sintaxis de las expresiones es bastante intuitiva. 
     Los operadores +, -, * y / funcionan como en otros lenguajes (p. ej. Pascal o C). 
-    Se puede usar parentesis para agrupar operaciones. El simbolo de igualdad sirve 
-    para asignar valores a variables.
+    Se puede usar parentesis para agrupar operaciones. 
     
-   Preguntas:
-    - Pregunta: 1 
+   Elementos:
+    - Elem: explicacion
+      Contenido: >
+       El simbolo de igualdad sirve para asignar valores a variables. *Variable = valor*
+    - Elem: explicacion
+      Contenido: >
+       "Unos ejemplos:
+          s = 'Hola Mundo'
+          entero = 6"
+    - Elem: pregunta
+      Numero: 1 
       Enunciado: Asigna a la variable i el valor 4
       Tipo: Codigo
       Resultado: llamada(String codigo)#i=4
-    - Pregunta: 2
-      Enunciado: si hacemos la operacion 7 / 2 que sale por pantalla?
+    - Elem: pregunta
+      Numero: 2
+      Enunciado: si hacemos la operacion '7 / 2' que sale por pantalla?
       Tipo: Opciones
       Pista: las operaciones enteras tienen resultado entero
 #para el tipo opciones
       Opcion_correcta: "1"
+      Multiple: no
       Opciones: 
-       - Opcion: 1) 3
-       - Opcion: 2) 4
-       - Opcion: 3) 3.5
-       - Opcion: 4) ninguna de las anteriores
-    - Pregunta: 3
-      Enunciado: "###Calcula el area de este triangulo ![ ](triangulo.png)"
+       - 1) 3
+       - 2) 4
+       - 3) 3.5
+       - 4) ninguna de las anteriores
+    - Elem: explicacion
+      Contenido: |
+       "En el entorno de Python se pueden crear pequeños programas como hayar el área de un polígono
+        ej:
+            altura = 7
+            ancho = 8
+            area = altura * ancho   
+       "
+    - Elem: pregunta
+      Numero: 3
+      Enunciado: |
+       Calcula el area de este triangulo 
+       ![triangulo](file:///resources/images/triangulo.jpg)
 #Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
       Resultado: a= 30
  - Leccion: 2
    Titulo_Leccion: Cadenas
-   Explicacion: >
-    AdemÃ¡s de los nÃºmeros, Python tambiÃ©n sabe manipular cadenas, que se 
-    * pueden expresar de diversas maneras. Se pueden encerrar entre comillas simples o dobles.
-   Preguntas:
-    - Pregunta: 1
-      Enunciado: Asigna a la variable â€˜cadenaâ€™ el valor â€˜Hola Mundoâ€™
+   Intro_leccion: >
+    Además de los números, Python también sabe manipular cadenas.
+   Elementos:
+    - Elem: explicacion
+      Contenido: |
+       "Las cadenas se pueden expresar de diversas formas:
+        
+        * Con comillas simples
+        * Con comillas dobles
+       " 
+    - Elem: pregunta
+      Numero: 1
+      Enunciado: Asigna a la variable **˜cadena** el valor "Hola Mundo"
       Tipo: Codigo
       Resultado: llamada(string codigo)#cadena = â€™Hola Mundoâ€™
-    - Pregunta: 2
+    - Elem: pregunta
+      Numero: 2
       Enunciado:  Introduce las siguientes palabras en la variable lista_animales separadas por un salto de linea. gato, perro, burro
       Tipo: Codigo
       Resultado: llamada(string codigo)#animales= â€œgato /nperro /nburroâ€�
-    - Pregunta: 3
-      Enunciado: Asigna a la variable palabra la cadena â€˜pacoâ€™ 3 veces, el resultado deberÃ­a ser â€˜pacopacopacoâ€™ (sin inicializar palabra de la forma palabra = â€™pacopacopacoâ€™).
+    - Elem: explicacion
+      Contenido: >
+       Para contruir una cadena a base de la repetición de varias subcadenas,
+       se puede llevar a cabo mediante un operador '*'
+    - Elem: explicacion
+      Contenido: |
+        Por ejemplo, la cadena "holahola" se puede obtener de las siguientes formas
+        
+        * cadena = "holahola"
+        * cadena = "hola" * 2        
+    - Elem: pregunta
+      Numero: 3
+      Enunciado: Asigna a la variable *palabra* la cadena "paco" 3 veces, el resultado deberá ser "pacopacopaco" (sin inicializar palabra de la forma palabra ="pacopacopaco").
       Explicacion: >
        En python, se puede concatenar una cadena multiples 
-       * veces con el operador â€˜*â€™ y el numero de veces que queremos repetir la palabra.
+       veces con el operador â€˜*â€™ y el numero de veces que queremos repetir la palabra.
       Pista: variable= â€œcadenaâ€� * n
       Tipo: Sintaxis
       Gramatica: por definir
       Resultado: cad=â€™pacopacopacoâ€™
-    - Pregunta: 4
-      Enunciado: Como sacarias la subcadena â€˜caâ€™ de la palabra recamara?
+    - Elem: explicacion
+      Contenido: "En *python*, las cadenas se pueden tratar como arrays de elementos"
+    - Elem: explicacion
+      Contenido: |
+       El primer caracter de la cadena es el elemento 0.
+       Por tanto,
+       cadena = bote
+       cadena[0] es b
+       cadena[1] es o
+       cadena[2] es t
+       cadena[3] es e
+    - Elem: pregunta
+      Numero: 4
+      Enunciado: Como sacarias la subcadena "ca" de la palabra recamara?
       Explicacion: Las cadenas en python se pueden tratar como si fueran un array de elementos, siendo el 0 el primer caracter.
       Tipo: Opciones
+      Multiple: no
       Opcion_correcta: "3"
       Opciones: 
-       - Opcion: 1) recamara[2:3]
-       - Opcion: 2) recamara[1:3]
-       - Opcion: 3) recamara[2:4]
-       - Opcion: 4) recamara[1:4]
+       - 1) recamara[2:3]
+       - 2) recamara[1:3]
+       - 3) recamara[2:4]
+       - 4) recamara[1:4]
