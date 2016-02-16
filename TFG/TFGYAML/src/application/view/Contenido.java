@@ -1,5 +1,8 @@
 ﻿package application.view;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,18 +14,16 @@ import org.python.util.PythonInterpreter;
 import application.controller.Controller;
 import application.model.Codigo;
 import application.model.Elemento;
+import application.model.Explicacion;
 import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -44,6 +45,12 @@ public class Contenido extends Pane{
 	public Contenido() {
 	}
 
+	/**
+	 * @param e
+	 * @param c
+	 * @param leccion
+	 * @return
+	 */
 	public Pane contenido(Elemento e, Controller c, int leccion) {
 		this.e = e;
 		this.c = c;
@@ -170,65 +177,40 @@ public class Contenido extends Pane{
 					if (!((Opciones) e).getMulti()) // Si la pregunta no es
 													// multirespuesta
 					{
-						int i = 0;// Contador de la posicion de la opcion que se
-									// analiza
+						int i = 0;// Contador de la posicion de la opcion que se analiza
 						for (Node o : opciones.getChildren()) // Recorre el
 																// array de
 																// RadioButtons
 						{
 							i++;
-							if (((RadioButton) o).isSelected()) // Comprueba si
-																// la opcion
-																// está
-																// seleccionada
+							if (((RadioButton) o).isSelected()) // Comprueba si la opcion está seleccionada
 								resp.add(i);// Se añade al array de respuestas
 						}
 					} else // La pregunta es multirespuesta
 					{
 						int i = 0;// Contador de la posicion de la opcion que se
 									// analiza
-						for (Node o : opciones.getChildren()) // Recorre el
-																// array de
-																// CheckBox
+						for (Node o : opciones.getChildren()) // Recorre array de CheckBox
 						{
 							i++;
 							if (((CheckBox) o).isSelected())
-								resp.add(i);// meter respuestas elegidas en
-											// array
+								resp.add(i);// meter respuestas elegidas en array
 						}
 					}
 					// TODO cambiar la forma de notificacion
-					System.out.println(c.corrige(resp, (Pregunta) e));// Se
-																		// corrige
-																		// la
-																		// pregunta
+					System.out.println(c.corrige(resp, (Pregunta) e));// Se corrige la pregunta
+																		
+																		
 				} // Fin de opciones
-				else if (e instanceof Codigo || e instanceof Sintaxis) {
+				
+				else if (e instanceof Codigo || e instanceof Sintaxis) //La pregunta es de tipo codigo
+				{
 					String code = codigo.getText();
 					System.out.println(code);
 
-					PythonInterpreter interp = new PythonInterpreter();
-					interp.exec("import sys");
-					interp.exec("print sys");
-
-					// Set variable values within the PythonInterpreter instance
-					interp.set("a", new PyInteger(42));
-					interp.exec("print a");
-					interp.exec("x = 2+2");
-
-					// Obtain the value of an object from the PythonInterpreter
-					// and store it
-					// into a PyObject.
-					PyObject x = interp.get("x");
-					System.out.println("x: " + x);
-					// execute a function that takes a string and returns a
-					// string
-					PyObject someFunc = interp.eval(code);
-					PyObject result = someFunc.__call__(new PyString("Test!"));
-					String realResult = (String) result.__tojava__(String.class);
-					System.out.println(realResult);
+					c.corrige(code, (Pregunta)e);//Se manda el codigo al controlador para que el modelo lo compruebe
 				}
-			}
+			}//fin de tipo codigo
 		});
 
 		// poner botones en el panel
@@ -237,6 +219,12 @@ public class Contenido extends Pane{
 		buttons.getChildren().addAll(help);
 		buttons.getChildren().addAll(resolve);
 		buttons.getChildren().addAll(menu);
+		
+		if (e instanceof Explicacion)
+		{
+			resolve.setVisible(false);
+			help.setVisible(false);
+		}
 
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);

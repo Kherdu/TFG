@@ -97,10 +97,19 @@ public class Controller {
 		this.tema = tema;
 	}
 
-	
+	/**
+	 * Corrige las preguntas de tipo Opciones
+	 * @param resp
+	 * @param p
+	 * @return
+	 */
 	public boolean corrige(ArrayList<Integer> resp, Pregunta p ) {
 		return p.corrige(resp);
-		
+	}
+	
+	public boolean corrige(String resp, Pregunta p)
+	{
+		return p.corrige(resp);
 	}
 	
 	/**

@@ -23,7 +23,6 @@ public abstract class Pregunta<T> extends Elemento
 	public Pregunta(int numero, String enunciado, String pista, T solucion) {
 		super(enunciado);
 		this.numero = numero;
-		//this.enunciado = enunciado;
 		this.solucion = solucion;
 		this.pista = pista;
 	}
@@ -44,7 +43,6 @@ public abstract class Pregunta<T> extends Elemento
 		this.numero = numero;
 	}
 
-	
 	public abstract void setSolucion(T solucion);
 
 	public abstract void setOpciones(ArrayList<String> opciones);
