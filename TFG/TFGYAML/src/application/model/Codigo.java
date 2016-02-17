@@ -2,6 +2,7 @@ package application.model;
 
 import java.util.ArrayList;
 
+import org.python.core.PyInstance;
 import org.python.core.PyInteger;
 import org.python.core.PyObject;
 import org.python.core.PyString;
@@ -36,27 +37,26 @@ public class Codigo extends Pregunta <String>
 	}
 
 	@Override
-	public boolean corrige(String respuesta) {
+	public boolean corrige(String respuesta, Tema tema) {
 		PythonInterpreter interp = new PythonInterpreter();
-		interp.exec("import sys");
-		interp.exec("print sys");
-		
-		// Set variable values within the PythonInterpreter instance
-		interp.set("a", new PyInteger(42));
-		interp.exec("print a");
-		interp.exec("x = 2+2");
-
+		//ejecutamos el archivo python pertinente
+		System.out.println("/exec/"+tema.getArchivo());
+		interp.execfile("resources/exec/"+tema.getArchivo());
+		String t= "Tema"+tema.getNumero();
+		PyInstance func = (PyInstance) interp.eval(t);//nombre de clase del .py
+		String f= this.solucion+"("+respuesta+")"; //función a ejecutar (nombre y entre paréntesis codigo del usuario)
+		func.invoke(f);
 		// Obtain the value of an object from the PythonInterpreter
 		// and store it
 		// into a PyObject.
-		PyObject x = interp.get("x");
-		System.out.println("x: " + x);
+		String result= (String) func.__getattr__("x").__tojava__(String.class);
+		System.out.println(result);
 		// execute a function that takes a string and returns a
 		// string
-		PyObject someFunc = interp.eval(respuesta);
-		PyObject result = someFunc.__call__(new PyString("Test!"));
-		String realResult = (String) result.__tojava__(String.class);
-		System.out.println(realResult);
+//		PyObject someFunc = interp.eval(respuesta);
+//		PyObject result = someFunc.__call__(new PyString("Test!"));
+//		String realResult = (String) result.__tojava__(String.class);
+//		System.out.println(realResult);
 		return false;
 	}
 

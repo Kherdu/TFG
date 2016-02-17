@@ -24,7 +24,7 @@ public class Sintaxis extends Pregunta<String>
 	}
 
 	@Override
-	public boolean corrige(String respuesta) {
+	public boolean corrige(String respuesta, Tema tema) {
 		// TODO Auto-generated method stub
 		return false;
 	}

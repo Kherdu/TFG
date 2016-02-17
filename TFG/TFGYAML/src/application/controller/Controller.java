@@ -104,12 +104,11 @@ public class Controller {
 	 * @return
 	 */
 	public boolean corrige(ArrayList<Integer> resp, Pregunta p ) {
-		return p.corrige(resp);
+		return p.corrige(resp, tema);
 	}
 	
-	public boolean corrige(String resp, Pregunta p)
-	{
-		return p.corrige(resp);
+	public boolean corrige(String resp, Pregunta p){
+		return p.corrige(resp, tema);
 	}
 	
 	/**

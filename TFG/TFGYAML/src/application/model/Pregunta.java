@@ -39,6 +39,10 @@ public abstract class Pregunta<T> extends Elemento
 		return numero;
 	}
 
+	public T getSolucion() {
+		return solucion;
+	}
+
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
@@ -47,7 +51,7 @@ public abstract class Pregunta<T> extends Elemento
 
 	public abstract void setOpciones(ArrayList<String> opciones);
 	
-	public abstract boolean corrige(T respuesta);
+	public abstract boolean corrige(T respuesta, Tema tema);
 
 	public abstract void setMulti(Boolean is);
 	

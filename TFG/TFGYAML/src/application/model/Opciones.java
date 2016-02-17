@@ -19,7 +19,7 @@ public class Opciones extends Pregunta<ArrayList<Integer>> {
 		this.opciones = new ArrayList<String>();
 	}
 
-	public List<Integer> getSolucion() {
+	public ArrayList<Integer> getSolucion() {
 		return solucion;
 	}
 
@@ -34,7 +34,7 @@ public class Opciones extends Pregunta<ArrayList<Integer>> {
 
 	}
 
-	public boolean corrige(ArrayList<Integer> respuesta) {
+	public boolean corrige(ArrayList<Integer> respuesta, Tema tema) {
 		boolean sol = true;
 		int tam = respuesta.size();
 		int i = 0;
