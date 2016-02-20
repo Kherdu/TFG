@@ -23,6 +23,8 @@ import javafx.scene.web.WebView;
  */
 public class Utilities {
 	
+	public static final String PATH = "C:\\Python34\\";
+	
 	/**
 	 * Modifica el la ruta de la imagen dentro del HTML
 	 * @param html

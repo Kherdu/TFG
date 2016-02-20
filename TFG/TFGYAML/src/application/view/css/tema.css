@@ -4,9 +4,15 @@
     -fx-text-fill:  gold;
 }
 
-.label
+.leng
 {
 	-fx-text-fill: gold ;
 	-fx-font-size: 20;
 	-fx-font-style: italic ;
+}
+
+.error
+{
+	-fx-text-fill: red ;
+	-fx-font-size: 20;
 }

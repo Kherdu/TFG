@@ -1,5 +1,7 @@
 package application.view;
 
+import java.awt.Color;
+
 import application.controller.Controller;
 import application.model.Tema;
 import javafx.collections.FXCollections;
@@ -9,8 +11,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -25,14 +29,12 @@ public class MenuLeccion extends Pane{
 		
 	}
 	
-	
 	public Pane menuLeccion(Tema t, Controller c){
 		
 		this.c=c;
 		this.t=t;
 		VBox box = new VBox(10);
-		//El grupo que se desea agregar, y el tamaño ancho y alto
-		//Scene scene = new Scene( box, 300, 300 );
+		HBox botonLabel = new HBox(5);//Contenedor del boton mas el label de aviso
 		
 		box.setMaxSize(600, 600);
 		///Elementos 
@@ -45,6 +47,7 @@ public class MenuLeccion extends Pane{
 		leccionList.setItems(obsLecciones);
 		
 		// TODO cambiar nombre... te odio
+		Label error = new Label();
 		Button alTurron = new Button("Al turron!");
 		alTurron.setOnAction(new EventHandler<ActionEvent>(){
 		MultipleSelectionModel<String> s;
@@ -53,8 +56,10 @@ public class MenuLeccion extends Pane{
 				s= leccionList.getSelectionModel();
 				if (!s.isEmpty()) //Se comprueba que haya una leccion seleccionada
 					c.selectedLeccion(s.getSelectedIndex());
-				else //TODO cambiar aviso
-					System.out.println("Seleccione alguna leccion");
+				else 
+				{
+					error.setText("Se debe seleccionar una leccion");
+				}
 				
 			}
 			
@@ -62,9 +67,14 @@ public class MenuLeccion extends Pane{
 		///Añadir elementos a la vista
 		box.getChildren().addAll(titulo);
 		box.getChildren().addAll(leccionList);
-		box.getChildren().addAll(alTurron);
+		botonLabel.getChildren().addAll(alTurron);
+		botonLabel.getChildren().addAll(error);
+		box.getChildren().addAll(botonLabel);
 		
 		box.setPadding(new Insets(20));
+		
+		error.getStyleClass().add("error");
+		box.getStylesheets().add("/application/view/css/leccion.css");
 		
 		box.setPrefSize(600, 600);
 		

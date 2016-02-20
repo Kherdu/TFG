@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -34,8 +35,7 @@ public class MenuTema extends Pane{
 		this.c=c;//Controlador
 		this.temas=f;//Lista de temas
 		VBox box = new VBox(10);//Contenedor de los elementos
-		//El grupo que se desea agregar, y el tamaño ancho y alto
-		//Scene scene = new Scene( box, 300, 300 );
+		HBox botonLabel = new HBox(5);//Contenedor del boton mas el label de aviso
 				
 		
 		///Elementos 
@@ -43,6 +43,7 @@ public class MenuTema extends Pane{
 		ListView<String> temasList = new ListView<String>(); //Lista de los temas
 		ObservableList<String> obsTemas =FXCollections.observableArrayList(temas);//permite ver la seleccion
 		temasList.setItems(obsTemas);
+		Label error = new Label();
 		Button comenzar = new Button("Comenzar");//Boton para cargar el tema seleccionado y avanzar en la aplicacion
 		comenzar.setOnAction(new EventHandler<ActionEvent>(){
 		
@@ -51,20 +52,24 @@ public class MenuTema extends Pane{
 				s= temasList.getSelectionModel();
 				if (!s.isEmpty())//Se comprueba que hay alguna opcion seleccionada
 					c.selectedTema(s.getSelectedItem());//Se carga el tema seleccionado
-				else //TODO cambiar forma de aviso
-					System.out.println("No hay tema seleccionado");
+				else 
+					error.setText("Se debe seleccionar un tema");
 			}
 			
 		});
 		box.setPadding(new Insets(20));
 		
+		leng.getStyleClass().add("leng");
 		comenzar.getStyleClass().add("comenzar");
+		error.getStyleClass().add("error");
 		box.getStylesheets().add("/application/view/css/tema.css");
 		
 		///Añadir elementos a la vista
 		box.getChildren().addAll(leng);
 		box.getChildren().addAll(temasList);
-		box.getChildren().addAll(comenzar);
+		botonLabel.getChildren().addAll(comenzar);
+		botonLabel.getChildren().addAll(error);
+		box.getChildren().addAll(botonLabel);
 		
 		box.setPrefSize(600, 600);
 		return box;
