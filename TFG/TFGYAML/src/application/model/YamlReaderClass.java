@@ -72,7 +72,7 @@ public final class YamlReaderClass {
 	
 					if (pre.get("Tipo").equals("Codigo")) //Pregunta de tipo codigo
 					{
-						String respuesta = (String) pre.get("Respuesta");//
+						String respuesta = (String) pre.get("Resultado");//
 						elem = new Codigo(num, enunciado, pista, respuesta);
 	
 					} else if (pre.get("Tipo").equals("Sintaxis")) {
