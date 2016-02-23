@@ -38,9 +38,7 @@ def pregunta22(codigo):
     try:
         exec(codigo)
         lista = ["gato", "perro", "burro"]
-        lista.sort
-        print(locals()['lista_animales'].sort)
-        if locals()['lista_animales'].sort==lista:
+        if set(lista)==set(locals()['lista_animales']):
             print("Todo corecto")
             return True;
         else:
