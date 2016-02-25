@@ -1,6 +1,7 @@
 package application;
 
 import application.controller.Controller;
+import application.view.Portada;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,6 +15,7 @@ public class Main extends Application{
 	private Stage primaryStage;
 	//private BorderPane rootLayout;
 	private static Controller c;
+	
 	
 
 	public static void main(String[] args) {

@@ -15,6 +15,7 @@ import org.pegdown.PegDownProcessor;
 import org.yaml.snakeyaml.Yaml;
 
 import application.Main;
+import application.SelectedPath;
 import application.model.Codigo;
 import application.model.Elemento;
 import application.model.Explicacion;
@@ -28,6 +29,7 @@ import application.model.YamlReaderClass;
 import application.view.Contenido;
 import application.view.MenuLeccion;
 import application.view.MenuTema;
+import application.view.Portada;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -57,7 +59,7 @@ import javafx.stage.Stage;
  *
  */
 public class Controller {
-
+	public static String path;//ejecutable de python
 	private Tema tema;
 	private Stage primaryStage;
 	private Pane root;
@@ -126,7 +128,7 @@ public class Controller {
 		        files.add(listOfFiles[i].getName());
 		      }
 		    }
-		showStart();
+		muestraIni();
 		
 	}
 	
@@ -138,10 +140,16 @@ public class Controller {
 		showStart();
 	}
 	
+	private void muestraIni()
+	{
+		Pane p = new Portada();
+		changeView(p, null,0);
+	}
+	
 	/**
 	 * Muestra la primera ventana de la aplicación
 	 */
-	private void showStart() {
+	public void showStart() {
 		primaryStage.setTitle("Python"); //el titulo se podria poner de la app, o del lenguaje, pero obteniendo en la primera lectura de ficheros...
 		//este es el encargado de hacer el setroot que tiene los contenidos necesarios
 		Pane p = new MenuTema();
@@ -159,7 +167,10 @@ public class Controller {
 	private void changeView(Pane p, ArrayList<String> files, int selected){
 		scene = new Scene(new Group());
 		root= new Pane();
-		if (p instanceof MenuTema){
+		if (p instanceof Portada){
+			root.getChildren().addAll(((Portada) p).portada(this));
+		}
+		else if (p instanceof MenuTema){
 			root.getChildren().addAll(((MenuTema) p).menuTema(files, this));
 		}else if (p instanceof MenuLeccion){
 			root.getChildren().addAll(((MenuLeccion) p).menuLeccion(tema, this));
@@ -230,12 +241,24 @@ public class Controller {
 	{
 		return Utilities.parserMarkDown(mark);
 	}
-
+	
+	/**
+	 * Muestra la pista en caso de que la pregunta tenga alguna pista para su resolucion
+	 * @return
+	 */
 	public String muestraPista() {
 		String pista = this.elems.get(this.actual).getPista();
 		if (null == pista) 
 			pista = "No hay pistas para esta pregunta";
 		
 		return pista;
+	}
+	
+	/**
+	 * Muesta el FileChooser para seleccionar donde se encuentra python en el equipo
+	 */
+	public void muestraSeleccion() {
+		SelectedPath sp = new SelectedPath(this.primaryStage);
+		this.path = sp.getPath();
 	}
 }

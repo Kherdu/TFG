@@ -206,7 +206,7 @@ public class Contenido extends Pane{
 				else if (e instanceof Codigo || e instanceof Sintaxis) //La pregunta es de tipo codigo
 				{
 					String code = codigo.getText();
-					System.out.println(code);
+					//System.out.println(code);
 
 					c.corrige(code, (Pregunta)e);//Se manda el codigo al controlador para que el modelo lo compruebe
 				}
