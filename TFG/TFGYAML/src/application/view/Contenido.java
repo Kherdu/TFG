@@ -18,6 +18,7 @@ import application.model.Explicacion;
 import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
+import application.model.Utilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -69,8 +70,8 @@ public class Contenido extends Pane{
 		String content = null;
 
 		content = c.markToHtml(e.getTexto());
-		WebView text = new WebView();// Campo donde va la explicacion o el
-										// enunciado
+		WebView text = Utilities.creaBrowser(content);//Campo donde se escribe el enunciado o la explicacion de la pregunta
+		
 		WebEngine engine = text.getEngine();
 		engine.loadContent(content);
 

@@ -21,10 +21,7 @@ import javafx.scene.web.WebView;
  * @author Carlos
  *
  */
-public class Utilities {
-	
-	public static final String PATH = "C:\\Python34\\";
-	
+public class Utilities {	
 	/**
 	 * Modifica el la ruta de la imagen dentro del HTML
 	 * @param html
@@ -52,13 +49,12 @@ public class Utilities {
 		InputStream file;
 		String aux="";
 		try {
-			file = new FileInputStream("resources/css/estilo.css");
+			file = new FileInputStream("resources/css/prueba.css");
 			aux = fileToString(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-	    
 		final String CSS = aux;
 		 WebView browser = new WebView();
 	        final WebEngine webEngine = browser.getEngine();
@@ -71,7 +67,7 @@ public class Utilities {
 	                styleNode.appendChild(styleContent);
 	                doc.getDocumentElement().getElementsByTagName("head").item(0).appendChild(styleNode);
 
-	                System.out.println(webEngine.executeScript("document.documentElement.innerHTML"));
+	                //System.out.println(webEngine.executeScript("document.documentElement.innerHTML"));
 	            }
 	        });
 	        webEngine.loadContent(html);

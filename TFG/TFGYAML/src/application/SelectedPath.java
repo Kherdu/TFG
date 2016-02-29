@@ -13,7 +13,6 @@ public class SelectedPath
 		fc = new FileChooser();
 		fc.setTitle("Seleccion de pyhton");
 		this.path = fc.showOpenDialog(stage).getAbsolutePath();
-		
 	}
 	
 	public String getPath()

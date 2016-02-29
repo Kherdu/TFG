@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import application.controller.Controller;
 import application.model.Tema;
+import application.model.Utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,9 +39,10 @@ public class MenuLeccion extends Pane{
 		
 		box.setMaxSize(600, 600);
 		///Elementos 
-		WebView titulo = new WebView();
+		String content = c.markToHtml(t.getTitulo() + "\n" + t.getIntroduccion());
+		WebView titulo = Utilities.creaBrowser(content);
 		WebEngine engine = titulo.getEngine();
-		engine.loadContent(c.markToHtml(t.getTitulo() + "\n" + t.getIntroduccion()));
+		engine.loadContent(content);
 		
 		ListView<String> leccionList = new ListView<String>();
 		ObservableList<String> obsLecciones =FXCollections.observableArrayList (t.getNameLecciones());
