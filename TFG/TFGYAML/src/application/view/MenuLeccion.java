@@ -37,20 +37,20 @@ public class MenuLeccion extends Pane{
 		VBox box = new VBox(10);
 		HBox botonLabel = new HBox(5);//Contenedor del boton mas el label de aviso
 		
-		box.setMaxSize(600, 600);
+		
 		///Elementos 
 		String content = c.markToHtml(t.getTitulo() + "\n" + t.getIntroduccion());
 		WebView titulo = Utilities.creaBrowser(content);
 		WebEngine engine = titulo.getEngine();
 		engine.loadContent(content);
 		
+		Label lista = new Label("Lista de lecciones");
 		ListView<String> leccionList = new ListView<String>();
 		ObservableList<String> obsLecciones =FXCollections.observableArrayList (t.getNameLecciones());
 		leccionList.setItems(obsLecciones);
 		
-		// TODO cambiar nombre... te odio
 		Label error = new Label();
-		Button alTurron = new Button("Al turron!");
+		Button alTurron = new Button("Comenzar leccion");
 		alTurron.setOnAction(new EventHandler<ActionEvent>(){
 		MultipleSelectionModel<String> s;
 			@Override
@@ -68,15 +68,20 @@ public class MenuLeccion extends Pane{
 		});
 		///Añadir elementos a la vista
 		box.getChildren().addAll(titulo);
+		box.getChildren().addAll(lista);
 		box.getChildren().addAll(leccionList);
 		botonLabel.getChildren().addAll(alTurron);
 		botonLabel.getChildren().addAll(error);
 		box.getChildren().addAll(botonLabel);
 		
+		//Parte estetica
 		box.setPadding(new Insets(20));
-		
 		error.getStyleClass().add("error");
+		lista.getStyleClass().add("lista");
 		box.getStylesheets().add("/application/view/css/leccion.css");
+		
+		
+		
 		
 		box.setPrefSize(600, 600);
 		

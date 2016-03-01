@@ -1,5 +1,6 @@
 package application.view;
 
+import application.CargaConfig;
 import application.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,7 +37,7 @@ public class Portada extends Pane
 		root = new VBox(10);
 		titulo = new Label("Aprende Python");
 		rut = new Label("Path del lenguaje: ");
-		ruta = new TextField();
+		ruta = new TextField(CargaConfig.loadConfig());
 		select = new Button("Seleccion de python");
 		selectedPath = new HBox(20);
 		next = new Button ("Comenzar tutorial");
@@ -66,12 +67,17 @@ public class Portada extends Pane
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (ruta.getText().equals(""))
+				String r = ruta.getText();
+				if (null == r)
 				{
 					error.setText("DEBE HABER UN COMPILADOR SELECCIONADO");
 				}
 				else
+				{
+					CargaConfig.saveConfig(r);
+					c.setPath(r);
 					c.showStart();
+				}
 			}
 			
 		});

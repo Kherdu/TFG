@@ -14,6 +14,7 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.yaml.snakeyaml.Yaml;
 
+import application.CargaConfig;
 import application.Main;
 import application.SelectedPath;
 import application.model.Codigo;
@@ -68,6 +69,7 @@ public class Controller {
 	private ArrayList<Elemento> elems;
 	private int actual; //contador de el elemento del contenido en el que estamos
 	private ArrayList<String> files;//temas del lenguaje
+	private Portada portada;
 	
 	public Controller(Stage primaryStage) {
 		this.tema = null;
@@ -260,5 +262,17 @@ public class Controller {
 	public void muestraSeleccion() {
 		SelectedPath sp = new SelectedPath(this.primaryStage);
 		this.path = sp.getPath();
+		CargaConfig.saveConfig(this.path);	
+		
 	}
+	
+	/**
+	 * Modifica el path del ejecutable del lenguaje
+	 * @param path
+	 */
+	public  void setPath(String path)
+	{
+		this.path = path;
+	}
+
 }

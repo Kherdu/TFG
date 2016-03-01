@@ -61,12 +61,8 @@ public class Contenido extends Pane{
 		if (e instanceof Pregunta)
 			tipo.setText("Pregunta");
 
-		tipo.setAlignment(Pos.TOP_CENTER);
-
 		VBox box = new VBox(10);// Contenido de toda la ventana
-		VBox contenedor = new VBox(5); // Texto y campo de respuesta si es una
-										// pregunta
-
+		VBox contenedor = new VBox(5); // Texto y campo de respuesta si es una pregunta
 		String content = null;
 
 		content = c.markToHtml(e.getTexto());
@@ -79,7 +75,8 @@ public class Contenido extends Pane{
 
 		contenedor.getChildren().addAll(tipo);
 		contenedor.getChildren().addAll(text);
-
+		
+		Label codigoLab = new Label ("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
 
 		Label pista = new Label("pista");
@@ -117,6 +114,7 @@ public class Contenido extends Pane{
 			contenedor.getChildren().addAll(pista);
 		} else {
 			if (e instanceof Pregunta) {
+				contenedor.getChildren().addAll(codigoLab);
 				contenedor.getChildren().addAll(codigo);
 				contenedor.getChildren().addAll(pista);
 			}
@@ -230,7 +228,8 @@ public class Contenido extends Pane{
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
 		buttons.setAlignment(Pos.BOTTOM_CENTER);
-
+		
+		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		box.getStylesheets().add("/application/view/css/contenido.css");
 

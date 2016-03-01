@@ -1,6 +1,6 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
-Archivo: tema1.py
+Archivo: "resources/exec/tema1.py"
 Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
@@ -73,7 +73,7 @@ Lecciones:
       Resultado: pregunta21
     - Elem: pregunta
       Numero: 2
-      Enunciado:  Introduce las siguientes palabras en la variable lista_animales separadas por un salto de linea. gato, perro, burro
+      Enunciado:  Introduce las siguientes palabras en la variable lista_animales. gato, perro, burro
       Tipo: Codigo
       Resultado: pregunta22
     - Elem: explicacion

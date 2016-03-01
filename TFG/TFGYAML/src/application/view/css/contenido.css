@@ -3,3 +3,8 @@
    -fx-font-style: italic ;
    -fx-text-fill: red;
 }
+
+.labcode{
+	-fx-font-size: 16;
+	-fx-text-fill: blue;
+}

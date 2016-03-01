@@ -57,12 +57,16 @@ public class MenuTema extends Pane{
 			}
 			
 		});
+		
+		//Parte estetica
 		box.setPadding(new Insets(20));
 		
 		leng.getStyleClass().add("leng");
 		comenzar.getStyleClass().add("comenzar");
 		error.getStyleClass().add("error");
 		box.getStylesheets().add("/application/view/css/tema.css");
+		
+		
 		
 		///Añadir elementos a la vista
 		box.getChildren().addAll(leng);
