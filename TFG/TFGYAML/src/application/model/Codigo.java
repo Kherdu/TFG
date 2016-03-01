@@ -18,57 +18,71 @@ import org.python.util.PythonInterpreter;
 import application.Main;
 import application.controller.Controller;
 
-
-
 /**
  * Pregunta de tipo Codigo
+ * 
  * @author Carlos
  *
  */
-public class Codigo extends Pregunta <String>
-{
+public class Codigo extends Pregunta<String> {
 	public Codigo(int numero, String enunciado, String pista, String solucion) {
 		super(numero, enunciado, pista, solucion);
-		
-	}
-	
-	//respuesta es la funcion a la que llamar, código es lo que escribe el usuario
-	public boolean comprueba(String respuesta, String codigo){
-		return true;
+
 	}
 
+	// respuesta es la funcion a la que llamar, código es lo que escribe el
+	// usuario
+	public boolean comprueba(String respuesta, String codigo) {
+		return true;
+	}
 
 	@Override
 	public void setOpciones(ArrayList<String> opciones) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean corrige(String respuesta, Tema tema) {
 		File correccion = new File(tema.getArchivo());
 		String cor = correccion.getAbsolutePath();
-		ProcessBuilder pb = new ProcessBuilder(Controller.path ,cor, this.solucion, respuesta);
-		try {//No estalla pero no hace nada
+		ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta);
+		try {// No estalla pero no hace nada
 			System.out.println("lanza el proceso");
-		
+
 			Process p = pb.start();
-			//pb.command(this.solucion+"("+respuesta+")");
-			//pb.command("exit()"); //salir de la consola
-			//Map<String, String> env = pb.environment();
-	
+			// pb.command(this.solucion+"("+respuesta+")");
+			// pb.command("exit()"); //salir de la consola
+			// Map<String, String> env = pb.environment();
+
 			boolean errCode = p.waitFor(2, TimeUnit.SECONDS);
 			System.out.println("Echo command executed, any errors? " + (errCode ? "Yes" : "No"));
 			System.out.println("Echo Output:\n");
-			
+
 			InputStream is = p.getInputStream();
-	        InputStreamReader isr = new InputStreamReader(is);
-	        BufferedReader br = new BufferedReader(isr);
-	        String line;
-             
-	        while ((line = br.readLine()) != null) {
-	            System.out.println(line);
-	        }
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			String line;
+			int salida = p.exitValue();
+			System.out.print("Java dice: ");
+			switch (salida) {
+			case 1: {
+				System.out.println("Variable generada pero sin valor correcto");
+				break;
+			}
+			case -1: {
+				System.out.println("No existe la variable solicitada");
+				break;
+			}
+			case 0: {
+				System.out.println("Todo esta bien");
+				break;
+			}
+			}
+
+			while ((line = br.readLine()) != null) {
+				System.out.println(line);
+			}
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,25 +93,25 @@ public class Codigo extends Pregunta <String>
 	@Override
 	public void setSolucion(String solucion) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setMulti(Boolean is) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setSolucion(ArrayList<Integer> correctasAux) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setTexto(String explicacion) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }
