@@ -24,13 +24,13 @@ public final class YamlReaderClass {
 	 * @param cargar Nombre del archivo del tema
 	 * @return Tema seleccionado
 	 */
-	public static Tema cargaTema(String cargar) {
+	public static Tema cargaTema(String language,String cargar) {
 		Yaml yaml = new Yaml();
 		//ArrayList<String> key = new ArrayList<String>();//Lista de claves del arbol
 		//ArrayList<String> value = new ArrayList<String>();//lista de valores asociados a las claves 
 		InputStream input = null;
 		try {
-			String path= "resources/yaml/" + cargar; //Concatenamos con la ruta relativa
+			String path= "resources/yaml/" +language+"/"+ cargar; //Concatenamos con la ruta relativa
 			input = new FileInputStream(path); //carga el fichero
 		} catch (FileNotFoundException e) {
 			
@@ -127,5 +127,29 @@ public final class YamlReaderClass {
 		}
 		return ret;
 
+	}
+	
+	public static ArrayList<String> languages(){
+		Yaml yaml = new Yaml();
+		//ArrayList<String> key = new ArrayList<String>();//Lista de claves del arbol
+		//ArrayList<String> value = new ArrayList<String>();//lista de valores asociados a las claves 
+		InputStream input = null;
+		try {
+			String path= "resources/config/carga.yml"; //Concatenamos con la ruta relativa
+			input = new FileInputStream(path); //carga el fichero
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		// mapa lectura del yaml
+		@SuppressWarnings("unchecked")
+		Map<String, Object> mapaObjeto = (Map<String, Object>) yaml.load(input);
+		ArrayList<Map>l = (ArrayList<Map>) mapaObjeto.get("lenguajes");
+		ArrayList<String> s= new ArrayList<String>();
+		for (Map o: l) s.add((String) o.get("nombre"));
+		
+		
+		return s;
+		
 	}
 }

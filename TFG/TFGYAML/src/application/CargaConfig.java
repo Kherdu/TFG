@@ -12,7 +12,7 @@ public class CargaConfig
 	public static String loadConfig()
 	{
 		try {
-			InputStream is = new FileInputStream("resources/config/carga.txt");
+			InputStream is = new FileInputStream("resources/config/carga.yml");
 			Scanner sc = new Scanner(is);
 			String ruta = sc.nextLine();
 			sc.close();
@@ -27,6 +27,8 @@ public class CargaConfig
 	 * Guarda el nuevo path en el archivo de configuracion
 	 * @param np
 	 */
+	
+	
 	public static void saveConfig(String np)
 	{
 		try {

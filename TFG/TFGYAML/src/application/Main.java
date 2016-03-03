@@ -28,7 +28,7 @@ public class Main extends Application{
 		this.primaryStage=primaryStage;
 		this.primaryStage.setTitle("Prueba");
 		c = new Controller(primaryStage);
-		c.launch();
+		c.start();
 		
 		
 	}
