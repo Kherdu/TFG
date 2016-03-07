@@ -59,9 +59,11 @@ import javafx.stage.Stage;
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
  * 
  * @author Carlos
+ * @param <K>
+ * @param <V>
  *
  */
-public class Controller {
+public class Controller<K, V> {
 	public static String path;// ejecutable de python
 	private Tema tema;
 	private Stage primaryStage;
@@ -73,7 +75,8 @@ public class Controller {
 						// estamos
 	private ArrayList<String> files;// temas del lenguaje
 	private Portada portada;
-	private String len; //lenguaje seleccionado
+	private String len; // lenguaje seleccionado
+	private Map<String, String> lenguajes; // Map con los lenguajes posibles
 
 	public Controller(Stage primaryStage) {
 		this.tema = null;
@@ -126,10 +129,8 @@ public class Controller {
 	 */
 	public void showSubject() {
 
-		Pane p= new MenuTema();
-		
-
-		File folder = new File("resources/yaml/"+len);
+		Pane p = new MenuTema();
+		File folder = new File("resources/yaml/" + len);
 		File[] listOfFiles = folder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
@@ -137,7 +138,7 @@ public class Controller {
 				files.add(listOfFiles[i].getName());
 			}
 		}
-		changeView(p, files, 0); 
+		changeView(p, files, 0);
 	}
 
 	/**
@@ -149,11 +150,20 @@ public class Controller {
 
 	public void start() {
 		Pane p = new SeleccionLenguajes();
-		ArrayList<String> a = YamlReaderClass.languages();
 
+		Map<K, V> l = YamlReaderClass.languages();
+		ArrayList a = languageNames(l);
 		changeView(p, a, 0);
 	}
-	
+
+	public ArrayList<String> languageNames(Map l) {
+		ArrayList<Map> p = (ArrayList<Map>) l.get("lenguajes");
+		ArrayList<String> s = new ArrayList<String>();
+		for (Map o : p)
+			s.add((String) o.get("nombre"));
+
+		return s;
+	}
 
 	/**
 	 * Muestra la primera ventana de la aplicación
@@ -215,7 +225,7 @@ public class Controller {
 	 */
 	public void selectedTema(String selectedItem) {
 
-		this.tema = YamlReaderClass.cargaTema(len,selectedItem);
+		this.tema = YamlReaderClass.cargaTema(len, selectedItem);
 		changeView(new MenuLeccion(), null, 0);
 	}
 
@@ -301,8 +311,23 @@ public class Controller {
 	}
 
 	public void selectedLanguage(String selectedItem) {
-		this.len=selectedItem;
+		this.len = selectedItem;
+		Map<K, V> l = YamlReaderClass.languages();
+		setPath(pathSelected(l, selectedItem));
 		showSubject();
+	}
+
+	public String pathSelected(Map l, String lenguaje) {
+		ArrayList<Map> p = (ArrayList<Map>) l.get("lenguajes");
+		ArrayList<String> s = new ArrayList<String>();
+		ArrayList<String> r = new ArrayList<String>();
+		for (Map o : p)
+			s.add((String) o.get("nombre"));
+		for (Map o : p)
+			r.add((String) o.get("ruta"));
+
+		return r.get(s.indexOf(lenguaje));
+		
 	}
 
 }

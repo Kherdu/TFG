@@ -129,7 +129,7 @@ public final class YamlReaderClass {
 
 	}
 	
-	public static ArrayList<String> languages(){
+	public static <K, V> Map<K,V> languages(){
 		Yaml yaml = new Yaml();
 		//ArrayList<String> key = new ArrayList<String>();//Lista de claves del arbol
 		//ArrayList<String> value = new ArrayList<String>();//lista de valores asociados a las claves 
@@ -143,13 +143,9 @@ public final class YamlReaderClass {
 		}
 		// mapa lectura del yaml
 		@SuppressWarnings("unchecked")
-		Map<String, Object> mapaObjeto = (Map<String, Object>) yaml.load(input);
-		ArrayList<Map>l = (ArrayList<Map>) mapaObjeto.get("lenguajes");
-		ArrayList<String> s= new ArrayList<String>();
-		for (Map o: l) s.add((String) o.get("nombre"));
+		Map<K, V> mapaObjeto = (Map<K, V>) yaml.load(input);
 		
-		
-		return s;
+		return (Map<K, V>) mapaObjeto;
 		
 	}
 }
