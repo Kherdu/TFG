@@ -46,6 +46,7 @@ public class Codigo extends Pregunta<String> {
 	public boolean corrige(String respuesta, Tema tema) {
 		File correccion = new File(tema.getArchivo());
 		String cor = correccion.getAbsolutePath();
+		respuesta = respuesta.replace("\"", "'");
 		ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta);
 		try {// No estalla pero no hace nada
 			System.out.println("lanza el proceso");
