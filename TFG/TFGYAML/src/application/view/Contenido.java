@@ -1,5 +1,6 @@
 ﻿package application.view;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -27,14 +28,19 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.*;
+import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Popup;
 
 public class Contenido extends Pane{
 
@@ -80,6 +86,16 @@ public class Contenido extends Pane{
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
 
 		Label pista = new Label("pista");
+		
+		
+		HBox respuestaBox = new HBox(10);//Contenedor con el campo de respuesta y los botones de la pregunta
+		
+		//Botones para el envio/ayuda de respuestas
+		VBox buttonsCode = new VBox(5);
+		Button help = new Button("Ayuda");
+		Button resolve = new Button("Resolver");
+		
+		
 
 		VBox opciones = new VBox();
 
@@ -110,12 +126,16 @@ public class Contenido extends Pane{
 				}
 				opciones.getChildren().addAll(l);
 			}
-			contenedor.getChildren().addAll(opciones);
+			respuestaBox.getChildren().addAll(opciones);
+			respuestaBox.getChildren().addAll(buttonsCode);
+			contenedor.getChildren().addAll(respuestaBox);
 			contenedor.getChildren().addAll(pista);
 		} else {
 			if (e instanceof Pregunta) {
 				contenedor.getChildren().addAll(codigoLab);
-				contenedor.getChildren().addAll(codigo);
+				respuestaBox.getChildren().addAll(codigo);
+				respuestaBox.getChildren().addAll(buttonsCode);
+				contenedor.getChildren().addAll(respuestaBox);
 				contenedor.getChildren().addAll(pista);
 			}
 		}
@@ -123,13 +143,17 @@ public class Contenido extends Pane{
 		contenedor.setMinHeight(500);
 		box.getChildren().addAll(contenedor);
 		HBox buttons = new HBox(10);
+		
+		
 
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
-		Button help = new Button("Ayuda");
-		Button resolve = new Button("Resolver");
+		
 		Button menu = new Button("Menu principal");
 
+		buttonsCode.getChildren().addAll(resolve);
+		buttonsCode.getChildren().addAll(help);
+		
 		/// listeners
 		prior.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -162,7 +186,10 @@ public class Contenido extends Pane{
 			@Override
 			public void handle(ActionEvent event) {
 				if (e instanceof Pregunta)
+				{
 					pista.setText(c.muestraPista());
+					
+				}
 			}
 		});
 
@@ -197,8 +224,13 @@ public class Contenido extends Pane{
 						}
 					}
 					// TODO cambiar la forma de notificacion
-					System.out.println(c.corrige(resp, (Pregunta) e));// Se corrige la pregunta
-																		
+					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
+					{
+						pista.setText("CORRECTO");
+					}
+					else{
+						pista.setText("HAS FALLADO");
+					}
 																		
 				} // Fin de opciones
 				
@@ -207,7 +239,13 @@ public class Contenido extends Pane{
 					String code = codigo.getText();
 					//System.out.println(code);
 
-					c.corrige(code, (Pregunta)e);//Se manda el codigo al controlador para que el modelo lo compruebe
+					if(c.corrige(code, (Pregunta)e))//Se manda el codigo al controlador para que el modelo lo compruebe
+					{
+						pista.setText("CORRECTO");
+					}
+					else{
+						pista.setText("HAS FALLADO");
+					}
 				}
 			}//fin de tipo codigo
 		});
@@ -215,15 +253,15 @@ public class Contenido extends Pane{
 		// poner botones en el panel
 		buttons.getChildren().addAll(prior);
 		buttons.getChildren().addAll(next);
-		buttons.getChildren().addAll(help);
-		buttons.getChildren().addAll(resolve);
+		//buttons.getChildren().addAll(help);
+		//buttons.getChildren().addAll(resolve);
 		buttons.getChildren().addAll(menu);
 		
-		if (e instanceof Explicacion)
+		/*if (e instanceof Explicacion)
 		{
 			resolve.setVisible(false);
 			help.setVisible(false);
-		}
+		}*/
 
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);

@@ -57,7 +57,7 @@ public class Codigo extends Pregunta<String> {
 			// Map<String, String> env = pb.environment();
 
 			boolean errCode = p.waitFor(2, TimeUnit.SECONDS);
-			System.out.println("Echo command executed, any errors? " + (errCode ? "Yes" : "No"));
+			System.out.println("Echo command executed, any errors? " + (errCode ? "No" : "Yes"));
 			System.out.println("Echo Output:\n");
 
 			InputStream is = p.getInputStream();
@@ -84,11 +84,12 @@ public class Codigo extends Pregunta<String> {
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
 			}
+			return salida ==0;
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		return true;
+		
 	}
 
 	@Override

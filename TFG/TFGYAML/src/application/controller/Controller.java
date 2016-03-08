@@ -208,7 +208,11 @@ public class Controller<K, V> {
 			if (actual == -1) {
 				e = new Explicacion(tema.getLecciones().get(selected).getExplicacion());
 
-			} else
+			} else if (actual == this.elems.size())
+			{
+				e = new Explicacion("FIN DE LA LECCION");
+			}
+			else
 				e = elems.get(actual);
 
 			root.getChildren().addAll(((Contenido) p).contenido(e, this, selected));
@@ -249,7 +253,7 @@ public class Controller<K, V> {
 	 */
 	public void nextElem(int l) {
 		// TODO ojo, hay que desactivar y activar botones para que esto no pete
-		if (actual < this.elems.size() - 1)
+		if (actual < this.elems.size())
 			actual++;
 		changeView(new Contenido(), null, l);
 	}
@@ -327,7 +331,11 @@ public class Controller<K, V> {
 			r.add((String) o.get("ruta"));
 
 		return r.get(s.indexOf(lenguaje));
-		
+	}
+	
+	public Stage getPrimaryStage()
+	{
+		return this.primaryStage;
 	}
 
 }
