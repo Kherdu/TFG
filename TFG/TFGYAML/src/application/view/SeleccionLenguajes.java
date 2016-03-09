@@ -3,6 +3,7 @@ package application.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.SelectedPath;
 import application.controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -50,6 +53,23 @@ public class SeleccionLenguajes extends Pane {
 			
 		});
 		
+		Button settings = new Button("Ajustes");//Boton de ajustes para seleccionar el compilador
+		
+		settings.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				MultipleSelectionModel<String> s;
+				s= languageList.getSelectionModel();
+				if (!s.isEmpty())//Se comprueba que hay alguna opcion seleccionada
+					c.showPortada(s.getSelectedItem());//Se carga el tema seleccionado
+				else 
+					error.setText("Se debe seleccionar un lenguaje");
+				
+			}
+		});
+		
+		
 		//Parte estetica
 		box.setPadding(new Insets(20));
 		
@@ -65,6 +85,7 @@ public class SeleccionLenguajes extends Pane {
 		botonLabel.getChildren().addAll(comenzar);
 		botonLabel.getChildren().addAll(error);
 		botonLabel.getChildren().addAll(aviso);
+		botonLabel.getChildren().addAll(settings);
 		box.getChildren().addAll(botonLabel);
 		
 		box.setPrefSize(600, 600);

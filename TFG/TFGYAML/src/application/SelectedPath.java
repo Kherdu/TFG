@@ -8,10 +8,10 @@ public class SelectedPath
 	private FileChooser fc;
 	private String path;
 	
-	public SelectedPath(Stage stage)
+	public SelectedPath(Stage stage, String lenguaje)
 	{
 		fc = new FileChooser();
-		fc.setTitle("Seleccion de pyhton");
+		fc.setTitle(lenguaje);
 		this.path = fc.showOpenDialog(stage).getAbsolutePath();
 	}
 	

@@ -34,7 +34,7 @@ public class Portada extends Pane {
 
 		// Inicialización de los elementos
 		root = new VBox(10);
-		titulo = new Label("Aprende Python");
+		//titulo = new Label("Aprende Python");
 		String OS = System.getProperty("os.name").toLowerCase();
 		System.out.println(OS);
 
@@ -61,7 +61,7 @@ public class Portada extends Pane {
 		selectedPath.getChildren().addAll(next);
 
 		// Añadir los elementos al panel principal
-		root.getChildren().addAll(titulo);
+		//root.getChildren().addAll(titulo);
 		root.getChildren().addAll(selectedPath);
 		root.getChildren().addAll(error);
 
@@ -69,7 +69,7 @@ public class Portada extends Pane {
 
 			@Override
 			public void handle(ActionEvent event) {
-				c.muestraSeleccion();
+				c.muestraSeleccion("hola");
 				ruta.setText(Controller.path);
 			}
 		});

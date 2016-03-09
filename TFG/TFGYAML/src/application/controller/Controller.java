@@ -298,8 +298,8 @@ public class Controller<K, V> {
 	 * Muesta el FileChooser para seleccionar donde se encuentra python en el
 	 * equipo
 	 */
-	public void muestraSeleccion() {
-		SelectedPath sp = new SelectedPath(this.primaryStage);
+	public void muestraSeleccion(String lenguaje) {
+		SelectedPath sp = new SelectedPath(this.primaryStage, lenguaje);
 		this.path = sp.getPath();
 		CargaConfig.saveConfig(this.path);
 
@@ -336,6 +336,10 @@ public class Controller<K, V> {
 	public Stage getPrimaryStage()
 	{
 		return this.primaryStage;
+	}
+	
+	public void showPortada(String lenguaje){
+		this.changeView(new Portada(), null, 0);
 	}
 
 }
