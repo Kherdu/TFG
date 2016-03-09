@@ -286,13 +286,13 @@ public class Controller<K, V> {
 	 * 
 	 * @return
 	 */
-	public String muestraPista() {
+	/*public String muestraPista() {
 		String pista = this.elems.get(this.actual).getPista();
 		if (null == pista)
 			pista = "No hay pistas para esta pregunta";
 
 		return pista;
-	}
+	}*/
 
 	/**
 	 * Muesta el FileChooser para seleccionar donde se encuentra python en el

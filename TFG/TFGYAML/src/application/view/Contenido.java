@@ -28,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -84,15 +85,22 @@ public class Contenido extends Pane{
 		
 		Label codigoLab = new Label ("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
-
-		Label pista = new Label("pista");
+		
+		HBox result = new HBox();//Contenedor donde se muestra la resolucion de la pregunta
+		Label pista = new Label();//Indica si la pregunta se ha respondido bien o no
+		pista.setPrefWidth(300);
+		MenuButton pistas = new MenuButton("+ INFO"); //Boton para mostrar informacion sobre el fallo
+		
+		result.getChildren().addAll(pista);
+		result.getChildren().addAll(pistas);
+		pistas.setVisible(false);
 		
 		
 		HBox respuestaBox = new HBox(10);//Contenedor con el campo de respuesta y los botones de la pregunta
 		
 		//Botones para el envio/ayuda de respuestas
 		VBox buttonsCode = new VBox(5);
-		Button help = new Button("Ayuda");
+		MenuButton help = new MenuButton("Ayuda");
 		Button resolve = new Button("Resolver");
 		
 		
@@ -129,14 +137,14 @@ public class Contenido extends Pane{
 			respuestaBox.getChildren().addAll(opciones);
 			respuestaBox.getChildren().addAll(buttonsCode);
 			contenedor.getChildren().addAll(respuestaBox);
-			contenedor.getChildren().addAll(pista);
+			contenedor.getChildren().addAll(result);
 		} else {
 			if (e instanceof Pregunta) {
 				contenedor.getChildren().addAll(codigoLab);
 				respuestaBox.getChildren().addAll(codigo);
 				respuestaBox.getChildren().addAll(buttonsCode);
 				contenedor.getChildren().addAll(respuestaBox);
-				contenedor.getChildren().addAll(pista);
+				contenedor.getChildren().addAll(result);
 			}
 		}
 
@@ -148,7 +156,6 @@ public class Contenido extends Pane{
 
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
-		
 		Button menu = new Button("Menu principal");
 
 		buttonsCode.getChildren().addAll(resolve);
@@ -181,7 +188,7 @@ public class Contenido extends Pane{
 
 		});
 
-		help.setOnAction(new EventHandler<ActionEvent>() {
+		/*help.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -191,9 +198,9 @@ public class Contenido extends Pane{
 					
 				}
 			}
-		});
-
-		// TODO faltan las preguntas de tipo codigo y sintaxis
+		});*/
+		help.getItems().setAll(new MenuItem(e.getPista()));
+		
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -223,13 +230,14 @@ public class Contenido extends Pane{
 								resp.add(i);// meter respuestas elegidas en array
 						}
 					}
-					// TODO cambiar la forma de notificacion
+					
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
 						pista.setText("CORRECTO");
 					}
 					else{
 						pista.setText("HAS FALLADO");
+						pistas.setVisible(true);
 					}
 																		
 				} // Fin de opciones
@@ -245,6 +253,7 @@ public class Contenido extends Pane{
 					}
 					else{
 						pista.setText("HAS FALLADO");
+						pistas.setVisible(true);
 					}
 				}
 			}//fin de tipo codigo

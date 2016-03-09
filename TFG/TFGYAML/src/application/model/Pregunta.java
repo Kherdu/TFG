@@ -28,7 +28,10 @@ public abstract class Pregunta<T> extends Elemento
 	}
 
 	public String getPista() {
-		return pista;
+		if (pista != null)
+			return pista;
+		else
+			return "No hay pistas para esta pregunta";
 	}
 
 	public void setPista(String pista) {
