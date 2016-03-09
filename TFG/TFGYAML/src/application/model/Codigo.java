@@ -46,6 +46,7 @@ public class Codigo extends Pregunta<String> {
 	public boolean corrige(String respuesta, Tema tema) {
 		File correccion = new File(tema.getArchivo());
 		String cor = correccion.getAbsolutePath();
+		//metodo de la clase file createTempFile para crear el temporal
 		respuesta = respuesta.replace("\"", "'");
 		ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta);
 		try {// No estalla pero no hace nada
@@ -57,6 +58,8 @@ public class Codigo extends Pregunta<String> {
 			// Map<String, String> env = pb.environment();
 
 			boolean errCode = p.waitFor(2, TimeUnit.SECONDS);
+			//si errcode true mirar salida de python json
+			//si es false
 			System.out.println("Echo command executed, any errors? " + (errCode ? "No" : "Yes"));
 			System.out.println("Echo Output:\n");
 
@@ -66,16 +69,20 @@ public class Codigo extends Pregunta<String> {
 			String line;
 			int salida = p.exitValue();
 			System.out.print("Java dice: ");
-			switch (salida) {
-			case 1: {
+			switch (salida) { // a definir mas adelante, se pueden añadir mas
+							  // valores y tener otras salidas, SOLO EN CASO DE ERROR DE LA FUNCION CORRECTORA DEVOLVER UN VALOR DISTINTO DE 0,
+							  // en cualquier otro caso devolver 0, en caso de error de la función correctora se mostrará una excepción de java
+							  // en caso de 0, devolver json o similar, diciendo el error y demás
+			
+			case 1: {//si devuelve 1 no es nuestro problema
 				System.out.println("Variable generada pero sin valor correcto");
 				break;
 			}
-			case -1: {
+			case -1: {//esto sobra
 				System.out.println("No existe la variable solicitada");
 				break;
 			}
-			case 0: {
+			case 0: {//json en un fichero temporal a parte, a definir la estructura, leer tempfile
 				System.out.println("Todo esta bien");
 				break;
 			}
@@ -90,6 +97,8 @@ public class Codigo extends Pregunta<String> {
 			return false;
 		}
 		
+		
+		//borrar tempfile
 	}
 
 	@Override
