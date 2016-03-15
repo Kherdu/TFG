@@ -76,12 +76,13 @@ public class Controller<K, V> {
 	private ArrayList<String> files;// temas del lenguaje
 	private Portada portada;
 	private String len; // lenguaje seleccionado
-	private Map<String, String> lenguajes; // Map con los lenguajes posibles
+	private Map<K, V> lenguajes; // Map con los lenguajes posibles
 
 	public Controller(Stage primaryStage) {
 		this.tema = null;
 		this.primaryStage = primaryStage;
 		this.files = new ArrayList<String>();
+		this.lenguajes = YamlReaderClass.languages();
 	}
 
 	/**
@@ -138,7 +139,7 @@ public class Controller<K, V> {
 				files.add(listOfFiles[i].getName());
 			}
 		}
-		changeView(p, files, 0);
+		changeView(p, files, 0, len);
 	}
 
 	/**
@@ -151,13 +152,13 @@ public class Controller<K, V> {
 	public void start() {
 		Pane p = new SeleccionLenguajes();
 
-		Map<K, V> l = YamlReaderClass.languages();
-		ArrayList a = languageNames(l);
-		changeView(p, a, 0);
+		//Map<K, V> l = YamlReaderClass.languages();
+		ArrayList a = languageNames();
+		changeView(p, a, 0, len);
 	}
 
-	public ArrayList<String> languageNames(Map l) {
-		ArrayList<Map> p = (ArrayList<Map>) l.get("lenguajes");
+	public ArrayList<String> languageNames() {
+		ArrayList<Map> p = (ArrayList<Map>) this.lenguajes.get("lenguajes");
 		ArrayList<String> s = new ArrayList<String>();
 		for (Map o : p)
 			s.add((String) o.get("nombre"));
@@ -169,7 +170,7 @@ public class Controller<K, V> {
 	 * Muestra la primera ventana de la aplicación
 	 */
 	public void showStart() {
-		primaryStage.setTitle("Python"); // el titulo se podria poner de la app,
+		primaryStage.setTitle(this.len); // el titulo se podria poner de la app,
 											// o del lenguaje, pero obteniendo
 											// en la primera lectura de
 											// ficheros...
@@ -177,7 +178,7 @@ public class Controller<K, V> {
 		// necesarios
 		Pane p = new MenuTema();
 
-		changeView(p, files, 0);
+		changeView(p, files, 0, len);
 
 	}
 
@@ -190,12 +191,13 @@ public class Controller<K, V> {
 	 *            Lista de los ficheros que componen el temario
 	 * @param selected
 	 *            Lección seleccionada
+	 * @param lenSelect 
 	 */
-	private void changeView(Pane p, ArrayList<String> files, int selected) {
+	private void changeView(Pane p, ArrayList<String> files, int selected, String lenSelect) {
 		scene = new Scene(new Group());
 		root = new Pane();
 		if (p instanceof Portada) {
-			root.getChildren().addAll(((Portada) p).portada(this));
+			root.getChildren().addAll(((Portada) p).portada(this, lenSelect));
 		} else if (p instanceof SeleccionLenguajes) {
 			root.getChildren().addAll(((SeleccionLenguajes) p).SeleccionLenguajes(files, this));
 		} else if (p instanceof MenuTema) {
@@ -230,7 +232,7 @@ public class Controller<K, V> {
 	public void selectedTema(String selectedItem) {
 
 		this.tema = YamlReaderClass.cargaTema(len, selectedItem);
-		changeView(new MenuLeccion(), null, 0);
+		changeView(new MenuLeccion(), null, 0, len);
 	}
 
 	/**
@@ -242,7 +244,7 @@ public class Controller<K, V> {
 	public void selectedLeccion(int selectedItem) {
 		this.elems = (ArrayList<Elemento>) tema.getLecciones().get(selectedItem).getElementos();
 		actual = -1;
-		changeView(new Contenido(), null, selectedItem);
+		changeView(new Contenido(), null, selectedItem, len);
 	}
 
 	/**
@@ -255,7 +257,7 @@ public class Controller<K, V> {
 		// TODO ojo, hay que desactivar y activar botones para que esto no pete
 		if (actual < this.elems.size())
 			actual++;
-		changeView(new Contenido(), null, l);
+		changeView(new Contenido(), null, l, len);
 	}
 
 	/**
@@ -267,7 +269,7 @@ public class Controller<K, V> {
 	public void prevElem(int l) {
 		if (actual > -1)
 			actual--;
-		changeView(new Contenido(), null, l);
+		changeView(new Contenido(), null, l, len);
 	}
 
 	/**
@@ -280,26 +282,14 @@ public class Controller<K, V> {
 		return Utilities.parserMarkDown(mark);
 	}
 
-	/**
-	 * Muestra la pista en caso de que la pregunta tenga alguna pista para su
-	 * resolucion
-	 * 
-	 * @return
-	 */
-	/*public String muestraPista() {
-		String pista = this.elems.get(this.actual).getPista();
-		if (null == pista)
-			pista = "No hay pistas para esta pregunta";
-
-		return pista;
-	}*/
+	
 
 	/**
 	 * Muesta el FileChooser para seleccionar donde se encuentra python en el
 	 * equipo
 	 */
-	public void muestraSeleccion(String lenguaje) {
-		SelectedPath sp = new SelectedPath(this.primaryStage, lenguaje);
+	public void muestraSeleccion() {
+		SelectedPath sp = new SelectedPath(this.primaryStage, this.len);
 		this.path = sp.getPath();
 		CargaConfig.saveConfig(this.path);
 
@@ -316,21 +306,23 @@ public class Controller<K, V> {
 
 	public void selectedLanguage(String selectedItem) {
 		this.len = selectedItem;
-		Map<K, V> l = YamlReaderClass.languages();
-		setPath(pathSelected(l, selectedItem));
+		setPath(pathSelected());
 		showSubject();
 	}
 
-	public String pathSelected(Map l, String lenguaje) {
-		ArrayList<Map> p = (ArrayList<Map>) l.get("lenguajes");
-		ArrayList<String> s = new ArrayList<String>();
-		ArrayList<String> r = new ArrayList<String>();
+	public String pathSelected() {
+		ArrayList<Map> p = (ArrayList<Map>) this.lenguajes.get("lenguajes");
+		String ret = null;
+	
 		for (Map o : p)
-			s.add((String) o.get("nombre"));
-		for (Map o : p)
-			r.add((String) o.get("ruta"));
-
-		return r.get(s.indexOf(lenguaje));
+		{
+			if (o.get("nombre").equals(this.len))
+			{
+				ret = (String)o.get("ruta");
+				break;
+			}
+		}
+		return ret;
 	}
 	
 	public Stage getPrimaryStage()
@@ -339,7 +331,10 @@ public class Controller<K, V> {
 	}
 	
 	public void showPortada(String lenguaje){
-		this.changeView(new Portada(), null, 0);
+		//Map<K, V> l = YamlReaderClass.languages();
+		this.len = lenguaje;
+		setPath(this.pathSelected());
+		this.changeView(new Portada(), null, 0, this.path);
 	}
 
 }

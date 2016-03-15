@@ -3,6 +3,8 @@ package application.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import application.SelectedPath;
 import application.controller.Controller;
 import javafx.collections.FXCollections;
@@ -14,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -53,7 +56,10 @@ public class SeleccionLenguajes extends Pane {
 			
 		});
 		
+		
 		Button settings = new Button("Ajustes");//Boton de ajustes para seleccionar el compilador
+		
+		
 		
 		settings.setOnAction(new EventHandler<ActionEvent>() {
 

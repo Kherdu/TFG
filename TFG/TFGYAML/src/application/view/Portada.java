@@ -5,6 +5,7 @@ import application.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,7 +20,7 @@ public class Portada extends Pane {
 
 	}
 
-	public Pane portada(Controller c) {
+	public Pane portada(Controller c, String path) {
 		this.c = c;
 		VBox root; // Contenedor de los elementos
 		Label titulo;// Titulo de la aplicacion
@@ -37,11 +38,12 @@ public class Portada extends Pane {
 		//titulo = new Label("Aprende Python");
 		String OS = System.getProperty("os.name").toLowerCase();
 		System.out.println(OS);
-
-		ruta = new TextField(CargaConfig.loadConfig());
+		
+		
+		ruta = new TextField(path);
 		select = new Button("Seleccion de python");
 		selectedPath = new HBox(20);
-		next = new Button("Comenzar tutorial");
+		next = new Button("Volver al menu de lenguajes");
 		error = new Label();
 		if (OS.indexOf("win") >= 0) { // si es windows
 			rut = new Label("Path del lenguaje: ");
@@ -69,7 +71,7 @@ public class Portada extends Pane {
 
 			@Override
 			public void handle(ActionEvent event) {
-				c.muestraSeleccion("hola");
+				c.muestraSeleccion();
 				ruta.setText(Controller.path);
 			}
 		});
@@ -84,7 +86,7 @@ public class Portada extends Pane {
 				} else {
 					CargaConfig.saveConfig(r);
 					c.setPath(r);
-					c.showStart();
+					c.start();
 				}
 			}
 
@@ -96,5 +98,7 @@ public class Portada extends Pane {
 		return root;
 
 	}
+
+	
 
 }
