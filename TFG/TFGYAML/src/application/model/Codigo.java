@@ -2,13 +2,18 @@ package application.model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.python.core.PyInstance;
 import org.python.core.PyInteger;
 import org.python.core.PyObject;
@@ -46,59 +51,96 @@ public class Codigo extends Pregunta<String> {
 	public boolean corrige(String respuesta, Tema tema) {
 		File correccion = new File(tema.getArchivo());
 		String cor = correccion.getAbsolutePath();
-		//metodo de la clase file createTempFile para crear el temporal
+		JSONParser jsonParser = new JSONParser();
 		respuesta = respuesta.replace("\"", "'");
-		ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta);
-		try {// No estalla pero no hace nada
-			System.out.println("lanza el proceso");
+		Correction c = new Correction(null, null);
+		boolean response = false;
 
+		try {
+			File temp = File.createTempFile("json_Data", null);
+			String nombre = temp.getName();
+
+			ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta, nombre);
 			Process p = pb.start();
-			// pb.command(this.solucion+"("+respuesta+")");
-			// pb.command("exit()"); //salir de la consola
-			// Map<String, String> env = pb.environment();
-
-			boolean errCode = p.waitFor(2, TimeUnit.SECONDS);
-			//si errcode true mirar salida de python json
-			//si es false
-			System.out.println("Echo command executed, any errors? " + (errCode ? "No" : "Yes"));
-			System.out.println("Echo Output:\n");
-
 			InputStream is = p.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
 			String line;
-			int salida = p.exitValue();
-			System.out.print("Java dice: ");
-			switch (salida) { // a definir mas adelante, se pueden añadir mas
-							  // valores y tener otras salidas, SOLO EN CASO DE ERROR DE LA FUNCION CORRECTORA DEVOLVER UN VALOR DISTINTO DE 0,
-							  // en cualquier otro caso devolver 0, en caso de error de la función correctora se mostrará una excepción de java
-							  // en caso de 0, devolver json o similar, diciendo el error y demás
-			
-			case 1: {//si devuelve 1 no es nuestro problema
-				System.out.println("Variable generada pero sin valor correcto");
-				break;
-			}
-			case -1: {//esto sobra
-				System.out.println("No existe la variable solicitada");
-				break;
-			}
-			case 0: {//json en un fichero temporal a parte, a definir la estructura, leer tempfile
-				System.out.println("Todo esta bien");
-				break;
-			}
-			}
 
 			while ((line = br.readLine()) != null) {
+				// esto es para la salida de texto de python... en principio
+				// no hace falta
 				System.out.println(line);
 			}
-			return salida ==0;
-		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			return false;
+			boolean errCode = p.waitFor(2, TimeUnit.SECONDS);
+			if (!errCode) { // si ocurre esto es que el python está mal escrito,
+							// o bucle infinito
+				System.out.println("yo no he sido, ha sido ->python<-, o bien bucle infinito");
+				// TODO añadir aviso visual
+			} else {
+
+				
+
+				int salida = p.exitValue();
+				// SOLO EN CASO
+				// DE ERROR DE LA FUNCION CORRECTORA
+				// DEVOLVER UN VALOR DISTINTO DE 0,
+				// en cualquier otro caso devolver 0, en
+				// caso de error de la función correctora se
+				// mostrará una excepción de java
+				// en caso de 0, devolver json o similar,
+				// diciendo el error y demás
+				switch (salida) {
+
+				case 1: {// si devuelve 1 no es nuestro problema
+					System.out.println("no compila");
+					// TODO añadir aviso en ventana
+					break;
+				}
+
+				case 0: {
+					// comprobar si están vacios
+					FileReader fileReader = new FileReader(temp);
+					JSONObject json = (JSONObject) jsonParser.parse(fileReader);
+					Boolean correct = (Boolean) json.get("isCorrect");
+					if (correct != null) {
+						if (correct) {
+							response = true;
+							// solo si ocurre esto devuelve
+							// true, en cualquier otro caso
+							// tiene que mirar qué pasa.
+							// TODO si se pueden meter mas cosas en la
+							// corrección meterlas
+						} else {
+						 
+							String error = (String) json.get("typeError");
+							if (error != null){
+								c.setMessage(error);
+							}
+							@SuppressWarnings("unchecked")
+							List<String> hints = (List<String>) json.get("Hints");
+							if (hints != null){
+								c.setHints(hints);
+							}
+							
+						}
+						fileReader.close();
+						break;
+					}
+				}
+
+				}
+				temp.delete();
+
+			}
+		} catch (IOException e) {
+			// TODO mensaje de que peta el archivo
+		} catch (InterruptedException e) {
+			// TODO proceso interrumpido
+		} catch (ParseException e) {
+			// TODO parseo del json erroneo
 		}
-		
-		
-		//borrar tempfile
+		return response;
 	}
 
 	@Override
