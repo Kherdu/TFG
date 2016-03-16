@@ -30,10 +30,14 @@ import application.controller.Controller;
  *
  */
 public class Codigo extends Pregunta<String> {
+	
+	private Correction c;
 	public Codigo(int numero, String enunciado, String pista, String solucion) {
 		super(numero, enunciado, pista, solucion);
-
+		Correction c;
 	}
+
+	
 
 	// respuesta es la funcion a la que llamar, código es lo que escribe el
 	// usuario
@@ -53,7 +57,7 @@ public class Codigo extends Pregunta<String> {
 		String cor = correccion.getAbsolutePath();
 		JSONParser jsonParser = new JSONParser();
 		respuesta = respuesta.replace("\"", "'");
-		Correction c = new Correction(null, null);
+		this.c = new Correction("" , null );
 		boolean response = false;
 
 		try {
@@ -109,7 +113,7 @@ public class Codigo extends Pregunta<String> {
 							// solo si ocurre esto devuelve
 							// true, en cualquier otro caso
 							// tiene que mirar qué pasa.
-							// TODO si se pueden meter mas cosas en la
+							// si se pueden meter mas cosas en la
 							// corrección meterlas
 						} else {
 						 
@@ -165,6 +169,9 @@ public class Codigo extends Pregunta<String> {
 	public void setTexto(String explicacion) {
 		// TODO Auto-generated method stub
 
+	}
+	public Correction getCorrection() {
+		return c;
 	}
 
 }

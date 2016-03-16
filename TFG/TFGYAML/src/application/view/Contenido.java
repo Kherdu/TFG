@@ -43,7 +43,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
 
-public class Contenido extends Pane{
+public class Contenido extends Pane {
 
 	private Elemento e;
 	private Controller c;
@@ -89,8 +89,8 @@ public class Contenido extends Pane{
 		HBox result = new HBox();//Contenedor donde se muestra la resolucion de la pregunta
 		Label pista = new Label();//Indica si la pregunta se ha respondido bien o no
 		pista.setPrefWidth(300);
-		MenuButton pistas = new MenuButton("+ INFO"); //Boton para mostrar informacion sobre el fallo
-		
+		MenuButton pistas = new MenuButton("INFO"); //TODO el pene de congost
+		MenuItem hintsContent = new MenuItem();
 		result.getChildren().addAll(pista);
 		result.getChildren().addAll(pistas);
 		pistas.setAlignment(Pos.BOTTOM_RIGHT);
@@ -234,19 +234,29 @@ public class Contenido extends Pane{
 																		
 				} // Fin de opciones
 				
-				else if (e instanceof Codigo || e instanceof Sintaxis) //La pregunta es de tipo codigo
+				else if (e instanceof Codigo) //La pregunta es de tipo codigo
 				{
+					Codigo p= (Codigo) e;
 					String code = codigo.getText();
 					//System.out.println(code);
 
-					if(c.corrige(code, (Pregunta)e))//Se manda el codigo al controlador para que el modelo lo compruebe
+					if(c.corrige(code, p))//Se manda el codigo al controlador para que el modelo lo compruebe
 					{
 						pista.setText("CORRECTO");
 					}
-					else{
-						pista.setText("HAS FALLADO");
+					else{//asd
+						pista.setText("HAS FALLADO: "+p.getCorrection().getMessage());
+						List<String> hints = p.getCorrection().getHints();
+						String txt = "";
+						for (String h: hints){
+							txt += (h + "\n"); 
+						};
+						hintsContent.setText(txt);
+						pistas.getItems().setAll(hintsContent);
 						pistas.setVisible(true);
 					}
+				} else if (e  instanceof Sintaxis){
+					//TODO cuando estén las de sintaxis
 				}
 			}//fin de tipo codigo
 		});

@@ -18,6 +18,7 @@ import application.CargaConfig;
 import application.Main;
 import application.SelectedPath;
 import application.model.Codigo;
+import application.model.Correction;
 import application.model.Elemento;
 import application.model.Explicacion;
 import application.model.Leccion;
@@ -77,12 +78,13 @@ public class Controller<K, V> {
 	private Portada portada;
 	private String len; // lenguaje seleccionado
 	private Map<K, V> lenguajes; // Map con los lenguajes posibles
-
+	private Correction c;
 	public Controller(Stage primaryStage) {
 		this.tema = null;
 		this.primaryStage = primaryStage;
 		this.files = new ArrayList<String>();
 		this.lenguajes = YamlReaderClass.languages();
+		this.c= new Correction();
 	}
 
 	/**
@@ -91,6 +93,10 @@ public class Controller<K, V> {
 	 * @param cargaTema
 	 *            Nombre del fichero
 	 */
+
+	public Correction getCorrection() {
+		return c;
+	}
 
 	/**
 	 * Devuelve el tema que está abierto
@@ -118,6 +124,7 @@ public class Controller<K, V> {
 	 * @return
 	 */
 	public boolean corrige(ArrayList<Integer> resp, Pregunta p) {
+		
 		return p.corrige(resp, tema);
 	}
 

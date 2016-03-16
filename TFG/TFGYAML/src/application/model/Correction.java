@@ -6,6 +6,9 @@ public class Correction {
 	private String message;
 	private List<String> hints;
 	
+	public Correction(){
+		
+	}
 	public Correction(String m, List<String> h){
 		this.message=m;
 		this.hints=h;

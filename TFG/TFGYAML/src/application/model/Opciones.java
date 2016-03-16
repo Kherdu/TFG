@@ -76,6 +76,6 @@ public class Opciones extends Pregunta<ArrayList<Integer>> {
 		
 	}
 
-	
+		
 
 }

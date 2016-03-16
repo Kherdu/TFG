@@ -53,7 +53,6 @@ public class Sintaxis extends Pregunta<String>
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+		
 	
 }
