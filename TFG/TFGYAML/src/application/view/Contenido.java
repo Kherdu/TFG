@@ -93,6 +93,7 @@ public class Contenido extends Pane{
 		
 		result.getChildren().addAll(pista);
 		result.getChildren().addAll(pistas);
+		pistas.setAlignment(Pos.BOTTOM_RIGHT);
 		pistas.setVisible(false);
 		
 		
@@ -102,6 +103,7 @@ public class Contenido extends Pane{
 		VBox buttonsCode = new VBox(5);
 		MenuButton help = new MenuButton("Ayuda");
 		Button resolve = new Button("Resolver");
+		buttonsCode.setAlignment(Pos.CENTER_RIGHT);
 		
 		
 
@@ -188,18 +190,7 @@ public class Contenido extends Pane{
 
 		});
 
-		/*help.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				if (e instanceof Pregunta)
-				{
-					pista.setText(c.muestraPista());
-					
-				}
-			}
-		});*/
-		help.getItems().setAll(new MenuItem(e.getPista()));
+		help.getItems().setAll(new MenuItem(e.getPista()));//Añade el deplegable al button
 		
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -234,6 +225,7 @@ public class Contenido extends Pane{
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
 						pista.setText("CORRECTO");
+						pistas.setVisible(false);
 					}
 					else{
 						pista.setText("HAS FALLADO");

@@ -302,12 +302,31 @@ public class Controller<K, V> {
 	 */
 	public void setPath(String path) {
 		this.path = path;
+		modifyMap();
+		YamlReaderClass.saveConfig((Map<String, Object>) this.lenguajes);
 	}
 
 	public void selectedLanguage(String selectedItem) {
 		this.len = selectedItem;
 		setPath(pathSelected());
 		showSubject();
+	}
+	
+	/**
+	 * Modifica el path del lenguaje seleccionado
+	 */
+	private void modifyMap() {
+		ArrayList<Map> p = (ArrayList<Map>) this.lenguajes.get("lenguajes");
+		String ret = null;
+	
+		for (Map o : p)
+		{
+			if (o.get("nombre").equals(this.len))
+			{
+				o.put("ruta", this.path);
+			}
+		}
+		
 	}
 
 	public String pathSelected() {

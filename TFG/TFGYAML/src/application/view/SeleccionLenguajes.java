@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -89,10 +90,13 @@ public class SeleccionLenguajes extends Pane {
 		box.getChildren().addAll(leng);
 		box.getChildren().addAll(languageList);
 		botonLabel.getChildren().addAll(comenzar);
-		botonLabel.getChildren().addAll(error);
+		
 		botonLabel.getChildren().addAll(aviso);
 		botonLabel.getChildren().addAll(settings);
+		
 		box.getChildren().addAll(botonLabel);
+		
+		box.getChildren().addAll(error);
 		
 		box.setPrefSize(600, 600);
 		

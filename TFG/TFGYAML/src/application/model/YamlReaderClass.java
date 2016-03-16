@@ -1,7 +1,10 @@
 package application.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,5 +150,23 @@ public final class YamlReaderClass {
 		
 		return (Map<K, V>) mapaObjeto;
 		
+	}
+	
+	/**
+	 * Actualiza el fichero de lenguajes
+	 * @param lenguajes
+	 */
+	public static void saveConfig(Map<String, Object> lenguajes)
+	{
+		Yaml yaml = new Yaml();
+		try {
+			File file = new File("resources/config/carga.yml");
+			FileWriter writer = new FileWriter(file);
+			yaml.dump(lenguajes, writer);
+			writer.close();
+			
+		} catch (IOException e) {
+			
+		}
 	}
 }

@@ -84,7 +84,6 @@ public class Portada extends Pane {
 				if (null == r) {
 					error.setText("DEBE HABER UN COMPILADOR SELECCIONADO");
 				} else {
-					CargaConfig.saveConfig(r);
 					c.setPath(r);
 					c.start();
 				}
