@@ -87,8 +87,7 @@ public class Codigo extends Pregunta<String> {
 				switch (salida) {
 
 				case 1: {// si devuelve 1 no es nuestro problema
-					System.out.println("no compila");
-					// TODO añadir aviso en ventana
+					c.setMessage("No compila");
 					break;
 				}
 

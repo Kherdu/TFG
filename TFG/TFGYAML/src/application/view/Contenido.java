@@ -55,12 +55,16 @@ public class Contenido extends Pane {
 			tipo.setText("Pregunta");
 
 		VBox box = new VBox(10);// Contenido de toda la ventana
-		VBox contenedor = new VBox(5); // Texto y campo de respuesta si es una pregunta
+		VBox contenedor = new VBox(5); // Texto y campo de respuesta si es una
+										// pregunta
 		String content = null;
 
 		content = c.markToHtml(e.getTexto());
-		WebView text = Utilities.creaBrowser(content);//Campo donde se escribe el enunciado o la explicacion de la pregunta
-		
+		WebView text = Utilities.creaBrowser(content);// Campo donde se escribe
+														// el enunciado o la
+														// explicacion de la
+														// pregunta
+
 		WebEngine engine = text.getEngine();
 		engine.loadContent(content);
 
@@ -68,30 +72,30 @@ public class Contenido extends Pane {
 
 		contenedor.getChildren().addAll(tipo);
 		contenedor.getChildren().addAll(text);
-		
-		Label codigoLab = new Label ("CODIGO");
+
+		Label codigoLab = new Label("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
-		
-		HBox result = new HBox();//Contenedor donde se muestra la resolucion de la pregunta
-		Label pista = new Label();//Indica si la pregunta se ha respondido bien o no
+
+		HBox result = new HBox();// Contenedor donde se muestra la resolucion de
+									// la pregunta
+		Label pista = new Label();// Indica si la pregunta se ha respondido bien
+									// o no
 		pista.setPrefWidth(300);
-		MenuButton pistas = new MenuButton("INFO"); //TODO el pene de congost
+		MenuButton pistas = new MenuButton("INFO"); // TODO el pene de congost
 		MenuItem hintsContent = new MenuItem();
 		result.getChildren().addAll(pista);
 		result.getChildren().addAll(pistas);
 		pistas.setAlignment(Pos.BOTTOM_RIGHT);
 		pistas.setVisible(false);
-		
-		
-		HBox respuestaBox = new HBox(10);//Contenedor con el campo de respuesta y los botones de la pregunta
-		
-		//Botones para el envio/ayuda de respuestas
+
+		HBox respuestaBox = new HBox(10);// Contenedor con el campo de respuesta
+											// y los botones de la pregunta
+
+		// Botones para el envio/ayuda de respuestas
 		VBox buttonsCode = new VBox(5);
 		MenuButton help = new MenuButton("Ayuda");
 		Button resolve = new Button("Resolver");
 		buttonsCode.setAlignment(Pos.CENTER_RIGHT);
-		
-		
 
 		VBox opciones = new VBox();
 
@@ -139,8 +143,6 @@ public class Contenido extends Pane {
 		contenedor.setMinHeight(500);
 		box.getChildren().addAll(contenedor);
 		HBox buttons = new HBox(10);
-		
-		
 
 		Button prior = new Button("Atras");
 		Button next = new Button("Siguiente");
@@ -148,7 +150,7 @@ public class Contenido extends Pane {
 
 		buttonsCode.getChildren().addAll(resolve);
 		buttonsCode.getChildren().addAll(help);
-		
+
 		/// listeners
 		prior.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -176,8 +178,10 @@ public class Contenido extends Pane {
 
 		});
 
-		help.getItems().setAll(new MenuItem(e.getPista()));//Añade el deplegable al button
-		
+		help.getItems().setAll(new MenuItem(e.getPista()));// Añade el
+															// deplegable al
+															// button
+
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -187,83 +191,90 @@ public class Contenido extends Pane {
 					if (!((Opciones) e).getMulti()) // Si la pregunta no es
 													// multirespuesta
 					{
-						int i = 0;// Contador de la posicion de la opcion que se analiza
+						int i = 0;// Contador de la posicion de la opcion que se
+									// analiza
 						for (Node o : opciones.getChildren()) // Recorre el
 																// array de
 																// RadioButtons
 						{
 							i++;
-							if (((RadioButton) o).isSelected()) // Comprueba si la opcion está seleccionada
+							if (((RadioButton) o).isSelected()) // Comprueba si
+																// la opcion
+																// está
+																// seleccionada
 								resp.add(i);// Se añade al array de respuestas
 						}
 					} else // La pregunta es multirespuesta
 					{
 						int i = 0;// Contador de la posicion de la opcion que se
 									// analiza
-						for (Node o : opciones.getChildren()) // Recorre array de CheckBox
+						for (Node o : opciones.getChildren()) // Recorre array
+																// de CheckBox
 						{
 							i++;
 							if (((CheckBox) o).isSelected())
-								resp.add(i);// meter respuestas elegidas en array
+								resp.add(i);// meter respuestas elegidas en
+											// array
 						}
 					}
-					
+
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
 						pista.setText("CORRECTO");
 						pistas.setVisible(false);
-					}
-					else{
+					} else {
 						pista.setText("HAS FALLADO");
 						pistas.setVisible(true);
 					}
-																		
-				} // Fin de opciones
-				
-				else if (e instanceof Codigo) //La pregunta es de tipo codigo
-				{
-					Codigo p= (Codigo) e;
-					String code = codigo.getText();
-					//System.out.println(code);
 
-					if(c.corrige(code, p))//Se manda el codigo al controlador para que el modelo lo compruebe
+				} // Fin de opciones
+
+				else if (e instanceof Codigo) // La pregunta es de tipo codigo
+				{
+					Codigo p = (Codigo) e;
+					String code = codigo.getText();
+					// System.out.println(code);
+
+					if (c.corrige(code, p))// Se manda el codigo al controlador
+											// para que el modelo lo compruebe
 					{
 						pista.setText("CORRECTO");
-					}
-					else{//asd
-						pista.setText("HAS FALLADO: "+p.getCorrection().getMessage());
+					} else {//
+						pista.setText("HAS FALLADO: " + p.getCorrection().getMessage());
 						List<String> hints = p.getCorrection().getHints();
 						String txt = "";
-						for (String h: hints){
-							txt += (h + "\n"); 
-						};
-						hintsContent.setText(txt);
-						pistas.getItems().setAll(hintsContent);
-						pistas.setVisible(true);
+						if (hints != null) {
+							for (String h : hints) {
+								txt += (h + "\n");
+							};
+							hintsContent.setText(txt);
+							pistas.getItems().setAll(hintsContent);
+							pistas.setVisible(true);
+						}
+
 					}
-				} else if (e  instanceof Sintaxis){
-					//TODO cuando estén las de sintaxis
+				} else if (e instanceof Sintaxis) {
+					// TODO cuando estén las de sintaxis
 				}
-			}//fin de tipo codigo
+			}// fin de tipo codigo
 		});
 
 		// poner botones en el panel
 		buttons.getChildren().addAll(prior);
 		buttons.getChildren().addAll(next);
-		//buttons.getChildren().addAll(help);
-		//buttons.getChildren().addAll(resolve);
+		// buttons.getChildren().addAll(help);
+		// buttons.getChildren().addAll(resolve);
 		buttons.getChildren().addAll(menu);
-		
-		/*if (e instanceof Explicacion)
-		{
-			resolve.setVisible(false);
-			help.setVisible(false);
-		}*/
+
+		/*
+		 * if (e instanceof Explicacion) { resolve.setVisible(false);
+		 * help.setVisible(false); }
+		 */
 
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
 		buttons.setAlignment(Pos.BOTTOM_CENTER);
-		
+
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		box.getStylesheets().add("/application/view/css/contenido.css");
