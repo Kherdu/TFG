@@ -1,21 +1,11 @@
 ﻿package application.view;
 
-import java.awt.Color;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.util.PythonInterpreter;
 
 import application.controller.Controller;
 import application.model.Codigo;
 import application.model.Elemento;
-import application.model.Explicacion;
 import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
@@ -33,15 +23,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.*;
-import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Popup;
 
 public class Contenido extends Pane {
 

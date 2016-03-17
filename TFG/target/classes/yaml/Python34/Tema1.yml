@@ -1,6 +1,6 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
-Archivo: aqui se especifica el archivo
+Archivo: "resources/exec/tema1.py"
 Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
@@ -24,7 +24,7 @@ Lecciones:
       Numero: 1 
       Enunciado: Asigna a la variable i el valor 4
       Tipo: Codigo
-      Resultado: llamada(String codigo)#i=4
+      Resultado: pregunta11
     - Elem: pregunta
       Numero: 2
       Enunciado: si hacemos la operacion '7 / 2' que sale por pantalla?
@@ -51,7 +51,6 @@ Lecciones:
       Enunciado: |
        Calcula el area de este triangulo 
        ![triangulo](file:///resources/images/triangulo.jpg)
-#Imagen_pregunta: ruta imagen
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
       Resultado: a= 30
@@ -71,12 +70,12 @@ Lecciones:
       Numero: 1
       Enunciado: Asigna a la variable **˜cadena** el valor "Hola Mundo"
       Tipo: Codigo
-      Resultado: llamada(string codigo)#cadena = â€™Hola Mundoâ€™
+      Resultado: pregunta21
     - Elem: pregunta
       Numero: 2
-      Enunciado:  Introduce las siguientes palabras en la variable lista_animales separadas por un salto de linea. gato, perro, burro
+      Enunciado:  Introduce las siguientes palabras en la variable lista_animales. gato, perro, burro
       Tipo: Codigo
-      Resultado: llamada(string codigo)#animales= â€œgato /nperro /nburroâ€�
+      Resultado: pregunta22
     - Elem: explicacion
       Contenido: >
        Para contruir una cadena a base de la repetición de varias subcadenas,
@@ -104,10 +103,13 @@ Lecciones:
        El primer caracter de la cadena es el elemento 0.
        Por tanto,
        cadena = bote
-       cadena[0] es b
-       cadena[1] es o
-       cadena[2] es t
-       cadena[3] es e
+      
+       
+       | 0 | 1 | 2 | 3 |
+       |:--|:--|---|---|
+       | b | o | t | e |
+       
+      
     - Elem: pregunta
       Numero: 4
       Enunciado: Como sacarias la subcadena "ca" de la palabra recamara?
