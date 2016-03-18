@@ -12,6 +12,7 @@ import application.model.Sintaxis;
 import application.model.Utilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -26,8 +27,12 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Popup;
+import javafx.stage.PopupWindow;
 
 public class Contenido extends Pane {
 
@@ -81,7 +86,7 @@ public class Contenido extends Pane {
 		Label pista = new Label();// Indica si la pregunta se ha respondido bien
 									// o no
 		pista.setPrefWidth(300);
-		MenuButton pistas = new MenuButton("INFO"); // TODO el pene de congost
+		Button pistas = new Button("INFO"); // TODO el pene de congost
 		MenuItem hintsContent = new MenuItem();
 		result.getChildren().addAll(pista);
 		result.getChildren().addAll(pistas);
@@ -93,7 +98,7 @@ public class Contenido extends Pane {
 
 		// Botones para el envio/ayuda de respuestas
 		VBox buttonsCode = new VBox(5);
-		MenuButton help = new MenuButton("Ayuda");
+		Button help = new Button("Ayuda");
 		Button resolve = new Button("Resolver");
 		buttonsCode.setAlignment(Pos.CENTER_RIGHT);
 
@@ -178,9 +183,28 @@ public class Contenido extends Pane {
 
 		});
 
-		help.getItems().setAll(new MenuItem(e.getPista()));// Añade el
+		//help.getItems().setAll(new MenuItem(e.getPista()));// Añade el
 															// deplegable al
 															// button
+		help.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				final Popup popup = new Popup(); 
+					String helpText = e.getPista();
+				  Label popupLabel = new Label(helpText);
+				  popup.setAutoHide(true);
+				 // popup.setAutoFix(true);
+				  // Calculate popup placement coordinates.
+				  Node eventSource = (Node) event.getSource();
+				  Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
+				  popup.setX(sourceNodeBounds.getMinX() - 5.0);
+				  popup.setY(sourceNodeBounds.getMaxY() + 5.0);
+				  popup.getContent().addAll(popupLabel);
+			    popup.show(c.getPrimaryStage());
+				
+			}
+		});
 
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -224,7 +248,7 @@ public class Contenido extends Pane {
 						pistas.setVisible(false);
 					} else {
 						pista.setText("HAS FALLADO");
-						pistas.setVisible(true);
+						pistas.setVisible(false);
 					}
 
 				} // Fin de opciones
@@ -241,14 +265,7 @@ public class Contenido extends Pane {
 						pista.setText("CORRECTO");
 					} else {//
 						pista.setText("HAS FALLADO: " + p.getCorrection().getMessage());
-						List<String> hints = p.getCorrection().getHints();
-						String txt = "";
-						if (hints != null) {
-							for (String h : hints) {
-								txt += (h + "\n");
-							};
-							hintsContent.setText(txt);
-							pistas.getItems().setAll(hintsContent);
+						
 							pistas.setVisible(true);
 						}
 
@@ -258,6 +275,37 @@ public class Contenido extends Pane {
 				}
 			}// fin de tipo codigo
 		});
+		
+		pistas.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Popup popup = new Popup();
+				List<String> hints = ((Codigo) e).getCorrection().getHints();
+				String txt = "";
+				if (hints != null) {
+					for (String h : hints) {
+						txt += (h + "\n");
+					};
+					//hintsContent.setText(txt);
+					
+				
+				  Label popupLabel = new Label(txt);
+				  popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
+				  popup.setAutoHide(true);
+				  popup.setAutoFix(true);
+				  popup.setOpacity(1.00);
+				  // Calculate popup placement coordinates.
+				  Node eventSource = (Node) event.getSource();
+				  Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
+				  popup.setX(sourceNodeBounds.getMinX() - 5.0);
+				  popup.setY(sourceNodeBounds.getMaxY() + 5.0);
+				  popup.getContent().addAll(popupLabel);
+				  popup.show(c.getPrimaryStage());
+				}
+				
+			}
+		});
 
 		// poner botones en el panel
 		buttons.getChildren().addAll(prior);
@@ -266,10 +314,7 @@ public class Contenido extends Pane {
 		// buttons.getChildren().addAll(resolve);
 		buttons.getChildren().addAll(menu);
 
-		/*
-		 * if (e instanceof Explicacion) { resolve.setVisible(false);
-		 * help.setVisible(false); }
-		 */
+		
 
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
