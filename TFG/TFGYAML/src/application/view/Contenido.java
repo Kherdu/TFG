@@ -55,6 +55,10 @@ public class Contenido extends Pane {
 		this.c = c;
 
 		Label tipo = new Label("Explicacion");
+		
+		if (c.getActual()==-1)
+			tipo.setText("INTRODUCCION");
+
 
 		if (e instanceof Pregunta)
 			tipo.setText("Pregunta");
@@ -73,7 +77,7 @@ public class Contenido extends Pane {
 		WebEngine engine = text.getEngine();
 		engine.loadContent(content);
 
-		text.setMaxHeight(300);
+		//text.setMaxHeight(300);
 
 		contenedor.getChildren().addAll(tipo);
 		contenedor.getChildren().addAll(text);
@@ -85,7 +89,7 @@ public class Contenido extends Pane {
 									// la pregunta
 		Label pista = new Label();// Indica si la pregunta se ha respondido bien
 									// o no
-		pista.setPrefWidth(300);
+		//pista.setPrefWidth(300);
 		Button pistas = new Button("INFO"); // TODO el pene de congost
 		MenuItem hintsContent = new MenuItem();
 		result.getChildren().addAll(pista);
@@ -145,11 +149,12 @@ public class Contenido extends Pane {
 			}
 		}
 
-		contenedor.setMinHeight(500);
+		//contenedor.setMinHeight(500);
 		box.getChildren().addAll(contenedor);
 		HBox buttons = new HBox(10);
 
 		Button prior = new Button("Atras");
+		Label pages = new Label();
 		Button next = new Button("Siguiente");
 		Button menu = new Button("Menu principal");
 
@@ -269,11 +274,11 @@ public class Contenido extends Pane {
 							pistas.setVisible(true);
 						}
 
-					}
-				} else if (e instanceof Sintaxis) {
+				}
+				else if (e instanceof Sintaxis) {
 					// TODO cuando estén las de sintaxis
 				}
-			}// fin de tipo codigo
+			}
 		});
 		
 		pistas.setOnAction(new EventHandler<ActionEvent>() {
@@ -306,9 +311,12 @@ public class Contenido extends Pane {
 				
 			}
 		});
+		
+		pages.setText((c.getActual()+1)+"/"+c.getElems().size());
 
 		// poner botones en el panel
 		buttons.getChildren().addAll(prior);
+		buttons.getChildren().addAll(pages);
 		buttons.getChildren().addAll(next);
 		// buttons.getChildren().addAll(help);
 		// buttons.getChildren().addAll(resolve);

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.yaml.snakeyaml.Yaml;
@@ -34,6 +37,7 @@ import application.view.MenuTema;
 import application.view.Portada;
 import application.view.SeleccionLenguajes;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +53,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -79,6 +84,7 @@ public class Controller<K, V> {
 	private String len; // lenguaje seleccionado
 	private Map<K, V> lenguajes; // Map con los lenguajes posibles
 	private Correction c;
+	
 	public Controller(Stage primaryStage) {
 		this.tema = null;
 		this.primaryStage = primaryStage;
@@ -203,6 +209,7 @@ public class Controller<K, V> {
 	private void changeView(Pane p, ArrayList<String> files, int selected, String lenSelect) {
 		scene = new Scene(new Group());
 		root = new Pane();
+		
 		if (p instanceof Portada) {
 			root.getChildren().addAll(((Portada) p).portada(this, lenSelect));
 		} else if (p instanceof SeleccionLenguajes) {
@@ -227,7 +234,9 @@ public class Controller<K, V> {
 			root.getChildren().addAll(((Contenido) p).contenido(e, this, selected));
 		}
 		scene.setRoot(root);
+		
 		primaryStage.setScene(scene);
+		
 		primaryStage.show();
 	}
 
@@ -361,6 +370,21 @@ public class Controller<K, V> {
 		this.len = lenguaje;
 		setPath(this.pathSelected());
 		this.changeView(new Portada(), null, 0, this.path);
+	}
+
+	public Scene getScene() {
+		
+		return this.scene;
+	}
+
+	public int getActual() {
+		
+		return this.actual;
+	}
+
+	public ArrayList<Elemento> getElems() {
+		// TODO Auto-generated method stub
+		return this.elems;
 	}
 
 }
