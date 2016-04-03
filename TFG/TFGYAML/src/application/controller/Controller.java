@@ -1,33 +1,15 @@
 package application.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
-import org.yaml.snakeyaml.Yaml;
-
 import application.CargaConfig;
-import application.Main;
 import application.SelectedPath;
-import application.model.Codigo;
 import application.model.Correction;
 import application.model.Elemento;
 import application.model.Explicacion;
-import application.model.Leccion;
-import application.model.Opciones;
 import application.model.Pregunta;
-import application.model.Sintaxis;
 import application.model.Tema;
 import application.model.Utilities;
 import application.model.YamlReaderClass;
@@ -36,29 +18,11 @@ import application.view.MenuLeccion;
 import application.view.MenuTema;
 import application.view.Portada;
 import application.view.SeleccionLenguajes;
-import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 /**
@@ -84,6 +48,7 @@ public class Controller<K, V> {
 	private String len; // lenguaje seleccionado
 	private Map<K, V> lenguajes; // Map con los lenguajes posibles
 	private Correction c;
+
 	
 	public Controller(Stage primaryStage) {
 		this.tema = null;
@@ -91,6 +56,7 @@ public class Controller<K, V> {
 		this.files = new ArrayList<String>();
 		this.lenguajes = YamlReaderClass.languages();
 		this.c= new Correction();
+		
 	}
 
 	/**
@@ -208,16 +174,17 @@ public class Controller<K, V> {
 	 */
 	private void changeView(Pane p, ArrayList<String> files, int selected, String lenSelect) {
 		scene = new Scene(new Group());
-		root = new Pane();
+		//root = new GridPane();
 		
 		if (p instanceof Portada) {
 			root.getChildren().addAll(((Portada) p).portada(this, lenSelect));
 		} else if (p instanceof SeleccionLenguajes) {
-			root.getChildren().addAll(((SeleccionLenguajes) p).SeleccionLenguajes(files, this));
+			//root.getChildren().addAll(((SeleccionLenguajes) p).SeleccionLenguajes(files, this));
+			root = ((SeleccionLenguajes) p).SeleccionLenguajes(files, this);
 		} else if (p instanceof MenuTema) {
-			root.getChildren().addAll(((MenuTema) p).menuTema(files, this));
+			root=((MenuTema) p).menuTema(files, this);
 		} else if (p instanceof MenuLeccion) {
-			root.getChildren().addAll(((MenuLeccion) p).menuLeccion(tema, this));
+			root=((MenuLeccion) p).menuLeccion(tema, this);
 		} else if (p instanceof Contenido) {
 			Elemento e;
 			// TODO añadir preguntas de ambos tipos aquí
@@ -231,8 +198,9 @@ public class Controller<K, V> {
 			else
 				e = elems.get(actual);
 
-			root.getChildren().addAll(((Contenido) p).contenido(e, this, selected));
+			root=((Contenido) p).contenido(e, this, selected);
 		}
+		
 		scene.setRoot(root);
 		
 		primaryStage.setScene(scene);
@@ -383,7 +351,6 @@ public class Controller<K, V> {
 	}
 
 	public ArrayList<Elemento> getElems() {
-		// TODO Auto-generated method stub
 		return this.elems;
 	}
 

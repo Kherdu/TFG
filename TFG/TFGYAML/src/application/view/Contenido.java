@@ -3,6 +3,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import org.python.objectweb.asm.commons.CodeSizeEvaluator;
+
 import application.controller.Controller;
 import application.model.Codigo;
 import application.model.Elemento;
@@ -24,6 +26,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -62,6 +65,8 @@ public class Contenido extends Pane {
 
 		if (e instanceof Pregunta)
 			tipo.setText("Pregunta");
+		
+		GridPane mainPane = new GridPane();
 
 		VBox box = new VBox(10);// Contenido de toda la ventana
 		VBox contenedor = new VBox(5); // Texto y campo de respuesta si es una
@@ -81,7 +86,8 @@ public class Contenido extends Pane {
 
 		contenedor.getChildren().addAll(tipo);
 		contenedor.getChildren().addAll(text);
-
+		
+		
 		Label codigoLab = new Label("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
 
@@ -199,6 +205,7 @@ public class Contenido extends Pane {
 					String helpText = e.getPista();
 				  Label popupLabel = new Label(helpText);
 				  popup.setAutoHide(true);
+				  popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
 				 // popup.setAutoFix(true);
 				  // Calculate popup placement coordinates.
 				  Node eventSource = (Node) event.getSource();
@@ -206,7 +213,7 @@ public class Contenido extends Pane {
 				  popup.setX(sourceNodeBounds.getMinX() - 5.0);
 				  popup.setY(sourceNodeBounds.getMaxY() + 5.0);
 				  popup.getContent().addAll(popupLabel);
-			    popup.show(c.getPrimaryStage());
+			      popup.show(c.getPrimaryStage());
 				
 			}
 		});
@@ -303,8 +310,8 @@ public class Contenido extends Pane {
 				  // Calculate popup placement coordinates.
 				  Node eventSource = (Node) event.getSource();
 				  Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
-				  popup.setX(sourceNodeBounds.getMinX() - 5.0);
-				  popup.setY(sourceNodeBounds.getMaxY() + 5.0);
+				  popup.setX(sourceNodeBounds.getMinX() + 5.0);
+				  popup.setY(sourceNodeBounds.getMaxY() + 1.0);
 				  popup.getContent().addAll(popupLabel);
 				  popup.show(c.getPrimaryStage());
 				}
@@ -318,22 +325,28 @@ public class Contenido extends Pane {
 		buttons.getChildren().addAll(prior);
 		buttons.getChildren().addAll(pages);
 		buttons.getChildren().addAll(next);
-		// buttons.getChildren().addAll(help);
-		// buttons.getChildren().addAll(resolve);
 		buttons.getChildren().addAll(menu);
 
-		
+		respuestaBox.autosize();
 
 		box.setPadding(new Insets(20));
 		box.getChildren().addAll(buttons);
 		buttons.setAlignment(Pos.BOTTOM_CENTER);
-
+		
+		
+		
+		
+		//codigo.setStyle("from, to, '-fx-font-weight: bold;'");
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
+		respuestaBox.getStyleClass().add("respuestaBox");
 		box.getStylesheets().add("/application/view/css/contenido.css");
-
+		
+		
+		
 		box.setPrefSize(600, 600);
-		return box;
+		mainPane.getChildren().addAll(box);
+		return mainPane;
 	}
 
 }
