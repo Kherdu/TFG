@@ -36,7 +36,7 @@ import javafx.scene.layout.VBox;
 
 public class SeleccionLenguajes extends Pane {
 	private Controller c;
-	private List<String> lenguajes;
+
 	public SeleccionLenguajes(){
 		
 	}
@@ -52,36 +52,32 @@ public class SeleccionLenguajes extends Pane {
 		languageList.setItems(obsTemas);
 		
 		
-		//TextArea languageList = new TextArea();//Para probar TODO borrar
+		//TextArea languageList = new TextArea();//Para probar TODO borrar		
 		
-		
-		HBox botonLabel = new HBox();//Contenedor del boton mas el label de aviso
+		GridPane botonLabel = new GridPane();//Contenedor del boton mas el label de aviso
 		Button start = new Button("Comenzar");//Boton para comenzar el tutorial con el lenguaje seleccionado
-		Label advise = new Label("Recuerda enlazar los compiladores");
+		Label advise = new Label("Recuerda enlazar los compiladores");//Mensaje de aviso 
 		Button settings = new Button("Ajustes");//Boton de ajustes para seleccionar el compilador
-		Label error = new Label("Mensaje de error"); //Label que se mostrara con el mensaje de error cuando no haya lenguaje seleccionado
+		Label error = new Label(); //Label que se mostrara con el mensaje de error cuando no haya lenguaje seleccionado
 		
 		tittle.setAlignment(Pos.TOP_CENTER);
+
 		
-		
-		
-		botonLabel.getChildren().add(start);
-		botonLabel.getChildren().add(advise);
-		botonLabel.getChildren().add(settings);
-		
-		HBox.setMargin(start, new Insets(0, 5, 0, 0));
-		HBox.setMargin(settings, new Insets(0, 0, 0, 5));
 		
 		pane.add(tittle, 0, 0);
 		pane.add(languageList, 0, 1);
-		pane.add(botonLabel, 1, 2);
+		pane.add(start, 0, 2);
+		pane.add(advise, 1, 2);
+		pane.add(settings, 2, 2);
 		pane.add(error,1,3);
 		
 		
 		
 		GridPane.setConstraints(tittle, 0, 0, 2,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
-		GridPane.setConstraints(languageList, 0, 1, 2, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
-		GridPane.setConstraints(botonLabel, 0, 2, 2, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(languageList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(start, 0, 2, 2, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(advise, 1, 2, 2, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(settings, 2, 2, 2, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(error, 1, 3, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 	
 		//GridPane.setConstraints(child, columnIndex, rowIndex, columnspan, rowspan, halignment, valignment, hgrow, vgrow, margin);
@@ -96,6 +92,7 @@ public class SeleccionLenguajes extends Pane {
 					c.selectedLanguage(s.getSelectedItem());//Se carga el tema seleccionado
 				else 
 					error.setText("Se debe seleccionar un lenguaje");
+				GridPane.setConstraints(languageList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 			}
 			
 		});
@@ -115,8 +112,14 @@ public class SeleccionLenguajes extends Pane {
 			}
 		});
 		
+		//Estetica
+		tittle.getStyleClass().add("tittle");
+		start.getStyleClass().add("start");
+		advise.getStyleClass().add("advise");
+		settings.getStyleClass().add("setting");
+		error.getStyleClass().add("error");
+		pane.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
 		
-		pane.getStylesheets().add("/application/view/css/tema.css");
 	
 		return pane;
 

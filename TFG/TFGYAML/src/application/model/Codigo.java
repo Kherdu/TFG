@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import application.controller.Controller;
 
 /**
@@ -130,8 +133,9 @@ public class Codigo extends Pregunta<String> {
 			// TODO mensaje de que peta el archivo
 		} catch (InterruptedException e) {
 			// TODO proceso interrumpido
-		} catch (ParseException e) {
-			// TODO parseo del json erroneo
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return response;
 	}

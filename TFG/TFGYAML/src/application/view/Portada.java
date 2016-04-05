@@ -1,17 +1,20 @@
 package application.view;
 
-import application.CargaConfig;
+
+
 import application.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Priority;
 
 public class Portada extends Pane {
 	Controller c;
@@ -22,23 +25,41 @@ public class Portada extends Pane {
 
 	public Pane portada(Controller c, String path) {
 		this.c = c;
-		VBox root; // Contenedor de los elementos
-		Label titulo;// Titulo de la aplicacion
-		HBox selectedPath; // Contenedor de los elementos de seleccion del path
-		Label rut; // Label con indicacion de campo
-		TextField ruta; // Campo de texto en el que se escribe la ruta
-						// seleccionada
-		Button select; // Boton para seleccionar el compilador del lenguaje
-		Button next; // Boton para comezar el tutorial
-		Label error; // Etiqueta para mostrar error en el caso de que no haya
-						// ruta seleccionada
-
-		// Inicialización de los elementos
-		root = new VBox(10);
-		//titulo = new Label("Aprende Python");
-		String OS = System.getProperty("os.name").toLowerCase();
-		System.out.println(OS);
 		
+		GridPane root = new GridPane();
+		
+		Label tittle = new Label("Configuracion de Path");//Label de titulo de la vista
+		Label lPath = new Label("Ruta del compilador: ");//label de titulo al textfield
+		TextField tfPath = new TextField(path); //Campo con el path del compilador
+		Button back = new Button("Volver al menu principal");//Boton de volver al menu principal
+		Button select = new Button("Seleccion de ruta");//Muestra la seleccion del compilador
+		Button accept = new Button("Aceptar");//Confirmacion de la seleccion de compilador
+		Label error = new Label("Error");
+		
+		tittle.setAlignment(Pos.TOP_CENTER);
+		
+		root.add(tittle, 0, 0);
+		root.add(lPath, 0, 1);
+		root.add(tfPath, 1, 1);
+		root.add(select, 2, 1);
+		root.add(accept, 0, 2);
+		root.add(back, 1, 2);
+		root.add(error, 1, 3);
+		
+		 lPath.setMnemonicParsing(true);
+		 lPath.setLabelFor(tfPath);
+		 
+		 GridPane.setConstraints(tittle, 0, 0, 2,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		 GridPane.setConstraints(lPath, 0, 1, 1, 1, HPos.LEFT, VPos.CENTER, Priority.NEVER, Priority.NEVER, new Insets(5));
+		 GridPane.setConstraints(tfPath, 1, 1, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+	     GridPane.setConstraints(select, 2, 1, 2, 1, HPos.RIGHT, VPos.BOTTOM, Priority.NEVER, Priority.NEVER, new Insets(5));
+		 GridPane.setConstraints(accept, 0, 2, 2, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		 GridPane.setConstraints(back, 2, 2, 1, 1, HPos.RIGHT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		 GridPane.setConstraints(error, 1, 3, 1, 1, HPos.CENTER, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		
+		
+	
+		/*
 		
 		ruta = new TextField(path);
 		select = new Button("Seleccion de python");
@@ -56,32 +77,22 @@ public class Portada extends Pane {
 			// si es otro so? OS.indexOf("mac") >= 0 por ejemplo
 		}
 
-		// Añadir los elementos
-
-		selectedPath.getChildren().addAll(ruta);
-		selectedPath.getChildren().addAll(select);
-		selectedPath.getChildren().addAll(next);
-
-		// Añadir los elementos al panel principal
-		//root.getChildren().addAll(titulo);
-		root.getChildren().addAll(selectedPath);
-		root.getChildren().addAll(error);
-
+		*/
 		select.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				c.muestraSeleccion();
-				ruta.setText(Controller.path);
+				tfPath.setText(Controller.path);
 			}
 		});
 
-		next.setOnAction(new EventHandler<ActionEvent>() {
+		accept.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String r = ruta.getText();
-				if (null == r) {
+				String r = tfPath.getText();
+				if (r.equalsIgnoreCase("")) {
 					error.setText("DEBE HABER UN COMPILADOR SELECCIONADO");
 				} else {
 					c.setPath(r);
@@ -90,9 +101,24 @@ public class Portada extends Pane {
 			}
 
 		});
+		
+		back.setOnAction(new EventHandler<ActionEvent>() {
 
-		root.setPadding(new Insets(20));
-		root.setPrefSize(600, 600);
+			@Override
+			public void handle(ActionEvent event) {
+				c.start();
+				
+			}
+		});
+		
+		tittle.getStyleClass().add("tittle");
+		accept.getStyleClass().add("start");
+		back.getStyleClass().add("start");
+		select.getStyleClass().add("start");
+		error.getStyleClass().add("error");
+		root.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
+
+		
 
 		return root;
 

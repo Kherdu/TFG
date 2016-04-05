@@ -177,12 +177,11 @@ public class Controller<K, V> {
 		//root = new GridPane();
 		
 		if (p instanceof Portada) {
-			root.getChildren().addAll(((Portada) p).portada(this, lenSelect));
+			 root = ((Portada) p).portada(this, lenSelect);
 		} else if (p instanceof SeleccionLenguajes) {
-			//root.getChildren().addAll(((SeleccionLenguajes) p).SeleccionLenguajes(files, this));
 			root = ((SeleccionLenguajes) p).SeleccionLenguajes(files, this);
 		} else if (p instanceof MenuTema) {
-			root=((MenuTema) p).menuTema(files, this);
+			root=((MenuTema) p).menuTema(files, lenSelect, this);
 		} else if (p instanceof MenuLeccion) {
 			root=((MenuLeccion) p).menuLeccion(tema, this);
 		} else if (p instanceof Contenido) {
@@ -201,6 +200,7 @@ public class Controller<K, V> {
 			root=((Contenido) p).contenido(e, this, selected);
 		}
 		
+		root.setPrefSize(600, 600);
 		scene.setRoot(root);
 		
 		primaryStage.setScene(scene);
@@ -292,7 +292,7 @@ public class Controller<K, V> {
 
 	public void selectedLanguage(String selectedItem) {
 		this.len = selectedItem;
-		setPath(pathSelected());
+		//setPath(pathSelected());
 		showSubject();
 	}
 	

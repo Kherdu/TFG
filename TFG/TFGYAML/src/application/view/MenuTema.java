@@ -8,13 +8,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 /**
@@ -24,28 +29,45 @@ import javafx.scene.layout.VBox;
  */
 public class MenuTema extends Pane{
 	
-	private List<String> temas;
+	
 	private Controller c;
 	
 	public MenuTema(){
 	}
 	
-	public Pane menuTema(ArrayList<String> f, Controller c){
+	public Pane menuTema(ArrayList<String> temas, String lenSelect, Controller c){
 		
 		this.c=c;//Controlador
-		this.temas=f;//Lista de temas
-		VBox box = new VBox(10);//Contenedor de los elementos
-		HBox botonLabel = new HBox(5);//Contenedor del boton mas el label de aviso
-				
+		GridPane box = new GridPane();
 		
-		///Elementos 
-		Label leng = new Label("PYTHON"); //Noombre del lenguaje
+		Label language = new Label(lenSelect);
 		ListView<String> temasList = new ListView<String>(); //Lista de los temas
 		ObservableList<String> obsTemas =FXCollections.observableArrayList(temas);//permite ver la seleccion
 		temasList.setItems(obsTemas);
-		Label error = new Label();
-		Button comenzar = new Button("Comenzar");//Boton para cargar el tema seleccionado y avanzar en la aplicacion
-		comenzar.setOnAction(new EventHandler<ActionEvent>(){
+		
+		Button start = new Button("Comenzar");
+		Label error = new Label ();
+		
+		language.setAlignment(Pos.TOP_CENTER);
+		
+		
+		HBox botonLabel = new HBox();
+		botonLabel.getChildren().add(start);
+		botonLabel.getChildren().add(error);
+		
+		botonLabel.setAlignment(Pos.BOTTOM_CENTER);
+		
+		HBox.setMargin(start, new Insets(0, 5, 0, 0));
+		
+		box.add(language, 0, 0);
+		box.add(temasList, 0, 1);
+		box.add(botonLabel, 1, 2);
+		
+		GridPane.setConstraints(language, 0, 0, 2,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(temasList, 0, 1, 2, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(botonLabel, 0, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		
+		start.setOnAction(new EventHandler<ActionEvent>(){
 		
 			public void handle(ActionEvent event) {
 				MultipleSelectionModel<String> s;
@@ -59,23 +81,14 @@ public class MenuTema extends Pane{
 		});
 		
 		//Parte estetica
-		box.setPadding(new Insets(20));
-		
-		leng.getStyleClass().add("leng");
-		comenzar.getStyleClass().add("comenzar");
+		language.getStyleClass().add("tittle");
+		start.getStyleClass().add("start");
 		error.getStyleClass().add("error");
-		box.getStylesheets().add("/application/view/css/tema.css");
+		box.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
 		
 		
 		
-		///Añadir elementos a la vista
-		box.getChildren().addAll(leng);
-		box.getChildren().addAll(temasList);
-		botonLabel.getChildren().addAll(comenzar);
-		botonLabel.getChildren().addAll(error);
-		box.getChildren().addAll(botonLabel);
 		
-		box.setPrefSize(600, 600);
 		return box;
 		
 		

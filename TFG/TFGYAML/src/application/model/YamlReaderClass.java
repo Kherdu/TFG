@@ -29,16 +29,11 @@ public final class YamlReaderClass {
 	 */
 	public static Tema cargaTema(String language,String cargar) {
 		Yaml yaml = new Yaml();
-		//ArrayList<String> key = new ArrayList<String>();//Lista de claves del arbol
-		//ArrayList<String> value = new ArrayList<String>();//lista de valores asociados a las claves 
+		 
 		InputStream input = null;
-		try {
-			String path= "resources/yaml/" +language+"/"+ cargar; //Concatenamos con la ruta relativa
-			input = new FileInputStream(path); //carga el fichero
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		}
+		input = YamlReaderClass.class.getClassLoader().getResourceAsStream("yaml/" +language+"/"+ cargar);
+		/*String path= "resources/yaml/" +language+"/"+ cargar; //Concatenamos con la ruta relativa
+		input = new FileInputStream(path); //carga el fichero*/
 		// mapa lectura del yaml
 		@SuppressWarnings("unchecked")
 		Map<String, Object> mapaObjeto = (Map<String, Object>) yaml.load(input);
@@ -137,13 +132,10 @@ public final class YamlReaderClass {
 		//ArrayList<String> key = new ArrayList<String>();//Lista de claves del arbol
 		//ArrayList<String> value = new ArrayList<String>();//lista de valores asociados a las claves 
 		InputStream input = null;
-		try {
-			String path= "resources/config/carga.yml"; //Concatenamos con la ruta relativa
-			input = new FileInputStream(path); //carga el fichero
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		}
+		input = YamlReaderClass.class.getClassLoader().getResourceAsStream("config/carga.yml");
+		/*File carga = new File("resources/config/carga.yml");
+		String path= carga.getAbsolutePath(); //Concatenamos con la ruta relativa
+		input = new FileInputStream(path); //carga el fichero*/
 		// mapa lectura del yaml
 		@SuppressWarnings("unchecked")
 		Map<K, V> mapaObjeto = (Map<K, V>) yaml.load(input);
@@ -161,7 +153,8 @@ public final class YamlReaderClass {
 		Yaml yaml = new Yaml();
 		try {
 			File file = new File("resources/config/carga.yml");
-			FileWriter writer = new FileWriter(file);
+			String path = file.getAbsolutePath();
+			FileWriter writer = new FileWriter(path);
 			yaml.dump(lenguajes, writer);
 			writer.close();
 			
