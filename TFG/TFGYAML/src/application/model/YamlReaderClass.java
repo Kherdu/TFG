@@ -144,6 +144,12 @@ public final class YamlReaderClass {
 		
 	}
 	
+	//TODO este metodo deberia ser el que llame el controlador por defecto pasandole el lenguaje seleccionado para que le devuelva la ruta.
+	public String getPath(String language){
+		
+		return null;
+		
+	}
 	/**
 	 * Actualiza el fichero de lenguajes
 	 * @param lenguajes

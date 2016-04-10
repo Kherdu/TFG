@@ -51,8 +51,7 @@ public class SeleccionLenguajes extends Pane {
 		ObservableList<String> obsTemas =FXCollections.observableArrayList(f);//permite ver la seleccion
 		languageList.setItems(obsTemas);
 		
-		
-		//TextArea languageList = new TextArea();//Para probar TODO borrar		
+			
 		
 		GridPane botonLabel = new GridPane();//Contenedor del boton mas el label de aviso
 		Button start = new Button("Comenzar");//Boton para comenzar el tutorial con el lenguaje seleccionado
@@ -88,9 +87,11 @@ public class SeleccionLenguajes extends Pane {
 			public void handle(ActionEvent event) {
 				MultipleSelectionModel<String> s;
 				s= languageList.getSelectionModel();
-				if (!s.isEmpty())//Se comprueba que hay alguna opcion seleccionada
+				if (!s.isEmpty()){//Se comprueba que hay alguna opcion seleccionada
+					//TODO esto debería bastar, pero no funciona creo
+					//c.setPath(s.getSelectedItem());
 					c.selectedLanguage(s.getSelectedItem());//Se carga el tema seleccionado
-				else 
+				}else 
 					error.setText("Se debe seleccionar un lenguaje");
 				GridPane.setConstraints(languageList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 			}

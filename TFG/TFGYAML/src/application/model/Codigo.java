@@ -51,13 +51,13 @@ public class Codigo extends Pregunta<String> {
 		JSONParser jsonParser = new JSONParser();
 		respuesta = respuesta.replace("\"", "'");
 		this.c = new Correction("" , null );
-		boolean response = false;
+		boolean answer = false;
 
 		try {
 			File temp = File.createTempFile("json_Data", null);
 			String nombre = temp.getName();
-
-			ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta, nombre);
+			String pathprueba= "C:/python34/python.exe";
+			ProcessBuilder pb = new ProcessBuilder(pathprueba, cor, this.solucion, respuesta, nombre);
 			Process p = pb.start();
 			InputStream is = p.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
@@ -101,7 +101,7 @@ public class Codigo extends Pregunta<String> {
 					Boolean correct = (Boolean) json.get("isCorrect");
 					if (correct != null) {
 						if (correct) {
-							response = true;
+							answer = true;
 							// solo si ocurre esto devuelve
 							// true, en cualquier otro caso
 							// tiene que mirar qué pasa.
@@ -137,7 +137,7 @@ public class Codigo extends Pregunta<String> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return response;
+		return answer;
 	}
 
 	@Override

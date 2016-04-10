@@ -2,6 +2,7 @@ package application.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import application.CargaConfig;
@@ -38,25 +39,25 @@ public class Controller<K, V> {
 	private Tema tema;
 	private Stage primaryStage;
 	private Pane root;
-	private VBox buttons;
 	private Scene scene;
 	private ArrayList<Elemento> elems;
-	private int actual; // contador de el elemento del contenido en el que
-						// estamos
+	private int actualStep; // contador de el elemento del contenido en el que
+							// estamos
+	private int enabledSteps;
+	private boolean[] visited;
+	private int actualLesson;
 	private ArrayList<String> files;// temas del lenguaje
-	private Portada portada;
 	private String len; // lenguaje seleccionado
 	private Map<K, V> lenguajes; // Map con los lenguajes posibles
 	private Correction c;
 
-	
 	public Controller(Stage primaryStage) {
 		this.tema = null;
 		this.primaryStage = primaryStage;
 		this.files = new ArrayList<String>();
 		this.lenguajes = YamlReaderClass.languages();
-		this.c= new Correction();
-		
+		this.c = new Correction();
+
 	}
 
 	/**
@@ -96,12 +97,19 @@ public class Controller<K, V> {
 	 * @return
 	 */
 	public boolean corrige(ArrayList<Integer> resp, Pregunta p) {
-		
-		return p.corrige(resp, tema);
+		boolean ret = false;
+		if (p.corrige(resp, tema)) {
+			ret = true;
+		}
+		return ret;
 	}
 
 	public boolean corrige(String resp, Pregunta p) {
-		return p.corrige(resp, tema);
+		boolean ret = false;
+		if (p.corrige(resp, tema)) {
+			ret = true;
+		}
+		return ret;
 	}
 
 	/**
@@ -118,22 +126,23 @@ public class Controller<K, V> {
 				files.add(listOfFiles[i].getName());
 			}
 		}
-		changeView(p, files, 0, len);
+		changeView(p, files, 0, len, null);
 	}
 
 	/**
 	 * Vuelve a mostrar el menú de temas
 	 */
-	public void refresh() {
+	public void goMenu() {
 		showStart();
 	}
 
+	
 	public void start() {
 		Pane p = new SeleccionLenguajes();
 
-		//Map<K, V> l = YamlReaderClass.languages();
+		// Map<K, V> l = YamlReaderClass.languages();
 		ArrayList a = languageNames();
-		changeView(p, a, 0, len);
+		changeView(p, a, 0, len, null);
 	}
 
 	public ArrayList<String> languageNames() {
@@ -157,7 +166,7 @@ public class Controller<K, V> {
 		// necesarios
 		Pane p = new MenuTema();
 
-		changeView(p, files, 0, len);
+		changeView(p, files, 0, len, null);
 
 	}
 
@@ -170,41 +179,49 @@ public class Controller<K, V> {
 	 *            Lista de los ficheros que componen el temario
 	 * @param selected
 	 *            Lección seleccionada
-	 * @param lenSelect 
+	 * @param lenSelect
+	 *            Lenguaje seleccionado
 	 */
-	private void changeView(Pane p, ArrayList<String> files, int selected, String lenSelect) {
+	private void changeView(Pane p, ArrayList<String> files, int selected, String lenSelect, Number newStep) {
 		scene = new Scene(new Group());
-		//root = new GridPane();
-		
+		// root = new GridPane();
+
 		if (p instanceof Portada) {
-			 root = ((Portada) p).portada(this, lenSelect);
+			root = ((Portada) p).portada(this, lenSelect);
 		} else if (p instanceof SeleccionLenguajes) {
 			root = ((SeleccionLenguajes) p).SeleccionLenguajes(files, this);
 		} else if (p instanceof MenuTema) {
-			root=((MenuTema) p).menuTema(files, lenSelect, this);
+			root = ((MenuTema) p).menuTema(files, lenSelect, this);
 		} else if (p instanceof MenuLeccion) {
-			root=((MenuLeccion) p).menuLeccion(tema, this);
+			root = ((MenuLeccion) p).menuLeccion(tema, this);
 		} else if (p instanceof Contenido) {
 			Elemento e;
-			// TODO añadir preguntas de ambos tipos aquí
-			if (actual == -1) {
+			// TODO añadir preguntas de ambos tipos aquí, solo deberia usarse la
+			// primera vez en contenido, luego se deberia modificar, si no, en
+			// cada paso hacemos un objeto nuevo...
+
+			if (actualStep == -1) {
 				e = new Explicacion(tema.getLecciones().get(selected).getExplicacion());
 
-			} else if (actual == this.elems.size())
-			{
+			} else if (actualStep == this.elems.size()) {
 				e = new Explicacion("FIN DE LA LECCION");
+			} else {
+				e = elems.get(actualStep);
+				stepChange(newStep, e instanceof Pregunta);
 			}
-			else
-				e = elems.get(actual);
-
-			root=((Contenido) p).contenido(e, this, selected);
+			// habilitados empezaremos con 1, y el paso actual es el 1 para la
+			// vista (comienza en -1 aquí)
+			// el que estás mas algo
+			
+			//TODO elems.size tiene que ir con un +1 para que llegue a la ultima pregunta, ¿y si se quiere la notificación de que has terminado??
+			root = ((Contenido) p).contenido(e, this, elems.size()+1, enabledSteps, actualStep + 2);
 		}
-		
+
 		root.setPrefSize(600, 600);
 		scene.setRoot(root);
-		
+
 		primaryStage.setScene(scene);
-		
+
 		primaryStage.show();
 	}
 
@@ -216,44 +233,26 @@ public class Controller<K, V> {
 	public void selectedTema(String selectedItem) {
 
 		this.tema = YamlReaderClass.cargaTema(len, selectedItem);
-		changeView(new MenuLeccion(), null, 0, len);
+		changeView(new MenuLeccion(), null, 0, len, null);
 	}
 
 	/**
 	 * Carga los componenetes del tema, y muestra la ventana con la primera
-	 * explicación
+	 * explicación, se llamará cuando elijamos una leccion
 	 * 
 	 * @param selectedItem
+	 *            es la lección seleccionada
 	 */
 	public void selectedLeccion(int selectedItem) {
+		this.actualLesson = selectedItem;
 		this.elems = (ArrayList<Elemento>) tema.getLecciones().get(selectedItem).getElementos();
-		actual = -1;
-		changeView(new Contenido(), null, selectedItem, len);
-	}
+		actualStep = -1;
+		enabledSteps = 2;
+		visited = new boolean[elems.size()];
 
-	/**
-	 * Carga el siguiente elemento(pregunta,explicacion) del Tema
-	 * 
-	 * @param l
-	 *            Leccion seleccionada
-	 */
-	public void nextElem(int l) {
-		// TODO ojo, hay que desactivar y activar botones para que esto no pete
-		if (actual < this.elems.size())
-			actual++;
-		changeView(new Contenido(), null, l, len);
-	}
-
-	/**
-	 * Carga el anterior elemento(pregunta,explicacion) del Tema
-	 * 
-	 * @param l
-	 *            Leccion seleccionada
-	 */
-	public void prevElem(int l) {
-		if (actual > -1)
-			actual--;
-		changeView(new Contenido(), null, l, len);
+		Arrays.fill(visited, Boolean.FALSE);
+		visited[0] = true;
+		changeView(new Contenido(), null, actualLesson, len, 0);
 	}
 
 	/**
@@ -265,8 +264,6 @@ public class Controller<K, V> {
 	public String markToHtml(String mark) {
 		return Utilities.parserMarkDown(mark);
 	}
-
-	
 
 	/**
 	 * Muesta el FileChooser para seleccionar donde se encuentra python en el
@@ -285,6 +282,7 @@ public class Controller<K, V> {
 	 * @param path
 	 */
 	public void setPath(String path) {
+		//TODO esto tiene que hacer un get
 		this.path = path;
 		modifyMap();
 		YamlReaderClass.saveConfig((Map<String, Object>) this.lenguajes);
@@ -292,66 +290,82 @@ public class Controller<K, V> {
 
 	public void selectedLanguage(String selectedItem) {
 		this.len = selectedItem;
-		//setPath(pathSelected());
 		showSubject();
 	}
-	
+
 	/**
 	 * Modifica el path del lenguaje seleccionado
 	 */
 	private void modifyMap() {
 		ArrayList<Map> p = (ArrayList<Map>) this.lenguajes.get("lenguajes");
 		String ret = null;
-	
-		for (Map o : p)
-		{
-			if (o.get("nombre").equals(this.len))
-			{
+
+		for (Map o : p) {
+			if (o.get("nombre").equals(this.len)) {
 				o.put("ruta", this.path);
 			}
 		}
-		
+
 	}
 
 	public String pathSelected() {
 		ArrayList<Map> p = (ArrayList<Map>) this.lenguajes.get("lenguajes");
 		String ret = null;
-	
-		for (Map o : p)
-		{
-			if (o.get("nombre").equals(this.len))
-			{
-				ret = (String)o.get("ruta");
+
+		for (Map o : p) {
+			if (o.get("nombre").equals(this.len)) {
+				ret = (String) o.get("ruta");
 				break;
 			}
 		}
 		return ret;
 	}
-	
-	public Stage getPrimaryStage()
-	{
+
+	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
-	
-	public void showPortada(String lenguaje){
-		//Map<K, V> l = YamlReaderClass.languages();
+
+	public void showPortada(String lenguaje) {
+		// Map<K, V> l = YamlReaderClass.languages();
 		this.len = lenguaje;
 		setPath(this.pathSelected());
-		this.changeView(new Portada(), null, 0, this.path);
+		this.changeView(new Portada(), null, 0, this.path, null);
 	}
 
 	public Scene getScene() {
-		
+
 		return this.scene;
 	}
 
-	public int getActual() {
-		
-		return this.actual;
+	public int getActualStep() {
+
+		return this.actualStep;
 	}
 
 	public ArrayList<Elemento> getElems() {
 		return this.elems;
 	}
 
+	public void lessonPageChange(Number newStep) {
+		actualStep = (int) newStep - 2;
+		changeView(new Contenido(), null, actualLesson, len, newStep);
+	}
+
+	public void stepChange(Number newStep, boolean isQuestion) {
+		// -2 porque en nuestra indexación hay -1 que es la intro y elemento 0
+		if (!isQuestion)
+			enableNextStep((int) newStep);
+	}
+
+	public void enableNextStep(int actual) {
+		// TODO habilitar el siguiente si en el que estamos no ha sido visitado
+		// ya y es explicación, se llama cuando se corrige bien, y se llama aquí y no a stepchange por pregunta... hay alguna forma mejor?
+		if (!visited[actual - 1]) {
+			visited[actual - 1] = true;
+			enabledSteps += 1;
+		}
+	}
+	public void refreshWindow(){
+		changeView(new Contenido(), null, actualLesson, len, actualStep);
+	}
 }

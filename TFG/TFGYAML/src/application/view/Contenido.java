@@ -2,12 +2,10 @@
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.python.objectweb.asm.commons.CodeSizeEvaluator;
-
 import application.controller.Controller;
 import application.model.Codigo;
 import application.model.Elemento;
+import application.model.Explicacion;
 import application.model.Opciones;
 import application.model.Pregunta;
 import application.model.Sintaxis;
@@ -21,7 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
+
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -29,19 +27,14 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
 
 public class Contenido extends Pane {
 
-	private Elemento e;
-	private Controller c;
-	// private int leccion;
 	private final ToggleGroup group = new ToggleGroup();
 
 	public Contenido() {
@@ -53,41 +46,43 @@ public class Contenido extends Pane {
 	 * @param leccion
 	 * @return
 	 */
-	public Pane contenido(Elemento e, Controller c, int leccion) {
-		this.e = e;
-		this.c = c;
+	public Pane contenido(Elemento e, Controller c, int steps, int enabled, int selected) {
 
-		Label tipo = new Label("Explicacion");
-		
-		if (c.getActual()==-1)
-			tipo.setText("INTRODUCCION");
+		Label tipo = new Label(null);
 
+		if (selected == 1)
+			tipo.setText("Introducción");
 
-		if (e instanceof Pregunta)
+		if (e instanceof Pregunta) {
 			tipo.setText("Pregunta");
-		
+
+		} else if (e instanceof Explicacion) {
+			tipo.setText("Explicación");
+		}
 		GridPane mainPane = new GridPane();
-
-		VBox box = new VBox(10);// Contenido de toda la ventana
-		VBox contenedor = new VBox(5); // Texto y campo de respuesta si es una
+		VBox container = new VBox(5); // Texto y campo de respuesta si es una
 										// pregunta
+		Pagination p = new Pagination(steps); // paginador
 		String content = null;
-
+		// por defecto se habilitan 2, la intro y el siguiente
+		p.enabledProperty().setValue(enabled);
+		p.currentProperty().setValue(selected);
+		// listener para saber cual ha seleccionado.
+		p.currentProperty().addListener((prop, oldV, newV) -> {
+			// llamamos al método que vale para cambiar de un contenido a otro
+			c.lessonPageChange(newV);
+		});
 		content = c.markToHtml(e.getTexto());
-		WebView text = Utilities.creaBrowser(content);// Campo donde se escribe
-														// el enunciado o la
-														// explicacion de la
-														// pregunta
+
+		// Campo donde se escribeel enunciado o la explicacion de la pregunta
+		WebView text = Utilities.creaBrowser(content);
 
 		WebEngine engine = text.getEngine();
 		engine.loadContent(content);
 
-		//text.setMaxHeight(300);
+		container.getChildren().addAll(tipo);
+		container.getChildren().addAll(text);
 
-		contenedor.getChildren().addAll(tipo);
-		contenedor.getChildren().addAll(text);
-		
-		
 		Label codigoLab = new Label("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
 
@@ -95,7 +90,6 @@ public class Contenido extends Pane {
 									// la pregunta
 		Label pista = new Label();// Indica si la pregunta se ha respondido bien
 									// o no
-		//pista.setPrefWidth(300);
 		Button pistas = new Button("INFO"); // TODO el pene de congost
 		MenuItem hintsContent = new MenuItem();
 		result.getChildren().addAll(pista);
@@ -143,83 +137,59 @@ public class Contenido extends Pane {
 			}
 			respuestaBox.getChildren().addAll(opciones);
 			respuestaBox.getChildren().addAll(buttonsCode);
-			contenedor.getChildren().addAll(respuestaBox);
-			contenedor.getChildren().addAll(result);
+			container.getChildren().addAll(respuestaBox);
+			container.getChildren().addAll(result);
 		} else {
 			if (e instanceof Pregunta) {
-				contenedor.getChildren().addAll(codigoLab);
+				container.getChildren().addAll(codigoLab);
 				respuestaBox.getChildren().addAll(codigo);
 				respuestaBox.getChildren().addAll(buttonsCode);
-				contenedor.getChildren().addAll(respuestaBox);
-				contenedor.getChildren().addAll(result);
+				container.getChildren().addAll(respuestaBox);
+				container.getChildren().addAll(result);
 			}
 		}
 
-		//contenedor.setMinHeight(500);
-		box.getChildren().addAll(contenedor);
-		HBox buttons = new HBox(10);
-
-		Button prior = new Button("Atras");
-		Label pages = new Label();
-		Button next = new Button("Siguiente");
+		// contenedor.setMinHeight(500);
 		Button menu = new Button("Menu principal");
 
 		buttonsCode.getChildren().addAll(resolve);
 		buttonsCode.getChildren().addAll(help);
 
-		/// listeners
-		prior.setOnAction(new EventHandler<ActionEvent>() {
-
-			public void handle(ActionEvent event) {
-				c.prevElem(leccion);
-
-			}
-
-		});
-
-		next.setOnAction(new EventHandler<ActionEvent>() {
-
-			public void handle(ActionEvent event) {
-				c.nextElem(leccion);
-
-			}
-
-		});
-
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
-				c.refresh();
+				c.goMenu();
 			}
 
 		});
 
-		//help.getItems().setAll(new MenuItem(e.getPista()));// Añade el
-															// deplegable al
-															// button
+		// help.getItems().setAll(new MenuItem(e.getPista()));// Añade el
+		// deplegable al
+		// button
 		help.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				final Popup popup = new Popup(); 
-					String helpText = e.getPista();
-				  Label popupLabel = new Label(helpText);
-				  popup.setAutoHide(true);
-				  popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
-				 // popup.setAutoFix(true);
-				  // Calculate popup placement coordinates.
-				  Node eventSource = (Node) event.getSource();
-				  Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
-				  popup.setX(sourceNodeBounds.getMinX() - 5.0);
-				  popup.setY(sourceNodeBounds.getMaxY() + 5.0);
-				  popup.getContent().addAll(popupLabel);
-			      popup.show(c.getPrimaryStage());
-				
+				final Popup popup = new Popup();
+				String helpText = e.getPista();
+				Label popupLabel = new Label(helpText);
+				popup.setAutoHide(true);
+				popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
+				// popup.setAutoFix(true);
+				// Calculate popup placement coordinates.
+				Node eventSource = (Node) event.getSource();
+				Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
+				popup.setX(sourceNodeBounds.getMinX() - 5.0);
+				popup.setY(sourceNodeBounds.getMaxY() + 5.0);
+				popup.getContent().addAll(popupLabel);
+				popup.show(c.getPrimaryStage());
+
 			}
 		});
 
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void handle(ActionEvent event) {
 				if (e instanceof Opciones) {
@@ -257,7 +227,9 @@ public class Contenido extends Pane {
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
 						pista.setText("CORRECTO");
+						c.enableNextStep(selected);
 						pistas.setVisible(false);
+
 					} else {
 						pista.setText("HAS FALLADO");
 						pistas.setVisible(false);
@@ -275,19 +247,24 @@ public class Contenido extends Pane {
 											// para que el modelo lo compruebe
 					{
 						pista.setText("CORRECTO");
+						c.enableNextStep(selected);
+
 					} else {//
 						pista.setText("HAS FALLADO: " + p.getCorrection().getMessage());
-						
-							pistas.setVisible(true);
-						}
 
-				}
-				else if (e instanceof Sintaxis) {
+						pistas.setVisible(true);
+					}
+
+				} else if (e instanceof Sintaxis) {
 					// TODO cuando estén las de sintaxis
 				}
+				// TODO refrescar ventana
+				c.refreshWindow();
 			}
+			
+
 		});
-		
+
 		pistas.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -298,54 +275,39 @@ public class Contenido extends Pane {
 				if (hints != null) {
 					for (String h : hints) {
 						txt += (h + "\n");
-					};
-					//hintsContent.setText(txt);
-					
-				
-				  Label popupLabel = new Label(txt);
-				  popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
-				  popup.setAutoHide(true);
-				  popup.setAutoFix(true);
-				  popup.setOpacity(1.00);
-				  // Calculate popup placement coordinates.
-				  Node eventSource = (Node) event.getSource();
-				  Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
-				  popup.setX(sourceNodeBounds.getMinX() + 5.0);
-				  popup.setY(sourceNodeBounds.getMaxY() + 1.0);
-				  popup.getContent().addAll(popupLabel);
-				  popup.show(c.getPrimaryStage());
+					}
+					;
+					// hintsContent.setText(txt);
+
+					Label popupLabel = new Label(txt);
+					popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
+					popup.setAutoHide(true);
+					popup.setAutoFix(true);
+					popup.setOpacity(1.00);
+					// Calculate popup placement coordinates.
+					Node eventSource = (Node) event.getSource();
+					Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
+					popup.setX(sourceNodeBounds.getMinX() + 5.0);
+					popup.setY(sourceNodeBounds.getMaxY() + 1.0);
+					popup.getContent().addAll(popupLabel);
+					popup.show(c.getPrimaryStage());
 				}
-				
+
 			}
 		});
-		
-		pages.setText((c.getActual()+1)+"/"+c.getElems().size());
 
-		// poner botones en el panel
-		buttons.getChildren().addAll(prior);
-		buttons.getChildren().addAll(pages);
-		buttons.getChildren().addAll(next);
-		buttons.getChildren().addAll(menu);
-
-		respuestaBox.autosize();
-
-		box.setPadding(new Insets(20));
-		box.getChildren().addAll(buttons);
-		buttons.setAlignment(Pos.BOTTOM_CENTER);
-		
-		
-		
-		
-		//codigo.setStyle("from, to, '-fx-font-weight: bold;'");
+		RowConstraints row1 = new RowConstraints();
+		RowConstraints row2 = new RowConstraints();
+		row1.setPercentHeight(75);
+		row2.setPercentHeight(25);
+		mainPane.getRowConstraints().addAll(row1, row2);
+		mainPane.add(container, 1, 0);
+		mainPane.add(p, 1, 1);
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		respuestaBox.getStyleClass().add("respuestaBox");
-		box.getStylesheets().add("/application/view/css/contenido.css");
-		
-		
-		
-		box.setPrefSize(600, 600);
-		mainPane.getChildren().addAll(box);
+		mainPane.getStylesheets().add(getClass().getResource("/css/contenido.css").toExternalForm());
+		mainPane.setPrefSize(600, 600);
 		return mainPane;
 	}
 
