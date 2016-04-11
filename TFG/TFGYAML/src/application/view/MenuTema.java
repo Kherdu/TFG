@@ -55,13 +55,12 @@ public class MenuTema extends Pane{
 		botonLabel.getChildren().add(start);
 		botonLabel.getChildren().add(error);
 		
-		botonLabel.setAlignment(Pos.BOTTOM_CENTER);
 		
 		HBox.setMargin(start, new Insets(0, 5, 0, 0));
 		
 		box.add(language, 0, 0);
 		box.add(temasList, 0, 1);
-		box.add(botonLabel, 1, 2);
+		box.add(botonLabel, 0, 2);
 		
 		GridPane.setConstraints(language, 0, 0, 2,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
 		GridPane.setConstraints(temasList, 0, 1, 2, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));

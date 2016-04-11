@@ -217,7 +217,7 @@ public class Controller<K, V> {
 			root = ((Contenido) p).contenido(e, this, elems.size()+1, enabledSteps, actualStep + 2);
 		}
 
-		root.setPrefSize(600, 600);
+		root.setPrefSize(600,600);
 		scene.setRoot(root);
 
 		primaryStage.setScene(scene);
@@ -365,7 +365,9 @@ public class Controller<K, V> {
 			enabledSteps += 1;
 		}
 	}
-	public void refreshWindow(){
+	
+	//Creo que no va a hacer falta
+	/*public void refreshWindow(){
 		changeView(new Contenido(), null, actualLesson, len, actualStep);
-	}
+	}*/
 }

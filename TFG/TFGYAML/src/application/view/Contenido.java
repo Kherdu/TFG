@@ -13,8 +13,10 @@ import application.model.Utilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -24,11 +26,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
@@ -82,7 +87,7 @@ public class Contenido extends Pane {
 
 		container.getChildren().addAll(tipo);
 		container.getChildren().addAll(text);
-
+		
 		Label codigoLab = new Label("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
 
@@ -90,8 +95,8 @@ public class Contenido extends Pane {
 									// la pregunta
 		Label pista = new Label();// Indica si la pregunta se ha respondido bien
 									// o no
-		Button pistas = new Button("INFO"); // TODO el pene de congost
-		MenuItem hintsContent = new MenuItem();
+		Button pistas = new Button("INFO"); 
+		
 		result.getChildren().addAll(pista);
 		result.getChildren().addAll(pistas);
 		pistas.setAlignment(Pos.BOTTOM_RIGHT);
@@ -142,6 +147,7 @@ public class Contenido extends Pane {
 		} else {
 			if (e instanceof Pregunta) {
 				container.getChildren().addAll(codigoLab);
+				
 				respuestaBox.getChildren().addAll(codigo);
 				respuestaBox.getChildren().addAll(buttonsCode);
 				container.getChildren().addAll(respuestaBox);
@@ -149,7 +155,6 @@ public class Contenido extends Pane {
 			}
 		}
 
-		// contenedor.setMinHeight(500);
 		Button menu = new Button("Menu principal");
 
 		buttonsCode.getChildren().addAll(resolve);
@@ -163,9 +168,7 @@ public class Contenido extends Pane {
 
 		});
 
-		// help.getItems().setAll(new MenuItem(e.getPista()));// Añade el
-		// deplegable al
-		// button
+		
 		help.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -175,8 +178,7 @@ public class Contenido extends Pane {
 				Label popupLabel = new Label(helpText);
 				popup.setAutoHide(true);
 				popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
-				// popup.setAutoFix(true);
-				// Calculate popup placement coordinates.
+				
 				Node eventSource = (Node) event.getSource();
 				Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
 				popup.setX(sourceNodeBounds.getMinX() - 5.0);
@@ -227,7 +229,9 @@ public class Contenido extends Pane {
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
 						pista.setText("CORRECTO");
+						
 						c.enableNextStep(selected);
+						p.enabledProperty().setValue(enabled+1);
 						pistas.setVisible(false);
 
 					} else {
@@ -239,27 +243,28 @@ public class Contenido extends Pane {
 
 				else if (e instanceof Codigo) // La pregunta es de tipo codigo
 				{
-					Codigo p = (Codigo) e;
+					Codigo pc = (Codigo) e;
 					String code = codigo.getText();
 					// System.out.println(code);
 
-					if (c.corrige(code, p))// Se manda el codigo al controlador
+					if (c.corrige(code, pc))// Se manda el codigo al controlador
 											// para que el modelo lo compruebe
 					{
 						pista.setText("CORRECTO");
+						pistas.setVisible(false);
 						c.enableNextStep(selected);
-
+						p.enabledProperty().setValue(enabled+1);
+						
+						
 					} else {//
-						pista.setText("HAS FALLADO: " + p.getCorrection().getMessage());
-
+						pista.setText("HAS FALLADO: " + pc.getCorrection().getMessage());
+						
 						pistas.setVisible(true);
 					}
 
 				} else if (e instanceof Sintaxis) {
 					// TODO cuando estén las de sintaxis
 				}
-				// TODO refrescar ventana
-				c.refreshWindow();
 			}
 			
 
@@ -296,18 +301,23 @@ public class Contenido extends Pane {
 			}
 		});
 
-		RowConstraints row1 = new RowConstraints();
+		/*RowConstraints row1 = new RowConstraints();
 		RowConstraints row2 = new RowConstraints();
 		row1.setPercentHeight(75);
 		row2.setPercentHeight(25);
-		mainPane.getRowConstraints().addAll(row1, row2);
-		mainPane.add(container, 1, 0);
-		mainPane.add(p, 1, 1);
+		
+		mainPane.getRowConstraints().addAll(row1, row2);*/
+		mainPane.add(container, 0, 0);
+		mainPane.add(p, 0, 1);
+		GridPane.setConstraints(container, 0, 0, 2,1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(p, 0, 1, 2, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		
+		
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		respuestaBox.getStyleClass().add("respuestaBox");
 		mainPane.getStylesheets().add(getClass().getResource("/css/contenido.css").toExternalForm());
-		mainPane.setPrefSize(600, 600);
+		
 		return mainPane;
 	}
 
