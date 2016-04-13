@@ -1,8 +1,13 @@
 package application.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import application.view.Contenido;
 import application.view.Inicio;
@@ -44,8 +49,8 @@ public class Controller<K, V> {
 	private int enabledSteps;
 	private boolean[] visited;
 	private int actualLesson;
-	private ArrayList<String> files;// temas del lenguaje
-	private String len; // lenguaje seleccionado
+	private List<String> files;// temas del lenguaje
+	private String selectedLanguage; // lenguaje seleccionado
 	private Map<K, V> lenguajes; // Map con los lenguajes posibles
 	private Correction c;
 
@@ -111,20 +116,20 @@ public class Controller<K, V> {
 	}
 
 	/**
-	 * Lanza la ejecucion de las ventanas
+	 *  Llama a changeview pasandole la lista de temas disponibles para un lenguaje
 	 */
 	public void showSubject() {
 
 		Pane p = new MenuTema();
-		File folder = new File("resources/yaml/" + len);
-		File[] listOfFiles = folder.listFiles();
-
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				files.add(listOfFiles[i].getName());
-			}
-		}
-		changeView(p, files, 0, len, null);
+		//obtenemos el path del proyecto TODO probar en linux
+		String folderpath = new File("").getAbsolutePath();
+		//sacamos la lista de archivos en dicho path
+		String path= folderpath+"/src/resources/yaml/"+selectedLanguage +"/";
+		File folderFile = new File(path);
+		String[] stingray = folderFile.list(); 
+		files = Arrays.asList(stingray);
+		
+		changeView(p, files, 0, selectedLanguage, null);
 	}
 
 	/**
@@ -139,8 +144,8 @@ public class Controller<K, V> {
 		Pane p = new Inicio();
 
 		// Map<K, V> l = YamlReaderClass.languages();
-		ArrayList a = languageNames();
-		changeView(p, a, 0, len, null);
+		ArrayList<String> a = languageNames();
+		changeView(p, a, 0, selectedLanguage, null);
 	}
 
 	public ArrayList<String> languageNames() {
@@ -153,10 +158,10 @@ public class Controller<K, V> {
 	}
 
 	/**
-	 * Muestra la primera ventana de la aplicaciÃ³n
+	 * Muestra la primera ventana de la aplicación
 	 */
 	public void showStart() {
-		primaryStage.setTitle(this.len); // el titulo se podria poner de la app,
+		primaryStage.setTitle(this.selectedLanguage); // el titulo se podria poner de la app,
 											// o del lenguaje, pero obteniendo
 											// en la primera lectura de
 											// ficheros...
@@ -164,7 +169,7 @@ public class Controller<K, V> {
 		// necesarios
 		Pane p = new MenuTema();
 
-		changeView(p, files, 0, len, null);
+		changeView(p, files, 0, selectedLanguage, null);
 
 	}
 
@@ -180,7 +185,7 @@ public class Controller<K, V> {
 	 * @param lenSelect
 	 *            Lenguaje seleccionado
 	 */
-	private void changeView(Pane p, ArrayList<String> files, int selected, String lenSelect, Number newStep) {
+	private void changeView(Pane p, List<String> files, int selected, String lenSelect, Number newStep) {
 		scene = new Scene(new Group());
 		// root = new GridPane();
 
@@ -230,8 +235,8 @@ public class Controller<K, V> {
 	 */
 	public void selectedTema(String selectedItem) {
 
-		this.tema = YamlReaderClass.cargaTema(len, selectedItem);
-		changeView(new MenuLeccion(), null, 0, len, null);
+		this.tema = YamlReaderClass.cargaTema(selectedLanguage, selectedItem);
+		changeView(new MenuLeccion(), null, 0, selectedLanguage, null);
 	}
 
 	/**
@@ -247,10 +252,9 @@ public class Controller<K, V> {
 		actualStep = -1;
 		enabledSteps = 2;
 		visited = new boolean[elems.size()];
-
 		Arrays.fill(visited, Boolean.FALSE);
 		visited[0] = true;
-		changeView(new Contenido(), null, actualLesson, len, 0);
+		changeView(new Contenido(), null, actualLesson, selectedLanguage, 0);
 	}
 
 	/**
@@ -268,7 +272,7 @@ public class Controller<K, V> {
 	 * equipo
 	 */
 	public void muestraSeleccion() {
-		SelectedPath sp = new SelectedPath(this.primaryStage, this.len);
+		SelectedPath sp = new SelectedPath(this.primaryStage, this.selectedLanguage);
 		this.path = sp.getPath();
 		CargaConfig.saveConfig(this.path);
 
@@ -287,7 +291,7 @@ public class Controller<K, V> {
 	}
 
 	public void selectedLanguage(String selectedItem) {
-		this.len = selectedItem;
+		this.selectedLanguage = selectedItem;
 		showSubject();
 	}
 
@@ -299,7 +303,7 @@ public class Controller<K, V> {
 		String ret = null;
 
 		for (Map o : p) {
-			if (o.get("nombre").equals(this.len)) {
+			if (o.get("nombre").equals(this.selectedLanguage)) {
 				o.put("ruta", this.path);
 			}
 		}
@@ -311,7 +315,7 @@ public class Controller<K, V> {
 		String ret = null;
 
 		for (Map o : p) {
-			if (o.get("nombre").equals(this.len)) {
+			if (o.get("nombre").equals(this.selectedLanguage)) {
 				ret = (String) o.get("ruta");
 				break;
 			}
@@ -325,7 +329,7 @@ public class Controller<K, V> {
 
 	public void showPortada(String lenguaje) {
 		// Map<K, V> l = YamlReaderClass.languages();
-		this.len = lenguaje;
+		this.selectedLanguage = lenguaje;
 		setPath(this.pathSelected());
 		this.changeView(new Settings(), null, 0, this.path, null);
 	}
@@ -346,7 +350,7 @@ public class Controller<K, V> {
 
 	public void lessonPageChange(Number newStep) {
 		actualStep = (int) newStep - 2;
-		changeView(new Contenido(), null, actualLesson, len, newStep);
+		changeView(new Contenido(), null, actualLesson, selectedLanguage, newStep);
 	}
 
 	public void stepChange(Number newStep, boolean isQuestion) {

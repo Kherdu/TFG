@@ -39,15 +39,18 @@ public class Inicio extends Pane {
 	public Inicio(){
 		
 	}
-	
-	public Pane inicio(ArrayList<String> f,Controller c){
+	/*
+	 * Vista con la portada, elige un lenguaje, y llama en controlador a showPortada
+	 * 
+	 */
+	public Pane inicio(List<String> files,Controller c){
 		
 		
 		GridPane pane = new GridPane(); //Panel principal
 		
 		Label tittle = new Label("Selecciona un lenguaje"); //Label del titulo de la ventana
 		ListView<String> languageList = new ListView<String>(); //Lista de los temas
-		ObservableList<String> obsTemas =FXCollections.observableArrayList(f);//permite ver la seleccion
+		ObservableList<String> obsTemas =FXCollections.observableArrayList(files);//permite ver la seleccion
 		languageList.setItems(obsTemas);
 		
 			

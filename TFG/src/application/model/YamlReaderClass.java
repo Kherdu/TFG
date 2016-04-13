@@ -31,10 +31,12 @@ public final class YamlReaderClass {
 		Yaml yaml = new Yaml();
 		 
 		InputStream input = null;
-		input = YamlReaderClass.class.getClassLoader().getResourceAsStream("yaml/" +language+"/"+ cargar);
-		/*String path= "resources/yaml/" +language+"/"+ cargar; //Concatenamos con la ruta relativa
-		input = new FileInputStream(path); //carga el fichero*/
-		// mapa lectura del yaml
+//		String folderpath = new File("").getAbsolutePath();
+//		//sacamos la lista de archivos en dicho path
+//		File folderFile = new File(folderpath+"/src/resources/yaml/"+language+"/");
+//		String path = folderpath+"/src/resources/yaml/"+language+"/"+cargar;
+		input = YamlReaderClass.class.getClassLoader().getResourceAsStream("resources/yaml/" +language+"/"+ cargar);
+		//input = YamlReaderClass.class.getClassLoader().getResourceAsStream(path);
 		@SuppressWarnings("unchecked")
 		Map<String, Object> mapaObjeto = (Map<String, Object>) yaml.load(input);
 		// auxiliares

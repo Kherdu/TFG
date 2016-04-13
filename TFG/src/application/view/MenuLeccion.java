@@ -91,7 +91,7 @@ public class MenuLeccion extends Pane{
 		start.getStyleClass().add("start");
 		error.getStyleClass().add("error");
 		tittleList.getStyleClass().add("tittle");
-		box.getStylesheets().add(getClass().getResource("/resorces/css/menu.css").toExternalForm());
+		//box.getStylesheets().add(getClass().getResource("src/resorces/css/menu.css").toExternalForm());
 		
 		
 		return box;

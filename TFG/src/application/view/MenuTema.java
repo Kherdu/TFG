@@ -1,6 +1,8 @@
 package application.view;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import application.controller.Controller;
 import javafx.collections.FXCollections;
@@ -30,12 +32,12 @@ public class MenuTema extends Pane{
 	public MenuTema(){
 	}
 	
-	public Pane menuTema(ArrayList<String> temas, String lenSelect, Controller c){
+	public Pane menuTema(List<String> files, String lenSelect, Controller c){
 		GridPane box = new GridPane();
 		
 		Label language = new Label(lenSelect);
 		ListView<String> temasList = new ListView<String>(); //Lista de los temas
-		ObservableList<String> obsTemas =FXCollections.observableArrayList(temas);//permite ver la seleccion
+		ObservableList<String> obsTemas =FXCollections.observableArrayList(files);//permite ver la seleccion
 		temasList.setItems(obsTemas);
 		
 		Button start = new Button("Comenzar");
@@ -73,10 +75,12 @@ public class MenuTema extends Pane{
 		});
 		
 		//Parte estetica
-		language.getStyleClass().add("tittle");
+		language.getStyleClass().add("title");
 		start.getStyleClass().add("start");
 		error.getStyleClass().add("error");
-		box.getStylesheets().add(getClass().getResource("/resorces/css/menu.css").toExternalForm());
+		String folderpath = new File("").getAbsolutePath();
+		String csspath= folderpath+ "/src/resorces/css/menu.css";
+//		box.getStylesheets().add(getClass().getResource(csspath).toExternalForm());
 		
 		
 		

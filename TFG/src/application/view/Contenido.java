@@ -312,7 +312,7 @@ public class Contenido extends Pane {
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		respuestaBox.getStyleClass().add("respuestaBox");
-		mainPane.getStylesheets().add(getClass().getResource("/resorces/css/contenido.css").toExternalForm());
+		//mainPane.getStylesheets().add(getClass().getResource("/resorces/css/contenido.css").toExternalForm());
 		
 		return mainPane;
 	}

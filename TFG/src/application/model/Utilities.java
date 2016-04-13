@@ -49,7 +49,7 @@ public class Utilities {
 		InputStream file;
 		String aux="";
 		try {
-			file = new FileInputStream("resources/css/prueba.css");
+			file = new FileInputStream("src/resources/css/prueba.css");
 			aux = fileToString(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
