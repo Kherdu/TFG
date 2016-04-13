@@ -1,9 +1,0 @@
-lenguajes: #añadir aquí todos los lenguajes con los que se puede trabajar
- - nombre: python34
-   ruta: C:\Python34\python.exe 
- - nombre: python27
-   ruta: C:\Python27\python.exe 
- - nombre: java
-   ruta: C:\Program Files\Java\jdk1.8.0_73\bin\java.exe
-   
- 
