@@ -75,15 +75,12 @@ public class MenuTema extends Pane{
 		});
 		
 		//Parte estetica
-		language.getStyleClass().add("title");
+		language.getStyleClass().add("tittle");
 		start.getStyleClass().add("start");
 		error.getStyleClass().add("error");
-		String folderpath = new File("").getAbsolutePath();
-		String csspath= folderpath+ "/src/resorces/css/menu.css";
-//		box.getStylesheets().add(getClass().getResource(csspath).toExternalForm());
-		
-		
-		
+		//String folderpath = new File("").getAbsolutePath();
+		//String csspath= folderpath+ "/resorces/css/menu.css";
+		box.getStylesheets().add(getClass().getResource("/resources/css/menu.css").toExternalForm());
 		
 		return box;
 		

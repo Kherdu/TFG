@@ -50,7 +50,7 @@ Lecciones:
       Numero: 3
       Enunciado: |
        Calcula el area de este triangulo 
-       ![triangulo](file:///resources/images/triangulo.jpg)
+       ![triangulo](file:///src/resources/images/triangulo.jpg)
       Tipo: Sintaxis
       Gramatica: Gramatica adecuada a la pregunta
       Resultado: a= 30

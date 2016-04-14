@@ -225,13 +225,14 @@ public class Contenido extends Pane {
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
 						pista.setText("CORRECTO");
-						
+						pista.setStyle("-fx-background-color: green");
 						c.enableNextStep(selected);
 						p.enabledProperty().setValue(enabled+1);
 						pistas.setVisible(false);
 
 					} else {
 						pista.setText("HAS FALLADO");
+						pista.setStyle("-fx-background-color: red");
 						pistas.setVisible(false);
 					}
 
@@ -241,12 +242,12 @@ public class Contenido extends Pane {
 				{
 					Codigo pc = (Codigo) e;
 					String code = codigo.getText();
-					// System.out.println(code);
 
 					if (c.corrige(code, pc))// Se manda el codigo al controlador
 											// para que el modelo lo compruebe
 					{
 						pista.setText("CORRECTO");
+						pista.setStyle("-fx-background-color: green");
 						pistas.setVisible(false);
 						c.enableNextStep(selected);
 						p.enabledProperty().setValue(enabled+1);
@@ -254,7 +255,7 @@ public class Contenido extends Pane {
 						
 					} else {//
 						pista.setText("HAS FALLADO: " + pc.getCorrection().getMessage());
-						
+						pista.setStyle("-fx-background-color: red");
 						pistas.setVisible(true);
 					}
 
@@ -312,7 +313,7 @@ public class Contenido extends Pane {
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		respuestaBox.getStyleClass().add("respuestaBox");
-		//mainPane.getStylesheets().add(getClass().getResource("/resorces/css/contenido.css").toExternalForm());
+		mainPane.getStylesheets().add(getClass().getResource("/resources/css/contenido.css").toExternalForm());
 		
 		return mainPane;
 	}

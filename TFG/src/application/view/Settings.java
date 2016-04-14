@@ -40,7 +40,7 @@ public class Settings extends Pane {
 														// del compilador
 		Button accept = new Button("Aceptar");// Confirmacion de la seleccion de
 												// compilador
-		Label error = new Label("Error");
+		Label error = new Label();
 
 		tittle.setAlignment(Pos.TOP_CENTER);
 
