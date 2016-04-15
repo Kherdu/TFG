@@ -1,0 +1,66 @@
+.tipo{
+   -fx-font-size: 30;
+   -fx-font-style: italic ;
+   -fx-text-fill: red;
+}
+
+.labcode{
+	-fx-font-size: 16;
+	-fx-text-fill: blue;
+}
+
+.box{
+	
+}
+
+
+
+
+/* Aquí para personalizar el botón actualmente seleccionado */
+/* Tomado de: http://fxexperience.com/2011/12/styling-fx-buttons-with-css/ */
+.new-paginator .selected-button {
+    -fx-background-color:
+        #80c800,
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #395306;
+}
+
+/* Tomado de: http://blog.ngopal.com.np/2012/07/11/customize-scrollbar-via-css/ */
+
+/* The main scrollbar **track** CSS class  */
+.new-paginator .scroll-bar:horizontal .track,
+.new-paginator .scroll-bar:vertical .track{
+	-fx-background-color:transparent;
+	-fx-border-color:transparent;
+	-fx-background-radius: 0em;
+	-fx-border-radius:2em;
+}
+
+
+/* The increment and decrement button CSS class of scrollbar */
+.new-paginator .scroll-bar:horizontal .increment-button ,
+.new-paginator .scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 0em;
+	-fx-padding:0 0 5 0;
+
+}
+
+
+.new-paginator  .scroll-bar .increment-arrow,
+.new-paginator  .scroll-bar .decrement-arrow
+ {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.new-paginator .scroll-bar:horizontal .thumb,
+.new-paginator .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 1em;
+
+}
