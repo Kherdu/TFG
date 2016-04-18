@@ -1,8 +1,5 @@
 package main.java.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +12,6 @@ import java.util.stream.Stream;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-
 import javafx.stage.Stage;
 import main.java.model.CargaConfig;
 import main.java.model.Correction;
@@ -32,6 +28,7 @@ import main.java.view.MenuTema;
 import main.java.view.SelectedPath;
 import main.java.view.Settings;
 
+
 /**
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
  * 
@@ -41,7 +38,7 @@ import main.java.view.Settings;
  *
  */
 public class Controller<K, V> {
-	public static String path;// ejecutable de python
+	public static String executable;// ejecutable de python
 	private Tema tema;
 	private Stage primaryStage;
 	private Pane root;
@@ -160,7 +157,6 @@ public class Controller<K, V> {
 	
 	public void start() {
 		Pane p = new Inicio();
-
 		// Map<K, V> l = YamlReaderClass.languages();
 		ArrayList<String> a = languageNames();
 		changeView(p, a, 0, selectedLanguage, null);
@@ -240,6 +236,11 @@ public class Controller<K, V> {
 
 		root.setPrefSize(600,600);
 		scene.setRoot(root);
+		
+		 primaryStage.setX(scene.getX());
+		 primaryStage.setY(scene.getY());
+		 primaryStage.setWidth(scene.getWidth());
+		 primaryStage.setHeight(scene.getHeight());
 
 		primaryStage.setScene(scene);
 
@@ -291,8 +292,8 @@ public class Controller<K, V> {
 	 */
 	public void muestraSeleccion() {
 		SelectedPath sp = new SelectedPath(this.primaryStage, this.selectedLanguage);
-		this.path = sp.getPath();
-		CargaConfig.saveConfig(this.path);
+		this.executable = sp.getPath();
+		CargaConfig.saveConfig(this.executable);
 
 	}
 
@@ -303,13 +304,14 @@ public class Controller<K, V> {
 	 */
 	public void setPath(String path) {
 		//TODO esto tiene que hacer un get
-		this.path = path;
+		this.executable = path;
 		modifyMap();
 		YamlReaderClass.saveConfig((Map<String, Object>) this.lenguajes);
 	}
 
 	public void selectedLanguage(String selectedItem) {
 		this.selectedLanguage = selectedItem;
+		this.executable = pathSelected();
 		showSubject();
 	}
 
@@ -322,7 +324,7 @@ public class Controller<K, V> {
 
 		for (Map o : p) {
 			if (o.get("nombre").equals(this.selectedLanguage)) {
-				o.put("ruta", this.path);
+				o.put("ruta", this.executable);
 			}
 		}
 
@@ -349,7 +351,7 @@ public class Controller<K, V> {
 		// Map<K, V> l = YamlReaderClass.languages();
 		this.selectedLanguage = lenguaje;
 		setPath(this.pathSelected());
-		this.changeView(new Settings(), null, 0, this.path, null);
+		this.changeView(new Settings(), null, 0, this.executable, null);
 	}
 
 	public Scene getScene() {

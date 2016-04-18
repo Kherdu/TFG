@@ -56,7 +56,7 @@ public class Codigo extends Pregunta<String> {
 			File temp = File.createTempFile("json_Data", null);
 			String nombre = temp.getName();
 			//String pathprueba= "C:/python34/python.exe";
-			ProcessBuilder pb = new ProcessBuilder(Controller.path, cor, this.solucion, respuesta, nombre);
+			ProcessBuilder pb = new ProcessBuilder(Controller.executable, cor, this.solucion, respuesta, nombre);
 			Process p = pb.start();
 			InputStream is = p.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);

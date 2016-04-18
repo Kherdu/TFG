@@ -5,12 +5,6 @@ package main.java;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import main.java.controller.Controller;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
-
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 
 /**
@@ -22,7 +16,7 @@ public class Main extends Application{
 
 	private Stage primaryStage;
 	//private BorderPane rootLayout;
-	private static Controller c;
+	
 	
 	
 
@@ -35,7 +29,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage=primaryStage;
 		this.primaryStage.setTitle("TutoFG");
-		c = new Controller(primaryStage);
+		Controller c = new Controller(primaryStage);
 		c.start();
 				
 	}

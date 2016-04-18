@@ -75,7 +75,7 @@ public class Settings extends Pane {
 			@Override
 			public void handle(ActionEvent event) {
 				c.muestraSeleccion();
-				tfPath.setText(Controller.path);
+				tfPath.setText(Controller.executable);
 			}
 		});
 
