@@ -1,0 +1,4 @@
+lenguajes:
+- {nombre: python34, ruta: /usr/bin/python34}
+- {nombre: python27, ruta: /usr/bin/python27}
+- {nombre: java, ruta: 'C:\Program Files\Java\jdk1.8.0_73\bin\java.exe'}
