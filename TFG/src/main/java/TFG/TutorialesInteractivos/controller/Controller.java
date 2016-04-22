@@ -223,8 +223,8 @@ public class Controller<K, V> {
 		scene = new Scene(new Group());
 		// root = new GridPane();
 
-		if (p instanceof Settings) {
-			root = ((Settings) p).settings(this, lenSelect);
+		if (p instanceof FirstConfiguration) {
+			root = ((FirstConfiguration) p).firstConfiguration(this);//(this, lenSelect);
 		} else if (p instanceof Inicio) {
 			root = ((Inicio) p).inicio(files, this);
 		} else if (p instanceof MenuTema) {
