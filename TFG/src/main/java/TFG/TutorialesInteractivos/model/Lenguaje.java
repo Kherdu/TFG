@@ -1,0 +1,32 @@
+package TFG.TutorialesInteractivos.model;
+
+import javafx.beans.property.SimpleStringProperty;
+
+public  class Lenguaje {
+	private final SimpleStringProperty  language;
+	private final SimpleStringProperty  path;
+	
+	public Lenguaje(String language, String path){
+		this.language = new SimpleStringProperty(language);
+		this.path = new SimpleStringProperty(path);
+	}
+
+	public String getLanguage() {
+		return language.get();
+	}
+
+	public String getPath() {
+		return path.get();
+	}
+	
+	public void setLanguage(String lang) {
+        this.language.set(lang);
+    }
+	
+	public void setPath(String path)
+	{
+		this.path.set(path);
+	}
+
+	
+}

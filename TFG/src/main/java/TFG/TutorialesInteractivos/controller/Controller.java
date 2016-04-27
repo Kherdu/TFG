@@ -178,6 +178,7 @@ public class Controller<K, V> {
 			changeView(p, a, 0, selectedLanguage, null);
 		} else {
 			Pane p = new FirstConfiguration();
+			changeView(p, files, 0, null, null);
 		}
 
 	}

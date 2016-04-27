@@ -28,7 +28,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage=primaryStage;
-		this.primaryStage.setTitle("TutoFG");
+		this.primaryStage.setTitle("Tutoriales Interactivos");
 		Controller c = new Controller(primaryStage);
 		c.start();
 				

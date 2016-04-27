@@ -306,7 +306,7 @@ public class Contenido extends Pane {
 		mainPane.getRowConstraints().addAll(row1, row2);*/
 		mainPane.add(container, 0, 0);
 		mainPane.add(p, 0, 1);
-		GridPane.setConstraints(container, 0, 0, 2,1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(container, 0, 0, 3,1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
 		GridPane.setConstraints(p, 0, 1, 2, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		
 		
