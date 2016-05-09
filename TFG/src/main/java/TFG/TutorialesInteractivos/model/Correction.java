@@ -2,6 +2,11 @@ package TFG.TutorialesInteractivos.model;
 
 import java.util.List;
 
+/**
+ * Crea el mensaje y las pistas en caso de que la pregunta sea fallida
+ * @author Carlos
+ *
+ */
 public class Correction {
 	private String message;
 	private List<String> hints;

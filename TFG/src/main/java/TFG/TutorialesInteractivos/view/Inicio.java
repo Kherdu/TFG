@@ -107,10 +107,10 @@ public class Inicio extends Pane {
 			public void handle(ActionEvent event) {
 				MultipleSelectionModel<String> s;
 				s= languageList.getSelectionModel();
-				if (!s.isEmpty())//Se comprueba que hay alguna opcion seleccionada
+				/*if (!s.isEmpty())//Se comprueba que hay alguna opcion seleccionada
 					c.showPortada(s.getSelectedItem());//Se carga el tema seleccionado
 				else 
-					error.setText("Se debe seleccionar un lenguaje");
+					error.setText("Se debe seleccionar un lenguaje");*/
 				
 			}
 		});

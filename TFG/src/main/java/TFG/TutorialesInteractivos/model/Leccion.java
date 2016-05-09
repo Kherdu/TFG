@@ -55,9 +55,10 @@ public class Leccion
 		this.elementos = elementos;
 	}
 	
-	public void addElemento(Elemento elem)
+	
+	/*public void addElemento(Elemento elem)
 	{
 		this.elementos.add(elem);
-	}
+	}*/
 	
 }

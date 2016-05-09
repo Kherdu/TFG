@@ -10,22 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
-import java.util.stream.Stream;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import TFG.TutorialesInteractivos.Main;
 import TFG.TutorialesInteractivos.model.Correction;
 import TFG.TutorialesInteractivos.model.Elemento;
 import TFG.TutorialesInteractivos.model.Explicacion;
 import TFG.TutorialesInteractivos.model.Pregunta;
 import TFG.TutorialesInteractivos.model.Tema;
 import TFG.TutorialesInteractivos.utilities.CargaConfig;
-import TFG.TutorialesInteractivos.utilities.PreferencesHandler;
 import TFG.TutorialesInteractivos.utilities.Utilities;
 import TFG.TutorialesInteractivos.utilities.YamlReaderClass;
 import TFG.TutorialesInteractivos.view.Contenido;
@@ -34,7 +25,10 @@ import TFG.TutorialesInteractivos.view.Inicio;
 import TFG.TutorialesInteractivos.view.MenuLeccion;
 import TFG.TutorialesInteractivos.view.MenuTema;
 import TFG.TutorialesInteractivos.view.SelectedPath;
-import TFG.TutorialesInteractivos.view.Settings;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
@@ -47,20 +41,20 @@ import TFG.TutorialesInteractivos.view.Settings;
 public class Controller<K, V> {
 	public static String executable;// ejecutable del lenguaje para ejecutar
 									// código
-	private Tema tema;
-	private Stage primaryStage;
-	private Pane root;
+	private Tema tema; //Tema que se está ejecutando
+	private Stage primaryStage;//Vista principal de la aplicación
+	private Pane root;//Panel con los elementos de la vista
 	private Scene scene;
-	private ArrayList<Elemento> elems;
+	private ArrayList<Elemento> elems; //Lista de elementos de un tema
 	private int actualStep; // contador de el elemento del contenido en el que
 							// estamos
-	private int enabledSteps;
-	private boolean[] visited;
-	private int actualLesson;
+	private int enabledSteps; //Elementos habilitados
+	private boolean[] visited; //Array con los elementos de una lección que se han visitado
+	private int actualLesson; //Lección en la que se encuentra el tutorial
 	private List<String> files;// temas del lenguaje
 	private String selectedLanguage; // lenguaje seleccionado
 	private Map<K, V> lenguajes; // Map con los lenguajes posibles
-	private Correction c;
+	private Correction c; 
 	private Preferences pref;
 	private String externalResourcesPath;
 
@@ -115,7 +109,13 @@ public class Controller<K, V> {
 		}
 		return ret;
 	}
-
+	
+	/**
+	 * Función correctora de las preguntas de tipo Codigo y sintaxis
+	 * @param resp
+	 * @param p
+	 * @return
+	 */
 	public boolean corrige(String resp, Pregunta p) {
 		boolean ret = false;
 		if (p.corrige(resp, tema)) {
@@ -164,7 +164,10 @@ public class Controller<K, V> {
 	public void goMenu() {
 		showStart();
 	}
-
+	
+	/**
+	 * Lanza la aplicacion
+	 */
 	public void start() {
 		// se pueden poner de usuario en vez de de sistema, pero en usuario
 		// serán para el usuario concreto, de sistema funciona para todo
@@ -182,7 +185,11 @@ public class Controller<K, V> {
 		}
 
 	}
-
+	
+	/**
+	 * Obtiene la lista de lenguajes disponibles
+	 * @return
+	 */
 	public ArrayList<String> languageNames() {
 
 		String lang = pref.get("Languages", null);
@@ -192,7 +199,7 @@ public class Controller<K, V> {
 	}
 
 	/**
-	 * Muestra la primera ventana de la aplicaci�n
+	 * Muestra la primera ventana de la aplicacion
 	 */
 	public void showStart() {
 		primaryStage.setTitle(this.selectedLanguage); // el titulo se podria
@@ -285,8 +292,8 @@ public class Controller<K, V> {
 	 * Carga los componenetes del tema, y muestra la ventana con la primera
 	 * explicación, se llamará cuando elijamos una leccion
 	 * 
-	 * @param selectedItem
-	 *            es la lección seleccionada
+	 * @param selectedItem  es la lección seleccionada
+	 *           
 	 */
 	public void selectedLeccion(int selectedItem) {
 		this.actualLesson = selectedItem;
@@ -331,7 +338,11 @@ public class Controller<K, V> {
 		modifyMap();
 		YamlReaderClass.saveConfig((Map<String, Object>) this.lenguajes);
 	}
-
+	
+	/**
+	 * Actualiza el lenguaje seleccionado y el path del archivo de ejecucion
+	 * @param selectedItem
+	 */
 	public void selectedLanguage(String selectedItem) {
 		this.selectedLanguage = selectedItem;
 		this.executable = pathSelected();
@@ -369,39 +380,60 @@ public class Controller<K, V> {
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
-
-	public void showPortada(String lenguaje) {
+	
+	
+	/*public void showPortada(String lenguaje) {
 		// Map<K, V> l = YamlReaderClass.languages();
 		this.selectedLanguage = lenguaje;
 		setPath(this.pathSelected());
 		this.changeView(new Settings(), null, 0, this.executable, null);
-	}
+	}*/
 
 	public Scene getScene() {
 
 		return this.scene;
 	}
 
+	/**
+	 * 
+	 * @return Elemento actual de la leccion
+	 */
 	public int getActualStep() {
 
 		return this.actualStep;
 	}
-
+	
+	/**
+	 * 
+	 * @return Lista de elementos de una leccion
+	 */
 	public ArrayList<Elemento> getElems() {
 		return this.elems;
 	}
-
+	
+	/**
+	 * Modifica la vista de Contenido
+	 * @param newStep
+	 */
 	public void lessonPageChange(Number newStep) {
 		actualStep = (int) newStep - 2;
 		changeView(new Contenido(), null, actualLesson, selectedLanguage, newStep);
 	}
-
+	
+	/**
+	 * Actualiza el estado del Paginator
+	 * @param newStep
+	 * @param isQuestion
+	 */
 	public void stepChange(Number newStep, boolean isQuestion) {
 		// -2 porque en nuestra indexación hay -1 que es la intro y elemento 0
 		if (!isQuestion)
 			enableNextStep((int) newStep);
 	}
 
+	/**
+	 * Habilita el siguiente elemento del actual en el Paginator. Solo si no es pregunta
+	 */
 	public void enableNextStep(int actual) {
 		// TODO habilitar el siguiente si en el que estamos no ha sido visitado
 		// ya y es explicación, se llama cuando se corrige bien, y se llama aquí

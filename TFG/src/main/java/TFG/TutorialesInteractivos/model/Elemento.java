@@ -20,6 +20,7 @@ public abstract class Elemento {
 		return this.texto;
 	}
 
+	
 	public abstract void setOpciones(ArrayList<String> opc);
 
 	public abstract void setMulti(Boolean is);

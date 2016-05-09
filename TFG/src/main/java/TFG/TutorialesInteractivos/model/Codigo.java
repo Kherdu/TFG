@@ -23,7 +23,7 @@ import TFG.TutorialesInteractivos.controller.Controller;
  */
 public class Codigo extends Pregunta<String> {
 
-	private Correction c;
+	private Correction c;// Corrector de las preguntas de tipo codigo
 
 	public Codigo(int numero, String enunciado, String pista, String solucion) {
 		super(numero, enunciado, pista, solucion);

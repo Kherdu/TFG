@@ -21,6 +21,11 @@ import TFG.TutorialesInteractivos.controller.Controller;
 import TFG.TutorialesInteractivos.model.Tema;
 import TFG.TutorialesInteractivos.utilities.Utilities;
 
+/**
+ * Muestra la lista de ls lecciones del tema seleccionado
+ * @author Carlos
+ *
+ */
 public class MenuLeccion extends Pane{
 	
 	

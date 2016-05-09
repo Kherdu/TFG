@@ -34,6 +34,11 @@ import TFG.TutorialesInteractivos.model.Pregunta;
 import TFG.TutorialesInteractivos.model.Sintaxis;
 import TFG.TutorialesInteractivos.utilities.Utilities;
 
+/**
+ * Vista de los elementos de la leccion
+ * @author Carlos
+ *
+ */
 public class Contenido extends Pane {
 
 	private final ToggleGroup group = new ToggleGroup();

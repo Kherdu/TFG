@@ -27,6 +27,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
+/**
+ * Vista para modificar la configuración de la aplicacion
+ * @author Carlos
+ *
+ */
 public class FirstConfiguration extends Pane {
 
 	public  FirstConfiguration(){
@@ -34,6 +39,9 @@ public class FirstConfiguration extends Pane {
 	}
 	
 	public Pane firstConfiguration(Controller c){
+		//TODO vendrá dado por el fichero. Hay que borrarlo
+		String[] lang = {"python34", "python27", "java"};
+		String[] rutas = {"path34", "path27", "pathjava"};
 		
 		GridPane root = new GridPane(); //Panel principal
 		
