@@ -32,7 +32,7 @@ import TFG.TutorialesInteractivos.model.Explicacion;
 import TFG.TutorialesInteractivos.model.Opciones;
 import TFG.TutorialesInteractivos.model.Pregunta;
 import TFG.TutorialesInteractivos.model.Sintaxis;
-import TFG.TutorialesInteractivos.utilities.Utilities;
+import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 
 /**
  * Vista de los elementos de la leccion
@@ -81,7 +81,7 @@ public class Contenido extends Pane {
 		content = c.markToHtml(e.getTexto());
 
 		// Campo donde se escribeel enunciado o la explicacion de la pregunta
-		WebView text = Utilities.creaBrowser(content);
+		WebView text = InternalUtilities.creaBrowser(content);
 
 		WebEngine engine = text.getEngine();
 		engine.loadContent(content);

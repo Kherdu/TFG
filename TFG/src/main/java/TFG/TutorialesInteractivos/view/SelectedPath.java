@@ -1,5 +1,6 @@
 package TFG.TutorialesInteractivos.view;
 
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -10,18 +11,19 @@ import javafx.stage.Stage;
  */
 public class SelectedPath 
 {
-	private FileChooser fc;
 	private String path;
 	
-	public SelectedPath(Stage stage, String lenguaje)
-	{
-		fc = new FileChooser();
-		fc.setTitle(lenguaje);
+	public SelectedPath(Stage stage, String lenguaje){
+		FileChooser fc = new FileChooser();
 		this.path = fc.showOpenDialog(stage).getAbsolutePath();
 	}
 	
-	public String getPath()
-	{
+	public SelectedPath(Stage stage){
+		DirectoryChooser chooser = new DirectoryChooser();
+		this.path = chooser.showDialog(stage).getAbsolutePath();
+	}
+	
+	public String getPath(){
 		return this.path;
 	}
 }

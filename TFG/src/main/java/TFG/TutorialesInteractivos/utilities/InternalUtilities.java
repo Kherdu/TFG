@@ -1,11 +1,14 @@
 package TFG.TutorialesInteractivos.utilities;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +28,7 @@ import javafx.scene.web.WebView;
  * @author Carlos
  *
  */
-public class Utilities {
+public class InternalUtilities {
 	/**
 	 * Modifica el la ruta de la imagen dentro del HTML
 	 * 
@@ -54,7 +57,7 @@ public class Utilities {
 	public static WebView creaBrowser(String html) {
 		InputStream file;
 		String aux = "";
-		file = Utilities.class.getClassLoader().getResourceAsStream("css/webView.css");
+		file = InternalUtilities.class.getClassLoader().getResourceAsStream("css/webView.css");
 
 		aux = fileToString(file);
 
@@ -111,4 +114,21 @@ public class Utilities {
 		return html;
 	}
 
+	public static List<String> getDirectoryList(String path) {
+		File directory = new File(path);
+
+		FileFilter directoryFileFilter = new FileFilter() {
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		};
+
+		File[] directoryListAsFile = directory.listFiles(directoryFileFilter);
+		List<String> foldersInDirectory = new ArrayList<String>(directoryListAsFile.length);
+		for (File directoryAsFile : directoryListAsFile) {
+			foldersInDirectory.add(directoryAsFile.getName());
+		}
+
+		return foldersInDirectory;
+	}
 }

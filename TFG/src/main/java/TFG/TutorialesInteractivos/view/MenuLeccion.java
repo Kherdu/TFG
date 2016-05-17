@@ -19,7 +19,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import TFG.TutorialesInteractivos.controller.Controller;
 import TFG.TutorialesInteractivos.model.Tema;
-import TFG.TutorialesInteractivos.utilities.Utilities;
+import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 
 /**
  * Muestra la lista de ls lecciones del tema seleccionado
@@ -43,7 +43,7 @@ public class MenuLeccion extends Pane{
 		
 		//Creacion de webview
 		String content = c.markToHtml(t.getTitulo() + "\n" + t.getIntroduccion());
-		WebView tittle = Utilities.creaBrowser(content);
+		WebView tittle = InternalUtilities.creaBrowser(content);
 		WebEngine engine = tittle.getEngine();
 		engine.loadContent(content);
 		
