@@ -16,10 +16,12 @@ Lecciones:
       Contenido: >
        El simbolo de igualdad sirve para asignar valores a variables. *Variable = valor*
     - Elem: explicacion
-      Contenido: >
-       "Unos ejemplos:
-          s = 'Hola Mundo'
-          entero = 6"
+      Contenido: |
+       Unos ejemplos:
+       ```
+       s = 'Hola Mundo'
+       entero = 6
+       ```
     - Elem: pregunta
       Numero: 1
       Enunciado: si hacemos la operacion '7 / 2' que sale por pantalla?
@@ -29,10 +31,10 @@ Lecciones:
       Opcion_correcta: "1"
       Multiple: no
       Opciones: 
-       - 1) 3
-       - 2) 4
-       - 3) 3.5
-       - 4) ninguna de las anteriores
+       - 3
+       - 4
+       - 3.5
+       - Ninguna de las anteriores
     - Elem: pregunta
       Numero: 2 
       Enunciado: Asigna a la variable i el valor 4
@@ -40,12 +42,13 @@ Lecciones:
       Resultado: pregunta11
     - Elem: explicacion
       Contenido: |
-       "En el entorno de Python se pueden crear pequeños programas como hayar el área de un polígono
-        ej:
-            altura = 7
-            ancho = 8
-            area = altura * ancho   
-       "
+       En el entorno de Python se pueden crear pequeños programas como hallar el área de un *rectángulo*
+       ej:
+       ```
+       altura = 7
+       ancho = 8
+       area = altura * ancho
+       ```
     - Elem: pregunta
       Numero: 3
       Enunciado: |
@@ -61,14 +64,13 @@ Lecciones:
    Elementos:
     - Elem: explicacion
       Contenido: |
-       "Las cadenas se pueden expresar de diversas formas:
-        
+       Las cadenas se pueden expresar de diversas formas:     
+       
         * Con comillas simples
         * Con comillas dobles
-       " 
     - Elem: pregunta
       Numero: 1
-      Enunciado: Asigna a la variable **˜cadena** el valor "Hola Mundo"
+      Enunciado: Asigna a la variable **cadena** el valor "Hola mundo"
       Tipo: Codigo
       Resultado: pregunta21
     - Elem: pregunta
