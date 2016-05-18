@@ -51,20 +51,21 @@ public class Configuration extends Pane {
 		Button acceptPath = new Button("aceptarPath"); // boton para aceptar el
 														// path una vez se añade
 														// por primera vez
-		
-		if (c.getExternalPath() != null)
+
+		// Lista con los lenguajes y la ruta de su compilador
+		TableView<Lenguaje> languageList = new TableView();
+		ObservableList<Lenguaje> data = FXCollections.observableArrayList();
+		List<Lenguaje> ls = null;
+		if (c.getExternalPath() != null) {
 			pathDep.setText(c.getExternalPath());
+			ls = c.getLanguagesList();
+			data.setAll(ls);
+		}
 		dependencies.setMnemonicParsing(true);
 		dependencies.setLabelFor(pathDep);
 
 		Label languagesLabel = new Label("LENGUAJES");
 
-		// Lista con los lenguajes y la ruta de su compilador
-		TableView<Lenguaje> languageList = new TableView();
-		ObservableList<Lenguaje> data = FXCollections.observableArrayList();
-		
-		List<Lenguaje> ls= c.getLanguagesList();
-		data.setAll(ls);
 		languageList.setEditable(true);
 		languageList.setVisible(true);
 		TableColumn firstNameCol = new TableColumn("Lenguaje");
@@ -164,12 +165,12 @@ public class Configuration extends Pane {
 				// este es para el lenguaje
 				Lenguaje l = languageList.getSelectionModel().getSelectedItem();
 				if (l != null) {
-					
+
 					c.muestraSeleccion(l);
 				} else {
 					// TODO no has seleccionado
 				}
-				data.set(data.indexOf(l),c.getLanguageAttributes());
+				data.set(data.indexOf(l), c.getLanguageAttributes());
 			}
 		});
 

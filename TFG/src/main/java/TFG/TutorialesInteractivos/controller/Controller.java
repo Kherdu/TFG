@@ -361,9 +361,10 @@ public class Controller<K, V> {
 							// lo guardamos en la variable y en preferences
 			sp = new SelectedPath(this.primaryStage);
 			this.externalResourcesPath = sp.getPath();
-		} else
+		} else{
 			sp = new SelectedPath(this.primaryStage, l.getLanguage());
 			obsLenguaje=new Lenguaje(l.getLanguage(),sp.getPath());
+		}
 	}
 
 	/**
