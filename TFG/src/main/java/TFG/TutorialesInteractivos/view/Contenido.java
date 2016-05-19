@@ -265,7 +265,9 @@ public class Contenido extends Pane {
 					}
 
 				} else if (e instanceof Sintaxis) {
-					// TODO cuando estén las de sintaxis
+					Sintaxis ps = (Sintaxis) e;
+					String code = codigo.getText();
+					c.corrige(code, ps);
 				}
 			}
 			
