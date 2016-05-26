@@ -1,6 +1,6 @@
 Tema: 1
 Titulo: "#Primera toma de contacto"
-Archivo: "externalResources/languages/python34/correctores/tema1.py"
+Archivo: "python34/correctores/tema1.py"
 Introduccion: "##Para mostrar la interaccion basica de python haremos unos pocos ejemplos con numeros y cadenas"
 Lecciones:
  - Leccion: 1 
@@ -53,9 +53,9 @@ Lecciones:
       Numero: 3
       Enunciado: |
        Calcula el area de este triangulo 
-       ![triangulo](/main/resources/images/triangulo.jpg)
+       ![triangulo](/python34/img/triangulo.jpg)
       Tipo: Sintaxis
-      Gramatica: Gramatica adecuada a la pregunta
+      Gramatica: Triangulo
       Resultado: a= 30
  - Leccion: 2
    Titulo_Leccion: Cadenas
@@ -75,7 +75,7 @@ Lecciones:
       Resultado: pregunta21
     - Elem: pregunta
       Numero: 2
-      Enunciado:  Introduce las siguientes palabras en la variable lista_animales. gato, perro, burro
+      Enunciado: Introduce las siguientes palabras en la variable lista_animales. gato, perro, burro
       Tipo: Codigo
       Resultado: pregunta22
     - Elem: explicacion
@@ -96,7 +96,7 @@ Lecciones:
        veces con el operador â€˜*â€™ y el numero de veces que queremos repetir la palabra.
       Pista: variable= â€œcadenaâ€� * n
       Tipo: Sintaxis
-      Gramatica: por definir
+      Gramatica: Bucle
       Resultado: cad=â€™pacopacopacoâ€™
     - Elem: explicacion
       Contenido: "En *python*, las cadenas se pueden tratar como arrays de elementos"

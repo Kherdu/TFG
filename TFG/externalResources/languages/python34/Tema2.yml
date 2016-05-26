@@ -1,6 +1,6 @@
 Tema: 2
 Titulo: "#Listas"
-Archivo: "externalResources/languages/python34/correctores/tema2.py"
+Archivo: "python34/correctores/tema2.py"
 Introduccion: |
  ##Python utiliza varios tipos de datos compuestos, que se utilizan para agrupar otros valores. 
  ##El más versátil es la lista.
@@ -75,6 +75,6 @@ Lecciones:
       Enunciado: Escribe el código para introducir en la lista 'l' los numeros del 1 al 5 utilizando un bucle
       Pista: Consulta el tema de bucles si tienes problemas
       Tipo: Sintaxis
-      Gramatica: ‘Gramática adecuada a la pregunta’
+      Gramatica: CadRep
       Resultado: l=[1,2,3,4,5]
 #faltan preguntas de reemplazar, anidar, borrar y añadir elementos
