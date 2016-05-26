@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
 
+import TFG.TutorialesInteractivos.controller.Controller;
 import TFG.TutorialesInteractivos.model.Codigo;
 import TFG.TutorialesInteractivos.model.Elemento;
 import TFG.TutorialesInteractivos.model.Explicacion;
@@ -39,7 +40,7 @@ public final class YamlReaderClass {
 		Yaml yaml = new Yaml();
 		 
 		
-		File file = new File("externalResources/languages/"+language+"/"+cargar);
+		File file = new File(Controller.externalResourcesPath +"/languages/"+language+"/"+cargar);
 		InputStream input=null;
 		try {
 			input = new FileInputStream(file);

@@ -44,7 +44,7 @@ public class Codigo extends Pregunta<String> {
 
 	@Override
 	public boolean corrige(String respuesta, Tema tema) {
-		File correccion = new File(tema.getArchivo());
+		File correccion = new File(Controller.externalResourcesPath+"/languages/"+tema.getArchivo());
 		String cor = correccion.getAbsolutePath();
 		JSONParser jsonParser = new JSONParser();
 		respuesta = respuesta.replace("\"", "'");

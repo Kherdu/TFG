@@ -43,7 +43,7 @@ import javafx.stage.Stage;
  * @param <V>
  *
  */
-public class Controller<K, V> {
+public class Controller {
 	public static String executable;// ejecutable del lenguaje para ejecutar
 									// código
 	private Tema tema; // Tema que se está ejecutando
@@ -58,11 +58,10 @@ public class Controller<K, V> {
 								// han visitado
 	private int actualLesson; // Lección en la que se encuentra el tutorial
 	private List<String> files;// temas del lenguaje
-	private String selectedLanguage; // lenguaje seleccionado
-	private Map<K, V> lenguajes; // Map con los lenguajes posibles
+	public static String selectedLanguage; // lenguaje seleccionado
 	private Correction c;
 	private Preferences pref;
-	private String externalResourcesPath;
+	public static String externalResourcesPath;
 	private URLClassLoader ucl;
 	private Lenguaje obsLenguaje;
 
@@ -152,7 +151,7 @@ public class Controller<K, V> {
 				}
 
 			};
-			final Path path = Paths.get("externalResources/languages/" + selectedLanguage);
+			final Path path = Paths.get(externalResourcesPath + "/languages/" + selectedLanguage);
 			final DirectoryStream<Path> dirStream = Files.newDirectoryStream(path, filter);
 			for (Path file : dirStream) {
 				// después de aplicar el filtro de extensión .yml, por si acaso
@@ -300,8 +299,6 @@ public class Controller<K, V> {
 		root.setPrefSize(600, 600);
 		scene.setRoot(root);
 
-		primaryStage.setX(scene.getX());
-		primaryStage.setY(scene.getY());
 		primaryStage.setWidth(scene.getWidth());
 		primaryStage.setHeight(scene.getHeight());
 		primaryStage.setScene(scene);
@@ -361,9 +358,9 @@ public class Controller<K, V> {
 							// lo guardamos en la variable y en preferences
 			sp = new SelectedPath(this.primaryStage);
 			this.externalResourcesPath = sp.getPath();
-		} else{
+		} else {
 			sp = new SelectedPath(this.primaryStage, l.getLanguage());
-			obsLenguaje=new Lenguaje(l.getLanguage(),sp.getPath());
+			obsLenguaje = new Lenguaje(l.getLanguage(), sp.getPath());
 		}
 	}
 
@@ -372,7 +369,6 @@ public class Controller<K, V> {
 	 * 
 	 * @param path
 	 */
-	
 
 	/**
 	 * Actualiza el lenguaje seleccionado y el path del archivo de ejecucion
@@ -385,10 +381,8 @@ public class Controller<K, V> {
 		showSubject();
 	}
 
-	
-
 	public String pathSelected() {
-		
+
 		return pref.get(selectedLanguage, null);
 	}
 
