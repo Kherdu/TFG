@@ -36,6 +36,7 @@ import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 
 /**
  * Vista de los elementos de la leccion
+ * 
  * @author Carlos
  *
  */
@@ -88,7 +89,7 @@ public class Contenido extends Pane {
 
 		container.getChildren().addAll(tipo);
 		container.getChildren().addAll(text);
-		
+
 		Label codigoLab = new Label("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
 
@@ -96,8 +97,8 @@ public class Contenido extends Pane {
 									// la pregunta
 		Label pista = new Label();// Indica si la pregunta se ha respondido bien
 									// o no
-		Button pistas = new Button("INFO"); 
-		
+		Button pistas = new Button("INFO");
+
 		result.getChildren().addAll(pista);
 		result.getChildren().addAll(pistas);
 		pistas.setAlignment(Pos.BOTTOM_RIGHT);
@@ -148,7 +149,7 @@ public class Contenido extends Pane {
 		} else {
 			if (e instanceof Pregunta) {
 				container.getChildren().addAll(codigoLab);
-				
+
 				respuestaBox.getChildren().addAll(codigo);
 				respuestaBox.getChildren().addAll(buttonsCode);
 				container.getChildren().addAll(respuestaBox);
@@ -169,7 +170,6 @@ public class Contenido extends Pane {
 
 		});
 
-		
 		help.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -179,7 +179,7 @@ public class Contenido extends Pane {
 				Label popupLabel = new Label(helpText);
 				popup.setAutoHide(true);
 				popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
-				
+
 				Node eventSource = (Node) event.getSource();
 				Bounds sourceNodeBounds = eventSource.localToScreen(eventSource.getBoundsInLocal());
 				popup.setX(sourceNodeBounds.getMinX() - 5.0);
@@ -232,7 +232,7 @@ public class Contenido extends Pane {
 						pista.setText("CORRECTO");
 						pista.setStyle("-fx-background-color: green");
 						c.enableNextStep(selected);
-						p.enabledProperty().setValue(enabled+1);
+						p.enabledProperty().setValue(enabled + 1);
 						pistas.setVisible(false);
 
 					} else {
@@ -255,9 +255,8 @@ public class Contenido extends Pane {
 						pista.setStyle("-fx-background-color: green");
 						pistas.setVisible(false);
 						c.enableNextStep(selected);
-						p.enabledProperty().setValue(enabled+1);
-						
-						
+						p.enabledProperty().setValue(enabled + 1);
+
 					} else {//
 						pista.setText("HAS FALLADO: " + pc.getCorrection().getMessage());
 						pista.setStyle("-fx-background-color: red");
@@ -267,11 +266,20 @@ public class Contenido extends Pane {
 				} else if (e instanceof Sintaxis) {
 					Sintaxis ps = (Sintaxis) e;
 					String code = codigo.getText();
-					c.corrige(code, ps);
+					if (c.corrige(code, ps)) {
+						pista.setText("CORRECTO");
+						pista.setStyle("-fx-background-color: green");
+						pistas.setVisible(false);
+						c.enableNextStep(selected);
+						p.enabledProperty().setValue(enabled + 1);
+
+					} else {//
+						pista.setText("HAS FALLADO");
+						pista.setStyle("-fx-background-color: red");
+						pistas.setVisible(true);
+					}
 				}
 			}
-			
-
 		});
 
 		pistas.setOnAction(new EventHandler<ActionEvent>() {
@@ -305,23 +313,24 @@ public class Contenido extends Pane {
 			}
 		});
 
-		/*RowConstraints row1 = new RowConstraints();
-		RowConstraints row2 = new RowConstraints();
-		row1.setPercentHeight(75);
-		row2.setPercentHeight(25);
-		
-		mainPane.getRowConstraints().addAll(row1, row2);*/
+		/*
+		 * RowConstraints row1 = new RowConstraints(); RowConstraints row2 = new
+		 * RowConstraints(); row1.setPercentHeight(75);
+		 * row2.setPercentHeight(25);
+		 * 
+		 * mainPane.getRowConstraints().addAll(row1, row2);
+		 */
 		mainPane.add(container, 0, 0);
 		mainPane.add(p, 0, 1);
-		GridPane.setConstraints(container, 0, 0, 3,1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(container, 0, 0, 3, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
+				new Insets(5));
 		GridPane.setConstraints(p, 0, 1, 2, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
-		
-		
+
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		respuestaBox.getStyleClass().add("respuestaBox");
 		mainPane.getStylesheets().add(getClass().getResource("/css/contenido.css").toExternalForm());
-		
+
 		return mainPane;
 	}
 

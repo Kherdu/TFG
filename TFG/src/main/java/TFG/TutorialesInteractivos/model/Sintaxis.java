@@ -42,7 +42,7 @@ public class Sintaxis extends Pregunta<String> {
 		try {
 			// falta el nombre de la carpeta en concreto, que irá tambien en los
 			// de abajo y en el getmethod lowercase
-			String s = "file:"+Controller.externalResourcesPath + "/languages/" + Controller.selectedLanguage
+			String s = "file:" + Controller.externalResourcesPath + "/languages/" + Controller.selectedLanguage
 					+ "/gramaticas/" + sintaxis + "/";
 			classUrl = new URL(s);
 		} catch (MalformedURLException e1) {
@@ -53,26 +53,23 @@ public class Sintaxis extends Pregunta<String> {
 		URLClassLoader ucl = new URLClassLoader(classUrls);
 
 		try {
-			// TODO main.prue.... hay que cambiarlo a lo que tiene el yml, que
-			// hay que añadirlo
-			Class<? extends Lexer> c = (Class<? extends Lexer>) Class.forName(sintaxis + "Lexer", true,
-					ucl);
+
+			Class<? extends Lexer> c = (Class<? extends Lexer>) Class.forName(sintaxis + "Lexer", true, ucl);
 			Constructor<? extends Lexer> constructor = c.getConstructor(CharStream.class);
 			// String respuesta = "h=2\nb=4\na=h*b/2";
 			Lexer l = constructor.newInstance(new ANTLRInputStream(respuesta));
 
-			Class<? extends Parser> cParser = (Class<? extends Parser>) Class.forName("main.prueba." + sintaxis + "Parser",
-					true, ucl);
+			Class<? extends Parser> cParser = (Class<? extends Parser>) Class.forName(sintaxis + "Parser", true, ucl);
 			Constructor<? extends Parser> constructorParser = cParser.getConstructor(TokenStream.class);
 			Parser p = constructorParser.newInstance(new CommonTokenStream(l));
 
 			// Aqui empieza lo bueno
 			Class<? extends ParserRuleContext> inner = (Class<? extends ParserRuleContext>) Class
-					.forName("main.prueba.TrianguloParser$TrianguloContext", true, ucl);
+					.forName(sintaxis + "Parser$" + sintaxis + "Context", true, ucl);
 			Constructor<? extends ParserRuleContext> constInn = inner.getConstructor(ParserRuleContext.class,
 					int.class);
 			ParserRuleContext prc = constInn.newInstance(new ParserRuleContext(), 5);
-			
+
 			prc = (ParserRuleContext) cParser.getMethod(sintaxis.toLowerCase()).invoke(p);
 			System.out.println(prc.exception);
 			if (prc.exception == null) {

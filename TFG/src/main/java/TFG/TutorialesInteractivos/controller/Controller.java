@@ -471,7 +471,7 @@ public class Controller {
 			for (Lenguaje l : data) {
 				pref.put(l.getLanguage(), l.getPath());
 			}
-			saveClassPath(path);
+		//	saveClassPath(path);
 		} else {
 			// TODO error que diga que no hay directorio o compiladores (aqui o
 			// en la vista?)
@@ -484,7 +484,8 @@ public class Controller {
 		changeView(p, a, 0, selectedLanguage, null);
 	}
 
-	private void saveClassPath(String path) {
+	
+	/*private void saveClassPath(String path) {
 		URL classUrl;
 		try {
 			classUrl = new URL("file:" + path);
@@ -494,7 +495,7 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public String getExternalPath() {
 		return externalResourcesPath;
