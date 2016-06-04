@@ -261,7 +261,7 @@ public class Controller {
 	 */
 	private void changeView(Pane p, List<String> files, int selected, String lenSelect, Number newStep) {
 		scene = new Scene(new Group());
-		// root = new GridPane();
+		
 
 		if (p instanceof Configuration) {
 			root = ((Configuration) p).firstConfiguration(this);
@@ -295,7 +295,8 @@ public class Controller {
 			// terminado??
 			root = ((Contenido) p).contenido(e, this, elems.size() + 1, enabledSteps, actualStep + 2);
 		}
-
+		
+		
 		root.setPrefSize(600, 600);
 		scene.setRoot(root);
 

@@ -39,9 +39,7 @@ public class FirstConfiguration extends Pane {
 	}
 	
 	public Pane firstConfiguration(Controller c){
-		//TODO vendrá dado por el fichero. Hay que borrarlo
-		String[] lang = {"python34", "python27", "java"};
-		String[] rutas = {"path34", "path27", "pathjava"};
+		
 		
 		GridPane root = new GridPane(); //Panel principal
 		
@@ -54,12 +52,7 @@ public class FirstConfiguration extends Pane {
 		
 		Label languagesLabel = new Label("LENGUAJES");
 		
-		//Sec Combinan los dos arrays se podria borrar
-		/*ArrayList<String> langMorePath = new ArrayList<>();
-		for (int i = 0; i < lang.length; i++)
-		{
-			langMorePath.add(lang[i]+ "-> Path: "+rutas[i]);
-		}*/
+		
 		
 		//Lista con los lenguajes y la ruta de su compilador 
 		TableView languageList = new TableView();

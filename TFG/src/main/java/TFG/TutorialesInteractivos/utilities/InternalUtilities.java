@@ -17,6 +17,7 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.w3c.dom.Document;
 
+import TFG.TutorialesInteractivos.controller.Controller;
 import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -36,7 +37,7 @@ public class InternalUtilities {
 	 * @return
 	 */
 	private String modifyImg(String html) {
-		String pattern = "(<img src=\")(.*?)(\".*?>)"; // Patron de la cadena a
+		String pattern = "(<img src=\"file:///)(.*?)(\".*?>)"; // Patron de la cadena a
 														// buscar.
 		// En el yaml el formato ha de ser "file:///"+ ruta relativa a la imagen
 
@@ -45,9 +46,11 @@ public class InternalUtilities {
 		Matcher matcher = p.matcher(html);
 
 		while (matcher.find()) {
-			URL im = getClass().getResource(matcher.group(2));
+			System.out.println(matcher.group(2));
+			File f = new File(Controller.externalResourcesPath+"/" + matcher.group(2));
+			String im = f.getPath();
 			html = html.replace(matcher.group(), matcher.group(1) + im + matcher.group(3));
-			System.out.println(html);
+			
 		}
 		return html;
 	}
@@ -72,8 +75,6 @@ public class InternalUtilities {
 				org.w3c.dom.Text styleContent = doc.createTextNode(CSS);
 				styleNode.appendChild(styleContent);
 				doc.getDocumentElement().getElementsByTagName("head").item(0).appendChild(styleNode);
-
-				// System.out.println(webEngine.executeScript("document.documentElement.innerHTML"));
 			}
 		});
 		webEngine.loadContent(html);
@@ -110,6 +111,7 @@ public class InternalUtilities {
 		String html;
 		PegDownProcessor pro = new PegDownProcessor(Extensions.ALL - Extensions.EXTANCHORLINKS);
 		html = pro.markdownToHtml(mark);
+		
 		html = modifyImg(html);
 		return html;
 	}
