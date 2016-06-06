@@ -56,8 +56,6 @@ public class Contenido extends Pane {
 	public Pane contenido(Elemento e, Controller c, int steps, int enabled, int selected) {
 
 		Label tipo = new Label(null);
-		
-		
 
 		if (selected == 1)
 			tipo.setText("Introducción");
@@ -106,14 +104,14 @@ public class Contenido extends Pane {
 		pistas.setAlignment(Pos.BOTTOM_RIGHT);
 		pistas.setVisible(false);
 
-		GridPane respuestaBox = new GridPane();// Contenedor con el campo de respuesta
+		HBox respuestaBox = new HBox(10);// Contenedor con el campo de respuesta
 											// y los botones de la pregunta
 
 		// Botones para el envio/ayuda de respuestas
 		VBox buttonsCode = new VBox(5);
 		Button help = new Button("Ayuda");
 		Button resolve = new Button("Resolver");
-		buttonsCode.setAlignment(Pos.CENTER);
+		buttonsCode.setAlignment(Pos.CENTER_RIGHT);
 
 		VBox opciones = new VBox();
 
@@ -144,21 +142,16 @@ public class Contenido extends Pane {
 				}
 				opciones.getChildren().addAll(l);
 			}
-			respuestaBox.add(opciones,0,0);
-			respuestaBox.add(buttonsCode,1,0);
-			
-			GridPane.setConstraints(opciones, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,new Insets(5));
-			GridPane.setConstraints(buttonsCode, 1, 0, 1, 1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.SOMETIMES, new Insets(5));
-
+			respuestaBox.getChildren().addAll(opciones);
+			respuestaBox.getChildren().addAll(buttonsCode);
 			container.getChildren().addAll(respuestaBox);
 			container.getChildren().addAll(result);
 		} else {
 			if (e instanceof Pregunta) {
 				container.getChildren().addAll(codigoLab);
-				respuestaBox.add(codigo,0,0);
-				respuestaBox.add(buttonsCode,1,0);
-				GridPane.setConstraints(codigo, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.ALWAYS,new Insets(5));
-				GridPane.setConstraints(buttonsCode, 1, 0, 1, 1, HPos.RIGHT, VPos.TOP, Priority.ALWAYS, Priority.SOMETIMES, new Insets(5));
+
+				respuestaBox.getChildren().addAll(codigo);
+				respuestaBox.getChildren().addAll(buttonsCode);
 				container.getChildren().addAll(respuestaBox);
 				container.getChildren().addAll(result);
 			}
@@ -329,9 +322,9 @@ public class Contenido extends Pane {
 		 */
 		mainPane.add(container, 0, 0);
 		mainPane.add(p, 0, 1);
-		GridPane.setConstraints(container, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
+		GridPane.setConstraints(container, 0, 0, 3, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
 				new Insets(5));
-		GridPane.setConstraints(p, 0, 1, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(p, 0, 1, 2, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
