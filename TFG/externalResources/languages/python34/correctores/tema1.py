@@ -19,12 +19,12 @@ def pregunta11(code, filename):
                 value3 = ['']
             else:
                 value1 = False
-                value2 = '¿te suena de algo el numero 4?'
-                value3 = ['read again', 'or sth like that']
+                value2 = 'Variable incorrecta'
+                value3 = ['lee el enunciado de nuevo']
         else:
             value1 = False
-            value2 = 'esta fatal'
-            value3 = ['prueba a leer el enunciado otra vez', 'o cortarte las venas']
+            value2 = 'Variable no encontrada'
+            value3 = ['prueba a leer el enunciado otra vez']
         dicc['isCorrect'] = value1
         dicc['typeError'] = value2
         dicc['Hints'] = value3
