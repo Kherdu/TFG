@@ -5,7 +5,7 @@ import tempfile
 
 def pregunta11(code, filename):
     try:
-		exec(codigo) 
+	exec(codigo) 
         r=["Rafa","Carlos", 32,27]
         if set(locals()['l']) == set(r) :
            value1 = True
@@ -15,13 +15,13 @@ def pregunta11(code, filename):
            value1 = False
            value2 = 'Error de contenido'
            value3 = ['Puede que hayas escrito mal los elementos']
-		dicc['isCorrect'] = value1
+	dicc['isCorrect'] = value1
         dicc['typeError'] = value2
         dicc['Hints'] = value3
-		with open(filename, 'w') as outfile:
+	with open(filename, 'w') as outfile:
             json.dump(dicc, outfile)
         sys.exit(0); 
-	except Exception as e:
+    except Exception as e:
         e.print_exc()
         sys.exit(1)
  
