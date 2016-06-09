@@ -53,7 +53,7 @@ Lecciones:
       Numero: 3
       Enunciado: |
        Calcula el area de este triangulo 
-       ![triangulo](file:///languages/python34/img/triangulo.jpg)
+       ![triangulo](file:///python34/img/triangulo.jpg)
       Tipo: Sintaxis
       Gramatica: Triangulo
       Resultado: a= 30

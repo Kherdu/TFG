@@ -9,14 +9,13 @@ import TFG.TutorialesInteractivos.controller.Controller;
 
 /**
  * Clase principal de la aplicación
- * @author Carlos
+ * @authors Carlos, Rafa
  *
  */
 public class Main extends Application{
 
 	private Stage primaryStage;
 	//private BorderPane rootLayout;
-	
 	
 	
 

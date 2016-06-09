@@ -24,7 +24,8 @@ import TFG.TutorialesInteractivos.controller.Controller;
 
 /**
  * Panel que muestra el menu con los temas que se compone el tutorial
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class MenuTema extends Pane{

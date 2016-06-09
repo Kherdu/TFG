@@ -6,7 +6,8 @@ import javafx.stage.Stage;
 
 /**
  * Muestra un FileChooser para seleccionar el path del compilador
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class SelectedPath 

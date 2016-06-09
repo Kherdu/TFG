@@ -23,7 +23,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 
 /**
+ * Clase para introducir el paginador en los tutoriales
+ * 
  * Tomado y adaptado de: Manuel Montenegro (mmontene@ucm.es)
+ * 
  */
 public class Pagination extends StackPane {
 

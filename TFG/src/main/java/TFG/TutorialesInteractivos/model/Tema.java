@@ -5,7 +5,8 @@ import java.util.List;
 
 /**
  * Tema con el que se trabaja
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class Tema {

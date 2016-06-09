@@ -20,7 +20,7 @@ import TFG.TutorialesInteractivos.controller.Controller;
 /**
  * Pregunta de tipo Sintaxis
  * 
- * @author Carlos
+ * @authors Carlos, Rafa
  *
  */
 public class Sintaxis extends Pregunta<String> {
@@ -42,8 +42,8 @@ public class Sintaxis extends Pregunta<String> {
 		try {
 			// falta el nombre de la carpeta en concreto, que irá tambien en los
 			// de abajo y en el getmethod lowercase
-			String s = "file:" + Controller.externalResourcesPath + "/languages/" + Controller.selectedLanguage
-					+ "/gramaticas/" + sintaxis + "/";
+			String s = "file:" + Controller.externalResourcesPath + "/" + Controller.selectedLanguage + "/gramaticas/"
+					+ sintaxis + "/";
 			classUrl = new URL(s);
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block

@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 /**
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
  * 
- * @author Carlos
+ * @authors Carlos, Rafa
  * @param <K>
  * @param <V>
  *
@@ -151,7 +151,7 @@ public class Controller {
 				}
 
 			};
-			final Path path = Paths.get(externalResourcesPath + "/languages/" + selectedLanguage);
+			final Path path = Paths.get(externalResourcesPath + "/" + selectedLanguage);
 			final DirectoryStream<Path> dirStream = Files.newDirectoryStream(path, filter);
 			for (Path file : dirStream) {
 				// después de aplicar el filtro de extensión .yml, por si acaso
@@ -225,7 +225,7 @@ public class Controller {
 		// hay que sacarlos del directorio, es decir, ir a
 		// externalresources/languages y mirar las carpetas que hay, esos son
 		// los lenguajes disponibles
-		return InternalUtilities.getDirectoryList(externalResourcesPath + "/languages");
+		return InternalUtilities.getDirectoryList(externalResourcesPath);
 
 	}
 
@@ -503,7 +503,7 @@ public class Controller {
 	}
 
 	public List<Lenguaje> getLanguagesList() {
-		List<String> lanL = InternalUtilities.getDirectoryList(externalResourcesPath + "/languages");
+		List<String> lanL = InternalUtilities.getDirectoryList(externalResourcesPath);
 		List<Lenguaje> l = new ArrayList<Lenguaje>();
 		if (!lanL.isEmpty()) {
 			for (String s : lanL) {

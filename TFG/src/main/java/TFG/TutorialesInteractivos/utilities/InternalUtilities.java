@@ -26,7 +26,7 @@ import javafx.scene.web.WebView;
  * Clase que contiene los metodos de modificaion de elementos dentro de la
  * aplicacion
  * 
- * @author Carlos
+ * @authors Carlos, Rafa
  *
  */
 public class InternalUtilities {
@@ -37,8 +37,8 @@ public class InternalUtilities {
 	 * @return
 	 */
 	private String modifyImg(String html) {
-		String pattern = "(<img src=\"file:///)(.*?)(\".*?>)"; // Patron de la cadena a
-														// buscar.
+		// Definimos el patrón a buscar
+		String pattern = "(<img src=\"file:///)(.*?)(\".*?>)"; 
 		// En el yaml el formato ha de ser "file:///"+ ruta relativa a la imagen
 
 		// Compilar el patron ignorando si esta en mayusculas o minusculas
@@ -47,7 +47,7 @@ public class InternalUtilities {
 
 		while (matcher.find()) {
 			System.out.println(matcher.group(2));
-			File f = new File(Controller.externalResourcesPath+"/" + matcher.group(2));
+			File f = new File(Controller.externalResourcesPath + "/" + matcher.group(2));
 			String im = f.getPath();
 			html = html.replace(matcher.group(), matcher.group(1) + im + matcher.group(3));
 			

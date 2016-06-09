@@ -4,7 +4,8 @@ import java.util.List;
 
 /**
  * Crea el mensaje y las pistas en caso de que la pregunta sea fallida
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class Correction {

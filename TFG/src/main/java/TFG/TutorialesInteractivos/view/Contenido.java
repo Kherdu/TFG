@@ -38,7 +38,7 @@ import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 /**
  * Vista de los elementos de la leccion
  * 
- * @author Carlos
+ * @authors Carlos, Rafa
  *
  */
 public class Contenido extends Pane {

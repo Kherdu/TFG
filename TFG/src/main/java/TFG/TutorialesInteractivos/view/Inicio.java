@@ -33,6 +33,12 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import TFG.TutorialesInteractivos.controller.Controller;
 
+/**
+ * Pregunta de tipo Sintaxis
+ * 
+ * @authors Carlos, Rafa
+ *
+ */
 public class Inicio extends Pane {
 	
 

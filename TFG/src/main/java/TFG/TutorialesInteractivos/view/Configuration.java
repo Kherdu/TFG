@@ -32,7 +32,7 @@ import javafx.scene.layout.Priority;
 /**
  * Vista para modificar la configuración de la aplicacion
  * 
- * @author Carlos
+ * @authors Carlos, Rafa
  *
  */
 public class Configuration extends Pane {

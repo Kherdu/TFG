@@ -5,7 +5,8 @@ import java.util.List;
 
 /**
  * Clase con los elementos de leccion
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class Leccion 

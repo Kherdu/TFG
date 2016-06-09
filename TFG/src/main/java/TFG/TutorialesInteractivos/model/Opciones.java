@@ -5,7 +5,8 @@ import java.util.List;
 
 /**
  * Pregunta de tipo opciones
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class Opciones extends Pregunta<ArrayList<Integer>> {

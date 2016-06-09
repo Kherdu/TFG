@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Clase generica del elemento pregunta
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  * @param <T>
  */

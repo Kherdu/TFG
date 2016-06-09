@@ -23,7 +23,8 @@ import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 
 /**
  * Muestra la lista de ls lecciones del tema seleccionado
- * @author Carlos
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public class MenuLeccion extends Pane{

@@ -3,8 +3,9 @@ package TFG.TutorialesInteractivos.model;
 import java.util.ArrayList;
 
 /**
- * Clase abstarcta que representa a los Componentes de una lección
- * @author Carlos
+ * Clase abstracta que representa los Componentes de una lección
+ * 
+ * @authors Carlos, Rafa
  *
  */
 public abstract class Elemento {
