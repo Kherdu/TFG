@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -99,16 +100,16 @@ public class Contenido extends Pane {
 
 		HBox result = new HBox(10);// Contenedor donde se muestra la resolucion de
 									// la pregunta
-		Label pista = new Label();// Indica si la pregunta se ha respondido bien
+		Label isCorrect = new Label();// Indica si la pregunta se ha respondido bien
 									// o no
-		Button pistas = new Button("INFO");
+		Button hints = new Button("INFO");
 
-		result.getChildren().addAll(pista);
-		result.getChildren().addAll(pistas);
-		pistas.setAlignment(Pos.BOTTOM_RIGHT);
-		pistas.setVisible(false);
+		result.getChildren().addAll(isCorrect);
+		result.getChildren().addAll(hints);
+		hints.setAlignment(Pos.BOTTOM_RIGHT);
+		hints.setVisible(false);
 
-		GridPane respuestaBox = new GridPane();// Contenedor con el campo de respuesta
+		BorderPane respuestaBox = new BorderPane();// Contenedor con el campo de respuesta
 											// y los botones de la pregunta
 
 		// Botones para el envio/ayuda de respuestas
@@ -146,21 +147,16 @@ public class Contenido extends Pane {
 				}
 				opciones.getChildren().addAll(l);
 			}
-			respuestaBox.add(opciones,0,0);
-			respuestaBox.add(buttonsCode,1,0);
+			respuestaBox.setCenter(opciones);
+			respuestaBox.setRight(buttonsCode);
 			
-			GridPane.setConstraints(opciones, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,new Insets(5));
-			GridPane.setConstraints(buttonsCode, 1, 0, 1, 1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.SOMETIMES, new Insets(5));
-
 			container.getChildren().addAll(respuestaBox);
 			container.getChildren().addAll(result);
 		} else {
 			if (e instanceof Pregunta) {
 				container.getChildren().addAll(codigoLab);
-				respuestaBox.add(codigo,0,0);
-				respuestaBox.add(buttonsCode,1,0);
-				GridPane.setConstraints(codigo, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.ALWAYS,new Insets(5));
-				GridPane.setConstraints(buttonsCode, 1, 0, 1, 1, HPos.RIGHT, VPos.TOP, Priority.ALWAYS, Priority.SOMETIMES, new Insets(5));
+				respuestaBox.setCenter(codigo);
+				respuestaBox.setRight(buttonsCode);
 				container.getChildren().addAll(respuestaBox);
 				container.getChildren().addAll(result);
 			}
@@ -238,16 +234,16 @@ public class Contenido extends Pane {
 
 					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
 					{
-						pista.setText("CORRECTO");
-						pista.setStyle("-fx-background-color: green");
+						isCorrect.setText("CORRECTO");
+						isCorrect.setStyle("-fx-background-color: green");
 						c.enableNextStep(selected);
 						p.enabledProperty().setValue(enabled + 1);
-						pistas.setVisible(false);
+						hints.setVisible(false);
 
 					} else {
-						pista.setText("RESPUESTA INCORRECTA");
-						pista.setStyle("-fx-background-color: red");
-						pistas.setVisible(false);
+						isCorrect.setText("RESPUESTA INCORRECTA");
+						isCorrect.setStyle("-fx-background-color: red");
+						hints.setVisible(false);
 					}
 
 				} // Fin de opciones
@@ -260,38 +256,44 @@ public class Contenido extends Pane {
 					if (c.corrige(code, pc))// Se manda el codigo al controlador
 											// para que el modelo lo compruebe
 					{
-						pista.setText("CORRECTO");
-						pista.setStyle("-fx-background-color: green");
-						pistas.setVisible(false);
+						isCorrect.setText("CORRECTO");
+						isCorrect.setStyle("-fx-background-color: green");
+						hints.setVisible(false);
 						c.enableNextStep(selected);
 						p.enabledProperty().setValue(enabled + 1);
 
 					} else {//
-						pista.setText(pc.getCorrection().getMessage());
-						pista.setStyle("-fx-background-color: red");
-						pistas.setVisible(true);
+						isCorrect.setText(pc.getCorrection().getMessage());
+						isCorrect.setStyle("-fx-background-color: red");
+						hints.setVisible(true);
 					}
 
 				} else if (e instanceof Sintaxis) {
 					Sintaxis ps = (Sintaxis) e;
 					String code = codigo.getText();
 					if (c.corrige(code, ps)) {
-						pista.setText("CORRECTO");
-						pista.setStyle("-fx-background-color: green");
-						pistas.setVisible(false);
-						c.enableNextStep(selected);
+						isCorrect.setText("CORRECTO");
+						isCorrect.setStyle("-fx-background-color: green");
+						hints.setVisible(false);
+						try{
+							c.enableNextStep(selected);
+						} catch (Exception e){
+							c.finishedLesson();
+						}
 						p.enabledProperty().setValue(enabled + 1);
 
 					} else {//
-						pista.setText("HAS FALLADO");
-						pista.setStyle("-fx-background-color: red");
-						pistas.setVisible(false);
+						isCorrect.setText("HAS FALLADO");
+						isCorrect.setStyle("-fx-background-color: red");
+						hints.setVisible(false);
 					}
 				}
 			}
 		});
 
-		pistas.setOnAction(new EventHandler<ActionEvent>() {
+		resolve.setMaxWidth(Double.MAX_VALUE);
+		help.setMaxWidth(Double.MAX_VALUE);
+		hints.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -328,7 +330,6 @@ public class Contenido extends Pane {
 		HBox buttonsLabel = new HBox(10);
 		buttonsLabel.getChildren().addAll(temaButton);
 		buttonsLabel.getChildren().addAll(leccionButton);
-		
 		buttonsLabel.setAlignment(Pos.BOTTOM_CENTER);
 		
 		temaButton.setOnAction(new EventHandler<ActionEvent>() {

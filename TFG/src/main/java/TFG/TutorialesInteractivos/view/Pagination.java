@@ -220,10 +220,10 @@ public class Pagination extends StackPane {
 
 	private Pane createControls(int numSteps) {
 		GridPane outerGridPane = new GridPane();
-		previousButton = new Button("<< Previous");
+		previousButton = new Button("<< Anterior");
 		previousButton.setMinWidth(GridPane.USE_PREF_SIZE);
 		previousButton.getStyleClass().add("previous-button");
-		nextButton = new Button("Next >>");
+		nextButton = new Button("Siguiente >>");
 		nextButton.setMinWidth(GridPane.USE_PREF_SIZE);
 		nextButton.getStyleClass().add("next-button");
 		HBox hboxStepButtons = generateButtons(numSteps);

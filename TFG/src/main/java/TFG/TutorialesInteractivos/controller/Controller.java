@@ -264,9 +264,7 @@ public class Controller {
 			if (actualStep == -1) {
 				e = new Explicacion(tema.getLecciones().get(selected).getExplicacion());
 
-			} else if (actualStep == this.elems.size()) {
-				e = new Explicacion("FIN DE LA LECCION");
-			} else {
+			}  else {
 				e = elems.get(actualStep);
 				stepChange(newStep, e instanceof Pregunta);
 			}
@@ -486,6 +484,11 @@ public class Controller {
 
 	public void backMenuLeccion() {
 		changeView(new MenuLeccion(), null, 0, selectedLanguage, null);
+		
+	}
+
+	public void finishedLesson() {
+		//TODO lección terminada
 		
 	}
 }
