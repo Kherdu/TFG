@@ -1,10 +1,7 @@
 package TFG.TutorialesInteractivos.controller;
 
-import java.io.File;
-import java.io.FileFilter;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -13,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.prefs.Preferences;
 
 import TFG.TutorialesInteractivos.model.Correction;
@@ -32,6 +28,7 @@ import TFG.TutorialesInteractivos.view.MenuTema;
 import TFG.TutorialesInteractivos.view.SelectedPath;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -39,8 +36,6 @@ import javafx.stage.Stage;
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
  * 
  * @authors Carlos, Rafa
- * @param <K>
- * @param <V>
  *
  */
 public class Controller {
@@ -111,11 +106,7 @@ public class Controller {
 	 * @return
 	 */
 	public boolean corrige(ArrayList<Integer> resp, Pregunta p) {
-		boolean ret = false;
-		if (p.corrige(resp, tema)) {
-			ret = true;
-		}
-		return ret;
+		return p.corrige(resp, tema);
 	}
 
 	/**
@@ -126,11 +117,7 @@ public class Controller {
 	 * @return
 	 */
 	public boolean corrige(String resp, Pregunta p) {
-		boolean ret = false;
-		if (p.corrige(resp, tema)) {
-			ret = true;
-		}
-		return ret;
+		return p.corrige(resp, tema);
 	}
 
 	/**
@@ -140,7 +127,7 @@ public class Controller {
 	public void showSubject() {
 
 		Pane p = new MenuTema();
-
+		files.clear(); //Esto es por si se vuelve al principio que no se dupliquen los temas
 		try {
 			DirectoryStream.Filter<Path> filter = new DirectoryStream.Filter<Path>() {
 
@@ -233,7 +220,7 @@ public class Controller {
 	 * Muestra la primera ventana de la aplicacion
 	 */
 	public void showStart() {
-		primaryStage.setTitle(this.selectedLanguage);
+		primaryStage.setTitle(selectedLanguage);
 		// el titulo se podria
 		// poner de la app,
 		// o del lenguaje, pero obteniendo
@@ -273,10 +260,7 @@ public class Controller {
 			root = ((MenuLeccion) p).menuLeccion(tema, this);
 		} else if (p instanceof Contenido) {
 			Elemento e;
-			// TODO añadir preguntas de ambos tipos aquí, solo deberia usarse la
-			// primera vez en contenido, luego se deberia modificar, si no, en
-			// cada paso hacemos un objeto nuevo...
-
+			
 			if (actualStep == -1) {
 				e = new Explicacion(tema.getLecciones().get(selected).getExplicacion());
 
@@ -358,7 +342,7 @@ public class Controller {
 							// del directorio
 							// lo guardamos en la variable y en preferences
 			sp = new SelectedPath(this.primaryStage);
-			this.externalResourcesPath = sp.getPath();
+			externalResourcesPath = sp.getPath();
 		} else {
 			sp = new SelectedPath(this.primaryStage, l.getLanguage());
 			obsLenguaje = new Lenguaje(l.getLanguage(), sp.getPath());
@@ -377,8 +361,8 @@ public class Controller {
 	 * @param selectedItem
 	 */
 	public void selectedLanguage(String selectedItem) {
-		this.selectedLanguage = selectedItem;
-		this.executable = pathSelected();
+		selectedLanguage = selectedItem;
+		executable = pathSelected();
 		showSubject();
 	}
 
@@ -391,12 +375,6 @@ public class Controller {
 		return this.primaryStage;
 	}
 
-	/*
-	 * public void showPortada(String lenguaje) { // Map<K, V> l =
-	 * YamlReaderClass.languages(); this.selectedLanguage = lenguaje;
-	 * setPath(this.pathSelected()); this.changeView(new Settings(), null, 0,
-	 * this.executable, null); }
-	 */
 
 	public Scene getScene() {
 
@@ -472,10 +450,9 @@ public class Controller {
 			for (Lenguaje l : data) {
 				pref.put(l.getLanguage(), l.getPath());
 			}
-		//	saveClassPath(path);
+		
 		} else {
-			// TODO error que diga que no hay directorio o compiladores (aqui o
-			// en la vista?)
+			// TODO error que diga que no hay directorio o compiladores (aqui o en la vista?)
 		}
 	}
 
@@ -485,18 +462,6 @@ public class Controller {
 		changeView(p, a, 0, selectedLanguage, null);
 	}
 
-	
-	/*private void saveClassPath(String path) {
-		URL classUrl;
-		try {
-			classUrl = new URL("file:" + path);
-			URL[] classUrls = { classUrl };
-			ucl = new URLClassLoader(classUrls);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
 
 	public String getExternalPath() {
 		return externalResourcesPath;
@@ -517,5 +482,10 @@ public class Controller {
 
 	public Lenguaje getLanguageAttributes() {
 		return obsLenguaje;
+	}
+
+	public void backMenuLeccion() {
+		changeView(new MenuLeccion(), null, 0, selectedLanguage, null);
+		
 	}
 }

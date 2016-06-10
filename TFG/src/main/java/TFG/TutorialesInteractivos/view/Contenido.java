@@ -3,6 +3,14 @@ package TFG.TutorialesInteractivos.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import TFG.TutorialesInteractivos.controller.Controller;
+import TFG.TutorialesInteractivos.model.Codigo;
+import TFG.TutorialesInteractivos.model.Elemento;
+import TFG.TutorialesInteractivos.model.Explicacion;
+import TFG.TutorialesInteractivos.model.Opciones;
+import TFG.TutorialesInteractivos.model.Pregunta;
+import TFG.TutorialesInteractivos.model.Sintaxis;
+import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -17,7 +25,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -26,14 +33,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
-import TFG.TutorialesInteractivos.controller.Controller;
-import TFG.TutorialesInteractivos.model.Codigo;
-import TFG.TutorialesInteractivos.model.Elemento;
-import TFG.TutorialesInteractivos.model.Explicacion;
-import TFG.TutorialesInteractivos.model.Opciones;
-import TFG.TutorialesInteractivos.model.Pregunta;
-import TFG.TutorialesInteractivos.model.Sintaxis;
-import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 
 /**
  * Vista de los elementos de la leccion
@@ -92,6 +91,8 @@ public class Contenido extends Pane {
 
 		container.getChildren().addAll(tipo);
 		container.getChildren().addAll(text);
+		
+		tipo.setAlignment(Pos.CENTER);
 
 		Label codigoLab = new Label("CODIGO");
 		TextArea codigo = new TextArea("Escriba aqui su codigo");
@@ -200,7 +201,7 @@ public class Contenido extends Pane {
 
 		resolve.setOnAction(new EventHandler<ActionEvent>() {
 
-			@SuppressWarnings({ "unchecked", "rawtypes" })
+			
 			@Override
 			public void handle(ActionEvent event) {
 				if (e instanceof Opciones) {
@@ -244,7 +245,7 @@ public class Contenido extends Pane {
 						pistas.setVisible(false);
 
 					} else {
-						pista.setText("HAS FALLADO");
+						pista.setText("RESPUESTA INCORRECTA");
 						pista.setStyle("-fx-background-color: red");
 						pistas.setVisible(false);
 					}
@@ -266,7 +267,7 @@ public class Contenido extends Pane {
 						p.enabledProperty().setValue(enabled + 1);
 
 					} else {//
-						pista.setText("HAS FALLADO: " + pc.getCorrection().getMessage());
+						pista.setText(pc.getCorrection().getMessage());
 						pista.setStyle("-fx-background-color: red");
 						pistas.setVisible(true);
 					}
@@ -284,7 +285,7 @@ public class Contenido extends Pane {
 					} else {//
 						pista.setText("HAS FALLADO");
 						pista.setStyle("-fx-background-color: red");
-						pistas.setVisible(true);
+						pistas.setVisible(false);
 					}
 				}
 			}
@@ -320,20 +321,43 @@ public class Contenido extends Pane {
 
 			}
 		});
+		
+		Button temaButton = new Button("Elegir Tema");
+		Button leccionButton = new Button("Elegir lección");
+		
+		HBox buttonsLabel = new HBox(10);
+		buttonsLabel.getChildren().addAll(temaButton);
+		buttonsLabel.getChildren().addAll(leccionButton);
+		
+		buttonsLabel.setAlignment(Pos.BOTTOM_CENTER);
+		
+		temaButton.setOnAction(new EventHandler<ActionEvent>() {
 
-		/*
-		 * RowConstraints row1 = new RowConstraints(); RowConstraints row2 = new
-		 * RowConstraints(); row1.setPercentHeight(75);
-		 * row2.setPercentHeight(25);
-		 * 
-		 * mainPane.getRowConstraints().addAll(row1, row2);
-		 */
+			@Override
+			public void handle(ActionEvent event) {
+				c.showStart();
+				
+			}
+		});
+		
+		leccionButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				c.backMenuLeccion();
+				
+			}
+		});
+
+		
 		mainPane.add(container, 0, 0);
 		mainPane.add(p, 0, 1);
-		GridPane.setConstraints(container, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
-				new Insets(5));
+		mainPane.add(buttonsLabel, 0, 2);
+		
+		GridPane.setConstraints(container, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,new Insets(5));
 		GridPane.setConstraints(p, 0, 1, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
-
+		GridPane.setConstraints(buttonsLabel, 0, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		
 		codigoLab.getStyleClass().add("labcode");
 		tipo.getStyleClass().add("tipo");
 		respuestaBox.getStyleClass().add("respuestaBox");

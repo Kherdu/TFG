@@ -15,13 +15,10 @@ import TFG.TutorialesInteractivos.controller.Controller;
 public class Main extends Application{
 
 	private Stage primaryStage;
-	//private BorderPane rootLayout;
-	
-	
+		
 
 	public static void main(String[] args) {
 		launch(args);
-		
 	}
 
 	@Override

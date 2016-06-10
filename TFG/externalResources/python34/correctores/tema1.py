@@ -19,7 +19,7 @@ def pregunta11(code, filename):
                 value3 = ['']
             else:
                 value1 = False
-                value2 = 'Variable incorrecta'
+                value2 = 'Valor incorrecto'
                 value3 = ['lee el enunciado de nuevo']
         else:
             value1 = False

@@ -27,7 +27,7 @@ public class Codigo extends Pregunta<String> {
 
 	public Codigo(int numero, String enunciado, String pista, String solucion) {
 		super(numero, enunciado, pista, solucion);
-		Correction c;
+		
 	}
 
 	// respuesta es la funcion a la que llamar, código es lo que escribe el

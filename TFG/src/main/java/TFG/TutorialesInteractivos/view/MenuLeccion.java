@@ -1,5 +1,8 @@
 package TFG.TutorialesInteractivos.view;
 
+import TFG.TutorialesInteractivos.controller.Controller;
+import TFG.TutorialesInteractivos.model.Tema;
+import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,14 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import TFG.TutorialesInteractivos.controller.Controller;
-import TFG.TutorialesInteractivos.model.Tema;
-import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 
 /**
  * Muestra la lista de ls lecciones del tema seleccionado
@@ -54,26 +53,28 @@ public class MenuLeccion extends Pane{
 		ObservableList<String> obsLecciones =FXCollections.observableArrayList (t.getNameLecciones());
 		leccionList.setItems(obsLecciones);
 		
-		HBox botonLabel = new HBox();//Contenedor del boton mas el label de aviso
 		
 		Button start = new Button("Comenzar leccion");//Boton para comenzar la leccion
 		Label error = new Label();//Label de error
-		
-		botonLabel.getChildren().add(start);
-		botonLabel.getChildren().add(error);
+		Button back = new Button("Menú anterior");
+		//botonLabel.getChildren().add(start);
+		//botonLabel.getChildren().add(error);
 		
 		//Colocacion de elementos en el panel
 		box.add(tittle, 0, 0);
 		box.add(tittleList, 0, 1);
 		box.add(leccionList, 0, 2);
-		box.add(botonLabel, 0, 3);
+		box.add(start, 2, 3);
+		box.add(error, 1, 3);
+		box.add(back, 0, 3);
+				
 		
-		
-		GridPane.setConstraints(tittle, 0, 0, 2,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
-		GridPane.setConstraints(tittleList, 0, 1, 2, 1, HPos.LEFT, VPos.CENTER, Priority.NEVER, Priority.ALWAYS, new Insets(5));
-		GridPane.setConstraints(leccionList, 0, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
-		GridPane.setConstraints(botonLabel, 0, 3, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
-		 
+		GridPane.setConstraints(tittle, 0, 0, 3,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(tittleList, 0, 1, 3, 1, HPos.CENTER, VPos.CENTER, Priority.NEVER, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(leccionList, 0, 2, 3, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(start, 2, 3, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(error, 1, 3, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(back, 0, 3, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		
 		//Listeners
 		start.setOnAction(new EventHandler<ActionEvent>(){
@@ -92,10 +93,20 @@ public class MenuLeccion extends Pane{
 				
 			});
 		
+		back.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				c.showStart();
+				
+			}
+		});
+		
 		
 		//Parte estetica
 		start.getStyleClass().add("start");
 		error.getStyleClass().add("error");
+		back.getStyleClass().add("start");
 		tittleList.getStyleClass().add("tittle");
 		box.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
 		return box;

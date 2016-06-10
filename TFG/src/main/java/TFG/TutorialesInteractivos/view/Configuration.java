@@ -1,15 +1,11 @@
 package TFG.TutorialesInteractivos.view;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.List;
 
 import TFG.TutorialesInteractivos.controller.Controller;
 import TFG.TutorialesInteractivos.model.Lenguaje;
 import TFG.TutorialesInteractivos.utilities.InternalUtilities;
-import javafx.beans.property.SimpleStringProperty;
-//import TFG.TutorialesInteractivos.controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +16,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -53,7 +48,7 @@ public class Configuration extends Pane {
 														// por primera vez
 
 		// Lista con los lenguajes y la ruta de su compilador
-		TableView<Lenguaje> languageList = new TableView();
+		TableView<Lenguaje> languageList = new TableView<Lenguaje>();
 		ObservableList<Lenguaje> data = FXCollections.observableArrayList();
 		List<Lenguaje> ls = null;
 		if (c.getExternalPath() != null) {
@@ -80,6 +75,8 @@ public class Configuration extends Pane {
 		Button change = new Button("Cambiar compilador");
 		Button back = new Button("Atras");
 		Button accept = new Button("Aceptar");
+		
+		Label warning = new Label("Para avanzar todos los lenguajes han de estar configurados");
 
 		root.add(dependencies, 0, 0);
 		root.add(pathDep, 1, 0);
@@ -90,9 +87,11 @@ public class Configuration extends Pane {
 		root.add(back, 0, 3);
 		root.add(change, 1, 3);
 		root.add(accept, 2, 3);
+		root.add(warning, 0, 4);
 
 		languagesLabel.setAlignment(Pos.TOP_CENTER);
-		change.setAlignment(Pos.TOP_CENTER);
+		warning.setAlignment(Pos.TOP_CENTER);
+		
 		GridPane.setConstraints(dependencies, 0, 0, 1, 1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
 				new Insets(5));
 		GridPane.setConstraints(pathDep, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.NEVER,
@@ -101,15 +100,17 @@ public class Configuration extends Pane {
 				new Insets(5));
 		GridPane.setConstraints(acceptPath, 3, 0, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.NEVER,
 				new Insets(5));
-		GridPane.setConstraints(languagesLabel, 0, 1, 3, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
+		GridPane.setConstraints(languagesLabel, 0, 1, 4, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
 				new Insets(5));
 		GridPane.setConstraints(languageList, 0, 2, 4, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
 				new Insets(5));
 		GridPane.setConstraints(back, 0, 3, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
 				new Insets(5));
-		GridPane.setConstraints(change, 1, 3, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
+		GridPane.setConstraints(change, 1, 3, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
 				new Insets(5));
-		GridPane.setConstraints(accept, 2, 3, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
+		GridPane.setConstraints(accept, 3, 3, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
+				new Insets(5));
+		GridPane.setConstraints(warning, 0, 4, 4, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS,
 				new Insets(5));
 
 		// Listeners
@@ -120,21 +121,19 @@ public class Configuration extends Pane {
 				c.start();
 			}
 		});
+		
 		acceptPath.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				// comprobamos si la ruta está seleccionada y el si el arbol
 				// está bien hecho
-				if (pathDep.getText() != null) {
+				System.out.println(pathDep.getText());
+				if (pathDep.getText()=="") {
 					File f = new File(pathDep.getText());
-					if (f.exists() && f.isDirectory()) {
-						List<String> l = InternalUtilities.getDirectoryList(pathDep.getText());
-						// TODO comprobar si esto va en linux
-						if (l.contains("images") && l.contains("languages")) {
-							List<String> lanL = InternalUtilities.getDirectoryList(pathDep.getText() + "/languages");
+					if (f.exists() && f.isDirectory()) {						
+							List<String> lanL = InternalUtilities.getDirectoryList(pathDep.getText());
 							// añadimos los lenguajes a la lista
-							
 							
 							for (String s : lanL) {
 								Lenguaje addedL = new Lenguaje(s, null);
@@ -144,12 +143,8 @@ public class Configuration extends Pane {
 							 
 							data.setAll(c.getLanguagesList());
 						}
-					} else {
-						// TODO mensaje de que no es un directorio o está mal
-						// construido
-					}
 				} else {
-					// TODO mensaje de que no has elegido path
+					warning.setText("Primero selecciona directorio de recursos");
 				}
 
 			}
@@ -172,10 +167,11 @@ public class Configuration extends Pane {
 				if (l != null) {
 
 					c.muestraSeleccion(l);
+					data.set(data.indexOf(l), c.getLanguageAttributes());
 				} else {
-					// TODO no has seleccionado
+					warning.setText("Selecciona un lenguaje antes");
 				}
-				data.set(data.indexOf(l), c.getLanguageAttributes());
+				
 			}
 		});
 
@@ -188,11 +184,12 @@ public class Configuration extends Pane {
 				pathDep.setText(c.getExternalPath());
 			}
 		});
-		languagesLabel.getStyleClass().add("title");
+		languagesLabel.getStyleClass().add("tittle");
 		accept.getStyleClass().add("start");
 		change.getStyleClass().add("start");
 		back.getStyleClass().add("start");
 		languageList.setId("table");
+		warning.getStyleClass().add("error");
 		root.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
 
 		return root;

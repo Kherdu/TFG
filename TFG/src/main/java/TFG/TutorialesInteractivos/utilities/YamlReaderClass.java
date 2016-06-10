@@ -3,8 +3,6 @@ package TFG.TutorialesInteractivos.utilities;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +26,6 @@ import TFG.TutorialesInteractivos.model.Tema;
  *
  */
 public final class YamlReaderClass {
-	private YamlReaderClass() {
-
-	}
 
 	/**
 	 * Carga el tema seleccionado (con el que se trabajara)
@@ -47,7 +42,7 @@ public final class YamlReaderClass {
 		try {
 			input = new FileInputStream(file);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		@SuppressWarnings("unchecked")
@@ -191,33 +186,5 @@ public final class YamlReaderClass {
 		}
 		return ret;
 
-	}
-
-	// TODO este metodo deberia ser el que llame el controlador por defecto
-	// pasandole el lenguaje seleccionado para que le devuelva la ruta.
-	public String getPath(String language) {
-
-		return null;
-
-	}
-
-	/**
-	 * Actualiza el fichero de lenguajes
-	 * 
-	 * @param lenguajes
-	 */
-	public static void saveConfig(Map<String, Object> lenguajes) {
-		Yaml yaml = new Yaml();
-		try {
-			// mirar api de persistance para cambiar esto
-			File file = new File("externalResources/config/carga.yml");
-			String path = file.getAbsolutePath();
-			FileWriter writer = new FileWriter(path);
-			yaml.dump(lenguajes, writer);
-			writer.close();
-
-		} catch (IOException e) {
-
-		}
 	}
 }

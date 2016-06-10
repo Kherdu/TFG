@@ -16,7 +16,6 @@ public class Opciones extends Pregunta<ArrayList<Integer>> {
 	
 	public Opciones(int numero, String enunciado, String pista) {
 		super(numero, enunciado, pista, new ArrayList());
-		// this.solucion = new ArrayList<Integer>();
 		this.opciones = new ArrayList<String>();
 	}
 

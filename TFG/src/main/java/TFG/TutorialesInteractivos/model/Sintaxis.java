@@ -46,7 +46,6 @@ public class Sintaxis extends Pregunta<String> {
 					+ sintaxis + "/";
 			classUrl = new URL(s);
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		URL[] classUrls = { classUrl };
@@ -56,7 +55,7 @@ public class Sintaxis extends Pregunta<String> {
 
 			Class<? extends Lexer> c = (Class<? extends Lexer>) Class.forName(sintaxis + "Lexer", true, ucl);
 			Constructor<? extends Lexer> constructor = c.getConstructor(CharStream.class);
-			// String respuesta = "h=2\nb=4\na=h*b/2";
+			
 			Lexer l = constructor.newInstance(new ANTLRInputStream(respuesta));
 
 			Class<? extends Parser> cParser = (Class<? extends Parser>) Class.forName(sintaxis + "Parser", true, ucl);
@@ -73,17 +72,17 @@ public class Sintaxis extends Pregunta<String> {
 			prc = (ParserRuleContext) cParser.getMethod(sintaxis.toLowerCase()).invoke(p);
 			System.out.println(prc.exception);
 			if (prc.exception == null) {
-				System.out.println("Terminado con exito");
+				//System.out.println("Terminado con exito");
 				return true;
 			}
 
 			else {
-				System.out.println("Está mal");
+				//System.out.println("Está mal");
 				return false;
 			}
 
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		return false;

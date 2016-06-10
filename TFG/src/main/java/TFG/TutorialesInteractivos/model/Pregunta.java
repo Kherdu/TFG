@@ -18,7 +18,7 @@ public abstract class Pregunta<T> extends Elemento
 	public Pregunta(){
 		super(null);
 		this.numero=0;
-		//this.enunciado=null;
+		
 	}
 	
 	public Pregunta(int numero, String enunciado, String pista, T solucion) {

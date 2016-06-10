@@ -1,9 +1,8 @@
 package TFG.TutorialesInteractivos.view;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
+import TFG.TutorialesInteractivos.controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,10 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import TFG.TutorialesInteractivos.controller.Controller;
 
 /**
  * Panel que muestra el menu con los temas que se compone el tutorial
@@ -43,27 +40,25 @@ public class MenuTema extends Pane{
 		
 		Button start = new Button("Comenzar");
 		Label error = new Label ();
+		Button back = new Button("Volver menú anterior");
 		
 		language.setAlignment(Pos.TOP_CENTER);
 		
 		
-		HBox botonLabel = new HBox();
-		botonLabel.getChildren().add(start);
-		botonLabel.getChildren().add(error);
-		
-		
-		HBox.setMargin(start, new Insets(0, 5, 0, 0));
-		
 		box.add(language, 0, 0);
 		box.add(temasList, 0, 1);
-		box.add(botonLabel, 0, 2);
+		box.add(start, 2, 2);
+		box.add(error, 1, 2);
+		box.add(back, 0, 2);
 		
-		GridPane.setConstraints(language, 0, 0, 2,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
-		GridPane.setConstraints(temasList, 0, 1, 2, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
-		GridPane.setConstraints(botonLabel, 0, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(language, 0, 0, 3,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(temasList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(start, 2, 2, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(error, 1, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(back, 0, 2, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+
 		
-		start.setOnAction(new EventHandler<ActionEvent>(){
-		
+		start.setOnAction(new EventHandler<ActionEvent>(){	
 			public void handle(ActionEvent event) {
 				MultipleSelectionModel<String> s;
 				s= temasList.getSelectionModel();
@@ -75,12 +70,20 @@ public class MenuTema extends Pane{
 			
 		});
 		
+		back.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				c.start();
+				
+			}
+		});
+		
 		//Parte estetica
 		language.getStyleClass().add("tittle");
 		start.getStyleClass().add("start");
 		error.getStyleClass().add("error");
-		//String folderpath = new File("").getAbsolutePath();
-		//String csspath= folderpath+ "/resorces/css/menu.css";
+		back.getStyleClass().add("start");
 		box.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
 		
 		return box;
