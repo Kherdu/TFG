@@ -20,17 +20,18 @@ import TFG.TutorialesInteractivos.model.Pregunta;
 import TFG.TutorialesInteractivos.model.Tema;
 import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import TFG.TutorialesInteractivos.utilities.YamlReaderClass;
-import TFG.TutorialesInteractivos.view.Contenido;
 import TFG.TutorialesInteractivos.view.Configuration;
+import TFG.TutorialesInteractivos.view.Contenido;
+import TFG.TutorialesInteractivos.view.EndLessonPane;
 import TFG.TutorialesInteractivos.view.Inicio;
 import TFG.TutorialesInteractivos.view.MenuLeccion;
 import TFG.TutorialesInteractivos.view.MenuTema;
 import TFG.TutorialesInteractivos.view.SelectedPath;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 
 /**
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
@@ -39,18 +40,15 @@ import javafx.stage.Stage;
  *
  */
 public class Controller {
-	public static String executable;// ejecutable del lenguaje para ejecutar
-									// código
+	public static String executable;// ejecutable del lenguaje para ejecutar código
 	private Tema tema; // Tema que se está ejecutando
 	private Stage primaryStage;// Vista principal de la aplicación
 	private Pane root;// Panel con los elementos de la vista
 	private Scene scene;
 	private ArrayList<Elemento> elems; // Lista de elementos de un tema
-	private int actualStep; // contador de el elemento del contenido en el que
-							// estamos
+	private int actualStep; // contador de el elemento del contenido en el que estamos
 	private int enabledSteps; // Elementos habilitados
-	private boolean[] visited; // Array con los elementos de una lección que se
-								// han visitado
+	private boolean[] visited; // Array con los elementos de una lección que se han visitado
 	private int actualLesson; // Lección en la que se encuentra el tutorial
 	private List<String> files;// temas del lenguaje
 	public static String selectedLanguage; // lenguaje seleccionado
@@ -66,7 +64,6 @@ public class Controller {
 		this.files = new ArrayList<String>();
 		this.c = new Correction();
 		this.pref = Preferences.userNodeForPackage(this.getClass());
-
 	}
 
 	/**
@@ -75,7 +72,6 @@ public class Controller {
 	 * @param cargaTema
 	 *            Nombre del fichero
 	 */
-
 	public Correction getCorrection() {
 		return c;
 	}
@@ -487,8 +483,9 @@ public class Controller {
 		
 	}
 
+	
 	public void finishedLesson() {
-		//TODO lección terminada
+		new EndLessonPane(this);
 		
 	}
 }
