@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Crea el mensaje y las pistas en caso de que la pregunta sea fallida
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 public class Correction {
@@ -15,6 +15,7 @@ public class Correction {
 	public Correction(){
 		
 	}
+	
 	public Correction(String m, List<String> h){
 		this.message=m;
 		this.hints=h;

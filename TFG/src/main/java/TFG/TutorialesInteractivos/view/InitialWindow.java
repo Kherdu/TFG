@@ -20,27 +20,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 /**
- * Pregunta de tipo Sintaxis
+ * Question de tipo Sintax
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class Inicio extends Pane {
+public class InitialWindow extends Pane {
 	
 
-	public Inicio(){
-		
-	}
+	
 	/*
 	 * Vista con la portada, elige un lenguaje, y llama en controlador a showPortada
 	 * 
 	 */
-	public Pane inicio(List<String> files,Controller c){
+	public Pane initialWin(List<String> files,Controller c){
 		
 		
 		GridPane pane = new GridPane(); //Panel principal
 		
-		Label tittle = new Label("Selecciona un lenguaje"); //Label del titulo de la ventana
+		Label labelTittle = new Label("Selecciona un lenguaje"); //Label del titulo de la ventana
 		ListView<String> languageList = new ListView<String>(); //Lista de los temas
 		ObservableList<String> obsTemas =FXCollections.observableArrayList(files);//permite ver la seleccion
 		languageList.setItems(obsTemas);
@@ -50,9 +48,9 @@ public class Inicio extends Pane {
 		Button settings = new Button("Ajustes");//Boton de ajustes para seleccionar el compilador
 		Label error = new Label(); //Label que se mostrara con el mensaje de error cuando no haya lenguaje seleccionado
 		
-		tittle.setAlignment(Pos.TOP_CENTER);
+		labelTittle.setAlignment(Pos.TOP_CENTER);
 
-		pane.add(tittle, 0, 0);
+		pane.add(labelTittle, 0, 0);
 		pane.add(languageList, 0, 1);
 		pane.add(start, 2, 2);
 		pane.add(advise, 1, 2);
@@ -61,7 +59,7 @@ public class Inicio extends Pane {
 		
 		
 		
-		GridPane.setConstraints(tittle, 0, 0, 3,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
+		GridPane.setConstraints(labelTittle, 0, 0, 3,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
 		GridPane.setConstraints(languageList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(start, 2, 2, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(advise, 1, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
@@ -88,13 +86,13 @@ public class Inicio extends Pane {
 
 			@Override
 			public void handle(ActionEvent event) {
-				c.vistaSettings();
+				c.showSettings();
 				
 			}
 		});
 		
 		//Estetica
-		tittle.getStyleClass().add("tittle");
+		labelTittle.getStyleClass().add("tittle");
 		start.getStyleClass().add("start");
 		advise.getStyleClass().add("advise");
 		settings.getStyleClass().add("setting");

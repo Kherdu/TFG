@@ -1,7 +1,7 @@
 package TFG.TutorialesInteractivos.view;
 
 import TFG.TutorialesInteractivos.controller.Controller;
-import TFG.TutorialesInteractivos.model.Tema;
+import TFG.TutorialesInteractivos.model.Subject;
 import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,18 +23,16 @@ import javafx.scene.web.WebView;
 /**
  * Muestra la lista de ls lecciones del tema seleccionado
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class MenuLeccion extends Pane{
+public class LessonsMenu extends Pane{
 	
 	
 	
-	public MenuLeccion(){
-		
-	}
 	
-	public Pane menuLeccion(Tema t, Controller c){
+	
+	public Pane lessonMenu(Subject t, Controller c){
 		
 		
 		GridPane box = new GridPane();
@@ -42,7 +40,7 @@ public class MenuLeccion extends Pane{
 		//Elementos
 		
 		//Creacion de webview
-		String content = c.markToHtml(t.getTitulo() + "\n" + t.getIntroduccion());
+		String content = c.markToHtml(t.getTittle() + "\n" + t.getIntroduction());
 		WebView tittle = InternalUtilities.creaBrowser(content);
 		WebEngine engine = tittle.getEngine();
 		engine.loadContent(content);
@@ -50,15 +48,14 @@ public class MenuLeccion extends Pane{
 		Label tittleList = new Label("Lecciones");//TItulo de la lista de lecciones
 		//Lista de lecciones
 		ListView<String> leccionList = new ListView<String>();
-		ObservableList<String> obsLecciones =FXCollections.observableArrayList (t.getNameLecciones());
+		ObservableList<String> obsLecciones =FXCollections.observableArrayList (t.getNameLessons());
 		leccionList.setItems(obsLecciones);
 		
 		
 		Button start = new Button("Comenzar leccion");//Boton para comenzar la leccion
 		Label error = new Label();//Label de error
 		Button back = new Button("Menú anterior");
-		//botonLabel.getChildren().add(start);
-		//botonLabel.getChildren().add(error);
+		
 		
 		//Colocacion de elementos en el panel
 		box.add(tittle, 0, 0);
@@ -83,7 +80,7 @@ public class MenuLeccion extends Pane{
 				public void handle(ActionEvent event) {
 					s= leccionList.getSelectionModel();
 					if (!s.isEmpty()) //Se comprueba que haya una leccion seleccionada
-						c.selectedLeccion(s.getSelectedIndex());
+						c.selectedLesson(s.getSelectedIndex());
 					else 
 					{
 						error.setText("Se debe seleccionar una leccion");

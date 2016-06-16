@@ -104,7 +104,6 @@ public class Pagination extends StackPane {
 	 * Returns the step text property. This is a function that specifies the
 	 * text of the buttons in each of the steps.
 	 * 
-	 * By default is (n -> String.valueOf(n))
 	 * 
 	 * @return Step text property
 	 */
@@ -118,7 +117,6 @@ public class Pagination extends StackPane {
 	 * function receives the currently selected step and the number of step in
 	 * the component.
 	 * 
-	 * By default is ((current, total) -> current + "/" + total)
 	 * 
 	 * @return Label text property
 	 */
@@ -127,9 +125,8 @@ public class Pagination extends StackPane {
 	}
 
 	/**
-	 * It returns the text property of the "<< Previous" button in the
+	 * It returns the text property of the  Previous button in the
 	 * component.
-	 * 
 	 * @return A string property with the text of the "Previous" button.
 	 */
 	public StringProperty previousTextProperty() {
@@ -137,7 +134,7 @@ public class Pagination extends StackPane {
 	}
 
 	/**
-	 * It returns the text property of the "Next >>" button in the component.
+	 * It returns the text property of the Next  button in the component.
 	 * 
 	 * @return A string property with the text of the "Next" button.
 	 */

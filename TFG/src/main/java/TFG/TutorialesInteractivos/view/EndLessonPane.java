@@ -6,16 +6,18 @@ import TFG.TutorialesInteractivos.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
+/**
+ * 
+ * @author Carlos, Rafa
+ *
+ */
 public class EndLessonPane {
 	
 	public EndLessonPane(Controller c)

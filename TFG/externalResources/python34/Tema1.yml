@@ -80,7 +80,7 @@ Lecciones:
       Resultado: pregunta22
     - Elem: explicacion
       Contenido: >
-       Para contruir una cadena a base de la repetición de varias subcadenas,
+       Para construir una cadena a base de la repetición de varias subcadenas,
        se puede llevar a cabo mediante un operador '*'
     - Elem: explicacion
       Contenido: |
@@ -94,9 +94,9 @@ Lecciones:
       Explicacion: >
        En python, se puede concatenar una cadena multiples 
        veces con el operador â€˜*â€™ y el numero de veces que queremos repetir la palabra.
-      Pista: variable= â€œcadenaâ€� * n
+      Pista: variable= cadena * n
       Tipo: Sintaxis
-      Gramatica: Bucle
+      Gramatica: Cadrep
       Resultado: cad=â€™pacopacopacoâ€™
     - Elem: explicacion
       Contenido: "En *python*, las cadenas se pueden tratar como arrays de elementos"

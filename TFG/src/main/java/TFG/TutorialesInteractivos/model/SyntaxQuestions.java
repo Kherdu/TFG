@@ -14,36 +14,37 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import TFG.TutorialesInteractivos.controller.Controller;
 
 /**
- * Pregunta de tipo Sintaxis
+ * Question de tipo Sintax
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class Sintaxis extends Pregunta<String> {
-	private String sintaxis;
+public class SyntaxQuestions extends Question<String> {
+	private String sintax;
 
-	public Sintaxis(int numero, String enunciado, String pista, String sintaxis, String solucion) {
-		super(numero, enunciado, pista, solucion);
-		this.sintaxis = sintaxis;
+	public SyntaxQuestions(int number, String wording, String clue, String sintax, String solution) {
+		super(number, wording, clue, solution);
+		this.sintax = sintax;
 	}
 
 	@Override
-	public void setOpciones(ArrayList<String> opciones) {
+	public void setOptions(ArrayList<String> options) {
 
 	}
 
 	@Override
-	public boolean corrige(String respuesta, Tema tema) {
+	public boolean check(String answer, Subject subject) {
 		URL classUrl = null;
 		try {
 			// falta el nombre de la carpeta en concreto, que irá tambien en los
 			// de abajo y en el getmethod lowercase
 			String s = "file:" + Controller.externalResourcesPath + "/" + Controller.selectedLanguage + "/gramaticas/"
-					+ sintaxis + "/";
+					+ sintax + "/";
 			classUrl = new URL(s);
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
@@ -53,43 +54,55 @@ public class Sintaxis extends Pregunta<String> {
 
 		try {
 
-			Class<? extends Lexer> c = (Class<? extends Lexer>) Class.forName(sintaxis + "Lexer", true, ucl);
+			Class<? extends Lexer> c = (Class<? extends Lexer>) Class.forName(sintax + "Lexer", true, ucl);
 			Constructor<? extends Lexer> constructor = c.getConstructor(CharStream.class);
 			
-			Lexer l = constructor.newInstance(new ANTLRInputStream(respuesta));
+			Lexer l = constructor.newInstance(new ANTLRInputStream(answer));
 
-			Class<? extends Parser> cParser = (Class<? extends Parser>) Class.forName(sintaxis + "Parser", true, ucl);
+			Class<? extends Parser> cParser = (Class<? extends Parser>) Class.forName(sintax + "Parser", true, ucl);
 			Constructor<? extends Parser> constructorParser = cParser.getConstructor(TokenStream.class);
 			Parser p = constructorParser.newInstance(new CommonTokenStream(l));
 
 			// Aqui empieza lo bueno
 			Class<? extends ParserRuleContext> inner = (Class<? extends ParserRuleContext>) Class
-					.forName(sintaxis + "Parser$" + sintaxis + "Context", true, ucl);
+					.forName(sintax + "Parser$" + sintax + "Context", true, ucl);
 			Constructor<? extends ParserRuleContext> constInn = inner.getConstructor(ParserRuleContext.class,
 					int.class);
-			ParserRuleContext prc = constInn.newInstance(new ParserRuleContext(), 5);
+			ParserRuleContext prc = constInn.newInstance(new ParserRuleContext(),0);
 
-			prc = (ParserRuleContext) cParser.getMethod(sintaxis.toLowerCase()).invoke(p);
+			prc = (ParserRuleContext) cParser.getMethod(sintax.toLowerCase()).invoke(p);
+			
 			System.out.println(prc.exception);
+			
+			/*
+			 * Con este bucle se mira los hijos producidos por la funcion que compruba la sintaxis
+			 * Se mira si el texto tiene la palabra missing que implica que falla algo
+			 */
+			for(ParseTree s : prc.children){
+				if (s.getText().contains("missing"))
+				{
+					return false;
+				}
+			}
+			
 			if (prc.exception == null) {
-				//System.out.println("Terminado con exito");
 				return true;
 			}
 
 			else {
-				//System.out.println("Está mal");
 				return false;
 			}
 
 		} catch (Exception e1) {
 			
 			e1.printStackTrace();
+			
 		}
 		return false;
 	}
 
-	public void setSolucion(String solucion) {
-		this.solucion = solucion;
+	public void setSolution(String solution) {
+		this.solution = solution;
 	}
 
 	@Override
@@ -98,16 +111,18 @@ public class Sintaxis extends Pregunta<String> {
 
 	}
 
+	
+
 	@Override
-	public void setSolucion(ArrayList<Integer> correctasAux) {
+	public void setText(String explicacion) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void setTexto(String explicacion) {
+	public void setSolution(ArrayList<Integer> correctsAux) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

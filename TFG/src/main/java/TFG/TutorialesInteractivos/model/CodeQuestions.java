@@ -12,68 +12,58 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import TFG.TutorialesInteractivos.controller.Controller;
 
 /**
- * Pregunta de tipo Codigo
+ * Question de tipo Code
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class Codigo extends Pregunta<String> {
+public class CodeQuestions extends Question<String> {
 
 	private Correction c;// Corrector de las preguntas de tipo codigo
 
-	public Codigo(int numero, String enunciado, String pista, String solucion) {
-		super(numero, enunciado, pista, solucion);
+	public CodeQuestions(int number, String wording, String clue, String solution) {
+		super(number, wording, clue, solution);
 		
 	}
 
-	// respuesta es la funcion a la que llamar, código es lo que escribe el
-	// usuario
-	public boolean comprueba(String respuesta, String codigo) {
-		return true;
-	}
 
 	@Override
-	public void setOpciones(ArrayList<String> opciones) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean corrige(String respuesta, Tema tema) {
-		File correccion = new File(Controller.externalResourcesPath+"/"+tema.getArchivo());
+	public boolean check(String answer, Subject subject) {
+		File correccion = new File(Controller.externalResourcesPath+"/"+subject.getCorrectorFile());
 		String cor = correccion.getAbsolutePath();
 		JSONParser jsonParser = new JSONParser();
-		respuesta = respuesta.replace("\"", "'");
+		answer = answer.replace("\"", "'");
 		this.c = new Correction("", null);
-		boolean answer = false;
+		boolean result = false;
 
 		try {
 			File temp = File.createTempFile("json_Data", null);
 			String nombre = temp.getName();
-			ProcessBuilder pb = new ProcessBuilder(Controller.executable, cor, this.solucion, respuesta, nombre);
+			ProcessBuilder pb = new ProcessBuilder(Controller.executable, cor, this.solution, answer, nombre);
 			Process p = pb.start();
 			InputStream is = p.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
-			String line;
+			//String line;
 
-			while ((line = br.readLine()) != null) {
+			//while ((line = br.readLine()) != null) {
 				// esto es para la salida de texto de python... en principio
 				// no hace falta
-				System.out.println(line);
-			}
+				//System.out.println(line);
+			//}
 			boolean errCode = p.waitFor(2, TimeUnit.SECONDS);
 			if (!errCode) { // si ocurre esto es que el python está mal escrito,
 							// o bucle infinito
-				System.out.println("yo no he sido, ha sido ->python<-, o bien bucle infinito");
+				//System.out.println("yo no he sido, ha sido ->python<-, o bien bucle infinito");
 				// TODO añadir aviso visual
 			} else {
 
-				int salida = p.exitValue();
+				int exit = p.exitValue();
 				// SOLO EN CASO
 				// DE ERROR DE LA FUNCION CORRECTORA
 				// DEVOLVER UN VALOR DISTINTO DE 0,
@@ -82,7 +72,7 @@ public class Codigo extends Pregunta<String> {
 				// mostrará una excepción de java
 				// en caso de 0, devolver json o similar,
 				// diciendo el error y demás
-				switch (salida) {
+				switch (exit) {
 
 				case 1: {// si devuelve 1 no es nuestro problema
 					c.setMessage("No compila");
@@ -96,7 +86,7 @@ public class Codigo extends Pregunta<String> {
 					Boolean correct = (Boolean) json.get("isCorrect");
 					if (correct != null) {
 						if (correct) {
-							answer = true;
+							result = true;
 							// solo si ocurre esto devuelve
 							// true, en cualquier otro caso
 							// tiene que mirar qué pasa.
@@ -124,21 +114,15 @@ public class Codigo extends Pregunta<String> {
 
 			}
 			temp.delete();
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException | ParseException  e) {
 			e.printStackTrace();
-			// TODO mensaje de que peta el archivo
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			// TODO proceso interrumpido
-		} catch (org.json.simple.parser.ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		}
-		return answer;
+		return result;
 	}
 
 	@Override
-	public void setSolucion(String solucion) {
+	public void setSolution(String solution) {
 		// TODO Auto-generated method stub
 
 	}
@@ -149,14 +133,9 @@ public class Codigo extends Pregunta<String> {
 
 	}
 
+	
 	@Override
-	public void setSolucion(ArrayList<Integer> correctasAux) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setTexto(String explicacion) {
+	public void setText(String explication) {
 		// TODO Auto-generated method stub
 
 	}
@@ -164,5 +143,24 @@ public class Codigo extends Pregunta<String> {
 	public Correction getCorrection() {
 		return c;
 	}
+
+
+
+	@Override
+	public void setOptions(ArrayList<String> options) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void setSolution(ArrayList<Integer> correctsAux) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
 
 }

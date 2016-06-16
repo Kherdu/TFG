@@ -24,7 +24,7 @@ import javafx.scene.web.WebView;
  * Clase que contiene los metodos de modificaion de elementos dentro de la
  * aplicacion
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 public class InternalUtilities {

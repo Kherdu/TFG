@@ -22,21 +22,18 @@ import javafx.scene.layout.Priority;
 /**
  * Panel que muestra el menu con los temas que se compone el tutorial
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class MenuTema extends Pane{
-		
-	public MenuTema(){
-	}
+public class SubjectsMenu extends Pane{
 	
-	public Pane menuTema(List<String> files, String lenSelect, Controller c){
+	public Pane subjectsMenu(List<String> files, String lenSelect, Controller c){
 		GridPane box = new GridPane();
 		
 		Label language = new Label(lenSelect);
-		ListView<String> temasList = new ListView<String>(); //Lista de los temas
-		ObservableList<String> obsTemas =FXCollections.observableArrayList(files);//permite ver la seleccion
-		temasList.setItems(obsTemas);
+		ListView<String> subjectsList = new ListView<String>(); //Lista de los temas
+		ObservableList<String> obsSubjects =FXCollections.observableArrayList(files);//permite ver la seleccion
+		subjectsList.setItems(obsSubjects);
 		
 		Button start = new Button("Comenzar");
 		Label error = new Label ();
@@ -46,13 +43,13 @@ public class MenuTema extends Pane{
 		
 		
 		box.add(language, 0, 0);
-		box.add(temasList, 0, 1);
+		box.add(subjectsList, 0, 1);
 		box.add(start, 2, 2);
 		box.add(error, 1, 2);
 		box.add(back, 0, 2);
 		
 		GridPane.setConstraints(language, 0, 0, 3,1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER, new Insets(5));
-		GridPane.setConstraints(temasList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(subjectsList, 0, 1, 3, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(start, 2, 2, 1, 1, HPos.RIGHT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(error, 1, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(back, 0, 2, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
@@ -61,9 +58,9 @@ public class MenuTema extends Pane{
 		start.setOnAction(new EventHandler<ActionEvent>(){	
 			public void handle(ActionEvent event) {
 				MultipleSelectionModel<String> s;
-				s= temasList.getSelectionModel();
+				s= subjectsList.getSelectionModel();
 				if (!s.isEmpty())//Se comprueba que hay alguna opcion seleccionada
-					c.selectedTema(s.getSelectedItem());//Se carga el tema seleccionado
+					c.selectedSubject(s.getSelectedItem());//Se carga el tema seleccionado
 				else 
 					error.setText("Se debe seleccionar un tema");
 			}

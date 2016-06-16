@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import TFG.TutorialesInteractivos.controller.Controller;
-import TFG.TutorialesInteractivos.model.Lenguaje;
+import TFG.TutorialesInteractivos.model.Language;
 import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,12 +27,12 @@ import javafx.scene.layout.Priority;
 /**
  * Vista para modificar la configuración de la aplicacion
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 public class Configuration extends Pane {
 
-	public Pane firstConfiguration(Controller c) {
+	public Pane configuration(Controller c) {
 
 		GridPane root = new GridPane(); // Panel principal
 
@@ -48,11 +48,11 @@ public class Configuration extends Pane {
 														// por primera vez
 
 		// Lista con los lenguajes y la ruta de su compilador
-		TableView<Lenguaje> languageList = new TableView<Lenguaje>();
-		ObservableList<Lenguaje> data = FXCollections.observableArrayList();
-		List<Lenguaje> ls = null;
-		if (c.getExternalPath() != null) {
-			pathDep.setText(c.getExternalPath());
+		TableView<Language> languageList = new TableView<Language>();
+		ObservableList<Language> data = FXCollections.observableArrayList();
+		List<Language> ls = null;
+		if (Controller.externalResourcesPath != null) {
+			pathDep.setText(Controller.externalResourcesPath);
 			ls = c.getLanguagesList();
 			data.setAll(ls);
 		}
@@ -63,10 +63,10 @@ public class Configuration extends Pane {
 
 		languageList.setEditable(true);
 		languageList.setVisible(true);
-		TableColumn firstNameCol = new TableColumn("Lenguaje");
-		firstNameCol.setCellValueFactory(new PropertyValueFactory<Lenguaje, String>("language"));
+		TableColumn firstNameCol = new TableColumn("Language");
+		firstNameCol.setCellValueFactory(new PropertyValueFactory<Language, String>("language"));
 		TableColumn secondNameCol = new TableColumn("Ruta");
-		secondNameCol.setCellValueFactory(new PropertyValueFactory<Lenguaje, String>("path"));
+		secondNameCol.setCellValueFactory(new PropertyValueFactory<Language, String>("path"));
 
 		languageList.setItems(data);
 		languageList.getColumns().addAll(firstNameCol, secondNameCol);
@@ -92,7 +92,7 @@ public class Configuration extends Pane {
 		languagesLabel.setAlignment(Pos.TOP_CENTER);
 		warning.setAlignment(Pos.TOP_CENTER);
 		
-		GridPane.setConstraints(dependencies, 0, 0, 1, 1, HPos.CENTER, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
+		GridPane.setConstraints(dependencies, 0, 0, 1, 1, HPos.RIGHT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,
 				new Insets(5));
 		GridPane.setConstraints(pathDep, 1, 0, 1, 1, HPos.LEFT, VPos.CENTER, Priority.ALWAYS, Priority.NEVER,
 				new Insets(5));
@@ -136,7 +136,7 @@ public class Configuration extends Pane {
 							// añadimos los lenguajes a la lista
 							
 							for (String s : lanL) {
-								Lenguaje addedL = new Lenguaje(s, null);
+								Language addedL = new Language(s, null);
 								
 								data.add(addedL);
 							}
@@ -163,10 +163,10 @@ public class Configuration extends Pane {
 			@Override
 			public void handle(ActionEvent event) {
 				// este es para el lenguaje
-				Lenguaje l = languageList.getSelectionModel().getSelectedItem();
+				Language l = languageList.getSelectionModel().getSelectedItem();
 				if (l != null) {
 
-					c.muestraSeleccion(l);
+					c.showSelection(l);
 					data.set(data.indexOf(l), c.getLanguageAttributes());
 				} else {
 					warning.setText("Selecciona un lenguaje antes");
@@ -180,8 +180,8 @@ public class Configuration extends Pane {
 			@Override
 			public void handle(ActionEvent event) {
 				// este es para el directorio
-				c.muestraSeleccion(null);
-				pathDep.setText(c.getExternalPath());
+				c.showSelection(null);
+				pathDep.setText(c.externalResourcesPath);
 			}
 		});
 		languagesLabel.getStyleClass().add("tittle");

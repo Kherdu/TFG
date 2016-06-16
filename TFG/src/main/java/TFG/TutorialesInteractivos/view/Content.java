@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import TFG.TutorialesInteractivos.controller.Controller;
-import TFG.TutorialesInteractivos.model.Codigo;
-import TFG.TutorialesInteractivos.model.Elemento;
-import TFG.TutorialesInteractivos.model.Explicacion;
-import TFG.TutorialesInteractivos.model.Opciones;
-import TFG.TutorialesInteractivos.model.Pregunta;
-import TFG.TutorialesInteractivos.model.Sintaxis;
+import TFG.TutorialesInteractivos.model.CodeQuestions;
+import TFG.TutorialesInteractivos.model.Element;
+import TFG.TutorialesInteractivos.model.Explanation;
+import TFG.TutorialesInteractivos.model.OptionQuestions;
+import TFG.TutorialesInteractivos.model.Question;
+import TFG.TutorialesInteractivos.model.SyntaxQuestions;
 import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,51 +38,52 @@ import javafx.stage.Popup;
 /**
  * Vista de los elementos de la leccion
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class Contenido extends Pane {
+public class Content extends Pane {
 
 	private final ToggleGroup group = new ToggleGroup();
 
-	public Contenido() {
-	}
+	
 
 	/**
 	 * @param e
 	 * @param c
-	 * @param leccion
+	 * @param steps
+	 * @param enabled
+	 * @param selected
 	 * @return
 	 */
-	public Pane contenido(Elemento e, Controller c, int steps, int enabled, int selected) {
+	public Pane content(Element e, Controller c, int steps, int enabled, int selected) {
 
-		Label tipo = new Label(null);
+		Label type = new Label(null);
 		
 		
 
 		if (selected == 1)
-			tipo.setText("Introducción");
+			type.setText("Introducción");
 
-		if (e instanceof Pregunta) {
-			tipo.setText("Pregunta");
+		if (e instanceof Question) {
+			type.setText("Pregunta");
 
-		} else if (e instanceof Explicacion) {
-			tipo.setText("Explicación");
+		} else if (e instanceof Explanation) {
+			type.setText("Explicación");
 		}
 		GridPane mainPane = new GridPane();
 		VBox container = new VBox(5); // Texto y campo de respuesta si es una
 										// pregunta
-		Pagination p = new Pagination(steps); // paginador
+		Pagination paginator = new Pagination(steps); // paginador
 		String content = null;
 		// por defecto se habilitan 2, la intro y el siguiente
-		p.enabledProperty().setValue(enabled);
-		p.currentProperty().setValue(selected);
+		paginator.enabledProperty().setValue(enabled);
+		paginator.currentProperty().setValue(selected);
 		// listener para saber cual ha seleccionado.
-		p.currentProperty().addListener((prop, oldV, newV) -> {
+		paginator.currentProperty().addListener((prop, oldV, newV) -> {
 			// llamamos al método que vale para cambiar de un contenido a otro
 			c.lessonPageChange(newV);
 		});
-		content = c.markToHtml(e.getTexto());
+		content = c.markToHtml(e.getText());
 
 		// Campo donde se escribeel enunciado o la explicacion de la pregunta
 		WebView text = InternalUtilities.creaBrowser(content);
@@ -90,13 +91,13 @@ public class Contenido extends Pane {
 		WebEngine engine = text.getEngine();
 		engine.loadContent(content);
 
-		container.getChildren().addAll(tipo);
+		container.getChildren().addAll(type);
 		container.getChildren().addAll(text);
 		
-		tipo.setAlignment(Pos.CENTER);
+		type.setAlignment(Pos.CENTER);
 
-		Label codigoLab = new Label("CODIGO");
-		TextArea codigo = new TextArea("Escriba aqui su codigo");
+		Label labelCode = new Label("CODIGO");
+		TextArea taCode = new TextArea("Escriba aqui su codigo");
 
 		HBox result = new HBox(10);// Contenedor donde se muestra la resolucion de
 									// la pregunta
@@ -109,7 +110,7 @@ public class Contenido extends Pane {
 		hints.setAlignment(Pos.BOTTOM_RIGHT);
 		hints.setVisible(false);
 
-		BorderPane respuestaBox = new BorderPane();// Contenedor con el campo de respuesta
+		BorderPane answerBox = new BorderPane();// Contenedor con el campo de respuesta
 											// y los botones de la pregunta
 
 		// Botones para el envio/ayuda de respuestas
@@ -118,14 +119,14 @@ public class Contenido extends Pane {
 		Button resolve = new Button("Resolver");
 		buttonsCode.setAlignment(Pos.CENTER);
 
-		VBox opciones = new VBox();
+		VBox options = new VBox();
 
-		if (e instanceof Opciones) {
-			final Opciones o = (Opciones) e;
+		if (e instanceof OptionQuestions) {
+			final OptionQuestions o = (OptionQuestions) e;
 
 			if (!o.getMulti()) {
 				List<RadioButton> l = new ArrayList<RadioButton>();
-				List<String> opc = o.getOpciones();
+				List<String> opc = o.getOptions();
 
 				for (Object op : opc) {
 					RadioButton rb = new RadioButton();
@@ -134,30 +135,30 @@ public class Contenido extends Pane {
 					l.add(rb);
 				}
 
-				opciones.getChildren().addAll(l);
+				options.getChildren().addAll(l);
 
 			} else {
 				List<CheckBox> l = new ArrayList<CheckBox>();
-				List<String> opc = o.getOpciones();
+				List<String> opc = o.getOptions();
 				for (Object op : opc) {
 					CheckBox cb = new CheckBox();
 					cb.setText(op.toString());
 
 					l.add(cb);
 				}
-				opciones.getChildren().addAll(l);
+				options.getChildren().addAll(l);
 			}
-			respuestaBox.setCenter(opciones);
-			respuestaBox.setRight(buttonsCode);
+			answerBox.setCenter(options);
+			answerBox.setRight(buttonsCode);
 			
-			container.getChildren().addAll(respuestaBox);
+			container.getChildren().addAll(answerBox);
 			container.getChildren().addAll(result);
 		} else {
-			if (e instanceof Pregunta) {
-				container.getChildren().addAll(codigoLab);
-				respuestaBox.setCenter(codigo);
-				respuestaBox.setRight(buttonsCode);
-				container.getChildren().addAll(respuestaBox);
+			if (e instanceof Question) {
+				container.getChildren().addAll(labelCode);
+				answerBox.setCenter(taCode);
+				answerBox.setRight(buttonsCode);
+				container.getChildren().addAll(answerBox);
 				container.getChildren().addAll(result);
 			}
 		}
@@ -170,7 +171,7 @@ public class Contenido extends Pane {
 		menu.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
-				c.goMenu();
+				c.goSubjectsMenu();
 			}
 
 		});
@@ -180,7 +181,7 @@ public class Contenido extends Pane {
 			@Override
 			public void handle(ActionEvent event) {
 				final Popup popup = new Popup();
-				String helpText = e.getPista();
+				String helpText = e.getClue();
 				Label popupLabel = new Label(helpText);
 				popup.setAutoHide(true);
 				popupLabel.setStyle("-fx-border-color: black; -fx-background-color: white");
@@ -200,14 +201,14 @@ public class Contenido extends Pane {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				if (e instanceof Opciones) {
+				if (e instanceof OptionQuestions) {
 					ArrayList<Integer> resp = new ArrayList<Integer>();
-					if (!((Opciones) e).getMulti()) // Si la pregunta no es
+					if (!((OptionQuestions) e).getMulti()) // Si la pregunta no es
 													// multirespuesta
 					{
 						int i = 0;// Contador de la posicion de la opcion que se
 									// analiza
-						for (Node o : opciones.getChildren()) // Recorre el
+						for (Node o : options.getChildren()) // Recorre el
 																// array de
 																// RadioButtons
 						{
@@ -222,7 +223,7 @@ public class Contenido extends Pane {
 					{
 						int i = 0;// Contador de la posicion de la opcion que se
 									// analiza
-						for (Node o : opciones.getChildren()) // Recorre array
+						for (Node o : options.getChildren()) // Recorre array
 																// de CheckBox
 						{
 							i++;
@@ -232,12 +233,16 @@ public class Contenido extends Pane {
 						}
 					}
 
-					if (c.corrige(resp, (Pregunta) e))// Se corrige la pregunta
+					if (c.check(resp, (Question) e))// Se corrige la pregunta
 					{
 						isCorrect.setText("CORRECTO");
-						isCorrect.setStyle("-fx-background-color: green");
-						c.enableNextStep(selected);
-						p.enabledProperty().setValue(enabled + 1);
+						isCorrect.setStyle("-fx-background-color: #33cc33");
+						try{
+							c.enableNextStep(selected);
+						} catch (Exception e){
+							c.finishedLesson();
+						}
+						paginator.enabledProperty().setValue(enabled + 1);
 						hints.setVisible(false);
 
 					} else {
@@ -248,19 +253,23 @@ public class Contenido extends Pane {
 
 				} // Fin de opciones
 
-				else if (e instanceof Codigo) // La pregunta es de tipo codigo
+				else if (e instanceof CodeQuestions) // La pregunta es de type codigo
 				{
-					Codigo pc = (Codigo) e;
-					String code = codigo.getText();
+					CodeQuestions pc = (CodeQuestions) e;
+					String code = taCode.getText();
 
-					if (c.corrige(code, pc))// Se manda el codigo al controlador
+					if (c.check(code, pc))// Se manda el codigo al controlador
 											// para que el modelo lo compruebe
 					{
 						isCorrect.setText("CORRECTO");
-						isCorrect.setStyle("-fx-background-color: green");
+						isCorrect.setStyle("-fx-background-color: #33cc33");
 						hints.setVisible(false);
-						c.enableNextStep(selected);
-						p.enabledProperty().setValue(enabled + 1);
+						try{
+							c.enableNextStep(selected);
+						} catch (Exception e){
+							c.finishedLesson();
+						}
+						paginator.enabledProperty().setValue(enabled + 1);
 
 					} else {//
 						isCorrect.setText(pc.getCorrection().getMessage());
@@ -268,19 +277,19 @@ public class Contenido extends Pane {
 						hints.setVisible(true);
 					}
 
-				} else if (e instanceof Sintaxis) {
-					Sintaxis ps = (Sintaxis) e;
-					String code = codigo.getText();
-					if (c.corrige(code, ps)) {
+				} else if (e instanceof SyntaxQuestions) {
+					SyntaxQuestions ps = (SyntaxQuestions) e;
+					String code = taCode.getText();
+					if (c.check(code, ps)) {
 						isCorrect.setText("CORRECTO");
-						isCorrect.setStyle("-fx-background-color: green");
+						isCorrect.setStyle("-fx-background-color: #33cc33");
 						hints.setVisible(false);
 						try{
 							c.enableNextStep(selected);
 						} catch (Exception e){
 							c.finishedLesson();
 						}
-						p.enabledProperty().setValue(enabled + 1);
+						paginator.enabledProperty().setValue(enabled + 1);
 
 					} else {//
 						isCorrect.setText("HAS FALLADO");
@@ -298,7 +307,7 @@ public class Contenido extends Pane {
 			@Override
 			public void handle(ActionEvent event) {
 				Popup popup = new Popup();
-				List<String> hints = ((Codigo) e).getCorrection().getHints();
+				List<String> hints = ((CodeQuestions) e).getCorrection().getHints();
 				String txt = "";
 				if (hints != null) {
 					for (String h : hints) {
@@ -324,15 +333,15 @@ public class Contenido extends Pane {
 			}
 		});
 		
-		Button temaButton = new Button("Elegir Tema");
-		Button leccionButton = new Button("Elegir lección");
+		Button subjectButton = new Button("Elegir tema");
+		Button lessonButton = new Button("Elegir lección");
 		
 		HBox buttonsLabel = new HBox(10);
-		buttonsLabel.getChildren().addAll(temaButton);
-		buttonsLabel.getChildren().addAll(leccionButton);
+		buttonsLabel.getChildren().addAll(subjectButton);
+		buttonsLabel.getChildren().addAll(lessonButton);
 		buttonsLabel.setAlignment(Pos.BOTTOM_CENTER);
 		
-		temaButton.setOnAction(new EventHandler<ActionEvent>() {
+		subjectButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -341,28 +350,28 @@ public class Contenido extends Pane {
 			}
 		});
 		
-		leccionButton.setOnAction(new EventHandler<ActionEvent>() {
+		lessonButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				c.backMenuLeccion();
+				c.backLessonsMenu();
 				
 			}
 		});
 
 		
 		mainPane.add(container, 0, 0);
-		mainPane.add(p, 0, 1);
+		mainPane.add(paginator, 0, 1);
 		mainPane.add(buttonsLabel, 0, 2);
 		
 		GridPane.setConstraints(container, 0, 0, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS, Priority.NEVER,new Insets(5));
-		GridPane.setConstraints(p, 0, 1, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
+		GridPane.setConstraints(paginator, 0, 1, 1, 1, HPos.LEFT, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		GridPane.setConstraints(buttonsLabel, 0, 2, 1, 1, HPos.CENTER, VPos.BOTTOM, Priority.ALWAYS, Priority.ALWAYS, new Insets(5));
 		
-		codigoLab.getStyleClass().add("labcode");
-		tipo.getStyleClass().add("tipo");
-		respuestaBox.getStyleClass().add("respuestaBox");
-		mainPane.getStylesheets().add(getClass().getResource("/css/contenido.css").toExternalForm());
+		labelCode.getStyleClass().add("labcode");
+		type.getStyleClass().add("tipo");
+		answerBox.getStyleClass().add("respuestaBox");
+		mainPane.getStylesheets().add(getClass().getResource("/css/content.css").toExternalForm());
 
 		return mainPane;
 	}

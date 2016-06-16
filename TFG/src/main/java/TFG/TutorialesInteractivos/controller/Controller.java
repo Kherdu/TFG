@@ -13,20 +13,20 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 import TFG.TutorialesInteractivos.model.Correction;
-import TFG.TutorialesInteractivos.model.Elemento;
-import TFG.TutorialesInteractivos.model.Explicacion;
-import TFG.TutorialesInteractivos.model.Lenguaje;
-import TFG.TutorialesInteractivos.model.Pregunta;
-import TFG.TutorialesInteractivos.model.Tema;
+import TFG.TutorialesInteractivos.model.Element;
+import TFG.TutorialesInteractivos.model.Explanation;
+import TFG.TutorialesInteractivos.model.Language;
+import TFG.TutorialesInteractivos.model.Question;
+import TFG.TutorialesInteractivos.model.Subject;
 import TFG.TutorialesInteractivos.utilities.InternalUtilities;
 import TFG.TutorialesInteractivos.utilities.YamlReaderClass;
 import TFG.TutorialesInteractivos.view.Configuration;
-import TFG.TutorialesInteractivos.view.Contenido;
+import TFG.TutorialesInteractivos.view.Content;
 import TFG.TutorialesInteractivos.view.EndLessonPane;
-import TFG.TutorialesInteractivos.view.Inicio;
-import TFG.TutorialesInteractivos.view.MenuLeccion;
-import TFG.TutorialesInteractivos.view.MenuTema;
-import TFG.TutorialesInteractivos.view.SelectedPath;
+import TFG.TutorialesInteractivos.view.InitialWindow;
+import TFG.TutorialesInteractivos.view.LessonsMenu;
+import TFG.TutorialesInteractivos.view.PathChooser;
+import TFG.TutorialesInteractivos.view.SubjectsMenu;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -36,16 +36,16 @@ import javafx.stage.Stage;
 /**
  * Clase controlador. Ejecuta todas las variaciones de la aplicación
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 public class Controller {
 	public static String executable;// ejecutable del lenguaje para ejecutar código
-	private Tema tema; // Tema que se está ejecutando
+	private Subject subject; // Subject que se está ejecutando
 	private Stage primaryStage;// Vista principal de la aplicación
 	private Pane root;// Panel con los elementos de la vista
 	private Scene scene;
-	private ArrayList<Elemento> elems; // Lista de elementos de un tema
+	private ArrayList<Element> elems; // Lista de elementos de un subject
 	private int actualStep; // contador de el elemento del contenido en el que estamos
 	private int enabledSteps; // Elementos habilitados
 	private boolean[] visited; // Array con los elementos de una lección que se han visitado
@@ -56,10 +56,14 @@ public class Controller {
 	private Preferences pref;
 	public static String externalResourcesPath;
 	private URLClassLoader ucl;
-	private Lenguaje obsLenguaje;
-
+	private Language language;
+	
+	/**
+	 * Constructora 
+	 * @param primaryStage
+	 */
 	public Controller(Stage primaryStage) {
-		this.tema = null;
+		this.subject = null;
 		this.primaryStage = primaryStage;
 		this.files = new ArrayList<String>();
 		this.c = new Correction();
@@ -67,53 +71,51 @@ public class Controller {
 	}
 
 	/**
-	 * Llama a la función del modelo encargada de cargar un tema
-	 * 
-	 * @param cargaTema
-	 *            Nombre del fichero
+	 * Devuelve la clase correctora
+	 * @return clase correctora
 	 */
 	public Correction getCorrection() {
 		return c;
 	}
 
 	/**
-	 * Devuelve el tema que está abierto
+	 * Devuelve el subject que está abierto
 	 * 
-	 * @return tema
+	 * @return subject
 	 */
-	public Tema getTema() {
-		return tema;
+	public Subject getSubject() {
+		return subject;
 	}
 
 	/**
-	 * Modifica el tema
+	 * Modifica el subject
 	 * 
-	 * @param tema
+	 * @param subject
 	 */
-	public void setTema(Tema tema) {
-		this.tema = tema;
+	public void setSubject(Subject subject) {
+		this.subject = subject;
 	}
 
 	/**
-	 * Corrige las preguntas de tipo Opciones
+	 * Corrige las preguntas de tipo Options
 	 * 
 	 * @param resp
 	 * @param p
 	 * @return
 	 */
-	public boolean corrige(ArrayList<Integer> resp, Pregunta p) {
-		return p.corrige(resp, tema);
+	public boolean check(ArrayList<Integer> resp, Question p) {
+		return p.check(resp, subject);
 	}
 
 	/**
-	 * Función correctora de las preguntas de tipo Codigo y sintaxis
+	 * Función correctora de las preguntas de tipo Code y sintaxis
 	 * 
 	 * @param resp
 	 * @param p
 	 * @return
 	 */
-	public boolean corrige(String resp, Pregunta p) {
-		return p.corrige(resp, tema);
+	public boolean check(String resp, Question p) {
+		return p.check(resp, subject);
 	}
 
 	/**
@@ -122,7 +124,7 @@ public class Controller {
 	 */
 	public void showSubject() {
 
-		Pane p = new MenuTema();
+		Pane p = new SubjectsMenu();
 		files.clear(); //Esto es por si se vuelve al principio que no se dupliquen los temas
 		try {
 			DirectoryStream.Filter<Path> filter = new DirectoryStream.Filter<Path>() {
@@ -153,7 +155,7 @@ public class Controller {
 	/**
 	 * Vuelve a mostrar el menú de temas
 	 */
-	public void goMenu() {
+	public void goSubjectsMenu() {
 		showStart();
 	}
 
@@ -164,15 +166,15 @@ public class Controller {
 		// se pueden poner de usuario en vez de de sistema, pero en usuario
 		// serán para el usuario concreto, de sistema funciona para todo
 		Pane p = new Pane();
-		List<String> a = new ArrayList<String>();
+		List<String> languagesList = new ArrayList<String>();
 
 		String pathResources = pref.get("ExternalResources", null);
 
 		if (pathResources != null) {
 			externalResourcesPath = pathResources;
-			a = languageNames();
-			if (loadLanguagePaths(a)) { // comprobamos si los compiladores están
-				p = new Inicio();
+			languagesList = languageNames();
+			if (loadLanguagePaths(languagesList)) { // comprobamos si los compiladores están
+				p = new InitialWindow();
 			} else
 				p = new Configuration(); // hace falta configurar compiladores
 
@@ -180,18 +182,19 @@ public class Controller {
 			p = new Configuration(); // hace falta configurar directorio y
 										// compiladores
 		}
-		changeView(p, a, 0, selectedLanguage, null);
+		changeView(p, languagesList, 0, selectedLanguage, null);
 
 	}
 
 	/**
-	 * 
+	 * Comprueba si todos los lengujes tienen su configuracion
+	 * @param languagesList Lista de lenguajes disponibles
 	 * @return true si y solo si los lenguajes que hay en el directorio externo
 	 *         tienen su path configurado (esté bien o mal)
 	 */
-	private boolean loadLanguagePaths(List<String> a) {
+	private boolean loadLanguagePaths(List<String> languagesList) {
 		boolean ret = true;
-		for (String s : a) {
+		for (String s : languagesList) {
 			String check = pref.get(s, null);
 			if (check == null)
 				ret = false;
@@ -202,7 +205,7 @@ public class Controller {
 	/**
 	 * Obtiene la lista de lenguajes disponibles
 	 * 
-	 * @return
+	 * @return lista de lenguajes
 	 */
 	public List<String> languageNames() {
 		// hay que sacarlos del directorio, es decir, ir a
@@ -217,65 +220,44 @@ public class Controller {
 	 */
 	public void showStart() {
 		primaryStage.setTitle(selectedLanguage);
-		// el titulo se podria
-		// poner de la app,
-		// o del lenguaje, pero obteniendo
-		// en la primera lectura de
-		// ficheros...
-		// este es el encargado de hacer el setroot que tiene los contenidos
-		// necesarios
-		Pane p = new MenuTema();
-
+		Pane p = new SubjectsMenu();
 		changeView(p, files, 0, selectedLanguage, null);
-
 	}
 
 	/**
 	 * Modifica la vista que se muestra en el momento
 	 * 
-	 * @param p
-	 *            Panel a mostrar
-	 * @param files
-	 *            Lista de los ficheros que componen el temario
-	 * @param selected
-	 *            Lección seleccionada
-	 * @param lenSelect
-	 *            Lenguaje seleccionado
+	 * @param p Panel a mostrar         
+	 * @param files Lista de los ficheros que componen el temario           
+	 * @param selected Lesson seleccionada
+	 * @param lenSelect Language seleccionado
 	 */
 	private void changeView(Pane p, List<String> files, int selected, String lenSelect, Number newStep) {
 		scene = new Scene(new Group());
-		
-
 		if (p instanceof Configuration) {
-			root = ((Configuration) p).firstConfiguration(this);
-		} else if (p instanceof Inicio) {
-			root = ((Inicio) p).inicio(files, this);
-		} else if (p instanceof MenuTema) {
-			root = ((MenuTema) p).menuTema(files, lenSelect, this);
-		} else if (p instanceof MenuLeccion) {
-			root = ((MenuLeccion) p).menuLeccion(tema, this);
-		} else if (p instanceof Contenido) {
-			Elemento e;
-			
+			root = ((Configuration) p).configuration(this);
+		} else if (p instanceof InitialWindow) {
+			root = ((InitialWindow) p).initialWin(files, this);
+		} else if (p instanceof SubjectsMenu) {
+			root = ((SubjectsMenu) p).subjectsMenu(files, lenSelect, this);
+		} else if (p instanceof LessonsMenu) {
+			root = ((LessonsMenu) p).lessonMenu(subject, this);
+		} else if (p instanceof Content) {
+			Element e;	
 			if (actualStep == -1) {
-				e = new Explicacion(tema.getLecciones().get(selected).getExplicacion());
-
+				e = new Explanation(subject.getLessons().get(selected).getExplication());
 			}  else {
 				e = elems.get(actualStep);
-				stepChange(newStep, e instanceof Pregunta);
+				stepChange(newStep, e instanceof Question);
 			}
 			// habilitados empezaremos con 1, y el paso actual es el 1 para la
 			// vista (comienza en -1 aquí)
 			// el que estás mas algo
 
-			// TODO elems.size tiene que ir con un +1 para que llegue a la
-			// ultima pregunta, ¿y si se quiere la notificación de que has
-			// terminado??
-			root = ((Contenido) p).contenido(e, this, elems.size() + 1, enabledSteps, actualStep + 2);
+			root = ((Content) p).content(e, this, elems.size() + 1, enabledSteps, actualStep + 2);
 		}
-		
-		
-		root.setPrefSize(600, 600);
+
+		//root.setPrefSize(600, 600);
 		scene.setRoot(root);
 
 		primaryStage.setWidth(scene.getWidth());
@@ -285,37 +267,36 @@ public class Controller {
 	}
 
 	/**
-	 * Caraga el tema seleccionado y carga el menu de seleccion de temas
+	 * Caraga el subject seleccionado y carga el menu de seleccion de lecciones
 	 * 
 	 * @param selectedItem
 	 */
-	public void selectedTema(String selectedItem) {
+	public void selectedSubject(String selectedItem) {
 
-		this.tema = YamlReaderClass.cargaTema(selectedLanguage, selectedItem);
-		changeView(new MenuLeccion(), null, 0, selectedLanguage, null);
+		this.subject = YamlReaderClass.cargaTema(selectedLanguage, selectedItem);
+		changeView(new LessonsMenu(), null, 0, selectedLanguage, null);
 	}
 
 	/**
-	 * Carga los componenetes del tema, y muestra la ventana con la primera
+	 * Carga los componenetes de la leccion, y muestra la ventana con la primera
 	 * explicación, se llamará cuando elijamos una leccion
 	 * 
-	 * @param selectedItem
-	 *            es la lección seleccionada
+	 * @param selectedItem es la lección seleccionada
 	 * 
 	 */
-	public void selectedLeccion(int selectedItem) {
+	public void selectedLesson(int selectedItem) {
 		this.actualLesson = selectedItem;
-		this.elems = (ArrayList<Elemento>) tema.getLecciones().get(selectedItem).getElementos();
+		this.elems = (ArrayList<Element>) subject.getLessons().get(selectedItem).getElements();
 		actualStep = -1;
 		enabledSteps = 2;
 		visited = new boolean[elems.size()];
 		Arrays.fill(visited, Boolean.FALSE);
 		visited[0] = true;
-		changeView(new Contenido(), null, actualLesson, selectedLanguage, 0);
+		changeView(new Content(), null, actualLesson, selectedLanguage, 0);
 	}
 
 	/**
-	 * Parseaa el texto en markdown y lo transforma en texto HTML
+	 * Parsea el texto en markdown y lo transforma en texto HTML
 	 * 
 	 * @param mark
 	 * @return texto en formato HTML
@@ -325,29 +306,23 @@ public class Controller {
 	}
 
 	/**
-	 * Muesta el FileChooser para seleccionar donde se encuentra python en el
+	 * Muesta el FileChooser para seleccionar donde se encuentra el interprete en el
 	 * equipo
 	 */
-	public void muestraSeleccion(Lenguaje l) {
+	public void showSelection(Language l) {
 		// diferenciar si l tiene lenguaje o no... en funcion de eso es el path
 		// de directorio o el de lenguaje
-		SelectedPath sp;
+		PathChooser sp;
 		if (l == null) { // si no llega lenguaje es que hemos cambiado el path
 							// del directorio
 							// lo guardamos en la variable y en preferences
-			sp = new SelectedPath(this.primaryStage);
+			sp = new PathChooser(this.primaryStage);
 			externalResourcesPath = sp.getPath();
 		} else {
-			sp = new SelectedPath(this.primaryStage, l.getLanguage());
-			obsLenguaje = new Lenguaje(l.getLanguage(), sp.getPath());
+			sp = new PathChooser(this.primaryStage, l.getLanguage());
+			language = new Language(l.getLanguage(), sp.getPath());
 		}
 	}
-
-	/**
-	 * Modifica el path del ejecutable del lenguaje
-	 * 
-	 * @param path
-	 */
 
 	/**
 	 * Actualiza el lenguaje seleccionado y el path del archivo de ejecucion
@@ -360,16 +335,26 @@ public class Controller {
 		showSubject();
 	}
 
+	/**
+	 * Devuelve el path del lenguaje seleccionado
+	 * @return
+	 */
 	public String pathSelected() {
 
 		return pref.get(selectedLanguage, null);
 	}
-
+	
+	/**
+	 * Devuelve la ventana principal
+	 * @return
+	 */
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
 
-
+	/**
+	 * Devuelve la vista
+	 */
 	public Scene getScene() {
 
 		return this.scene;
@@ -377,7 +362,7 @@ public class Controller {
 
 	/**
 	 * 
-	 * @return Elemento actual de la leccion
+	 * @return Element actual de la leccion
 	 */
 	public int getActualStep() {
 
@@ -388,18 +373,18 @@ public class Controller {
 	 * 
 	 * @return Lista de elementos de una leccion
 	 */
-	public ArrayList<Elemento> getElems() {
+	public ArrayList<Element> getElems() {
 		return this.elems;
 	}
 
 	/**
-	 * Modifica la vista de Contenido
+	 * Modifica la vista de Content
 	 * 
 	 * @param newStep
 	 */
 	public void lessonPageChange(Number newStep) {
 		actualStep = (int) newStep - 2;
-		changeView(new Contenido(), null, actualLesson, selectedLanguage, newStep);
+		changeView(new Content(), null, actualLesson, selectedLanguage, newStep);
 	}
 
 	/**
@@ -428,20 +413,18 @@ public class Controller {
 
 	/**
 	 * 
-	 * @param path
-	 *            externalResources path
-	 * @param data
-	 *            lista de lenguajes disponibles en la carpeta
+	 * @param path externalResources path
+	 * @param data lista de lenguajes disponibles en la carpeta
 	 * 
-	 *            Este metodo guarda en preferences el path, los lenguajes y las
-	 *            rutas de los compiladores y pone en el classpath la ruta para
-	 *            usar con antlr/reflections
+	 * Este metodo guarda en preferences el path, los lenguajes y las
+	 * rutas de los compiladores y pone en el classpath la ruta para
+	 * usar con antlr/reflections
 	 */
-	public void savePrefs(String path, List<Lenguaje> data) {
+	public void savePrefs(String path, List<Language> data) {
 
 		if (path != null && !data.isEmpty()) {
 			pref.put("ExternalResources", path);
-			for (Lenguaje l : data) {
+			for (Language l : data) {
 				pref.put(l.getLanguage(), l.getPath());
 			}
 		
@@ -449,41 +432,52 @@ public class Controller {
 			// TODO error que diga que no hay directorio o compiladores (aqui o en la vista?)
 		}
 	}
-
-	public void vistaSettings() {
+	
+	/**
+	 * Muestra la ventana de configuracion
+	 */
+	public void showSettings() {
 		Pane p = new Configuration();
 		List<String> a = languageNames();
 		changeView(p, a, 0, selectedLanguage, null);
 	}
 
-
-	public String getExternalPath() {
-		return externalResourcesPath;
-	}
-
-	public List<Lenguaje> getLanguagesList() {
+	/**
+	 * 
+	 * @return Lista de Lenguajes para la tabla
+	 */
+	public List<Language> getLanguagesList() {
 		List<String> lanL = InternalUtilities.getDirectoryList(externalResourcesPath);
-		List<Lenguaje> l = new ArrayList<Lenguaje>();
+		List<Language> l = new ArrayList<Language>();//Lista de lenguajes
 		if (!lanL.isEmpty()) {
 			for (String s : lanL) {
-				Lenguaje addedL = new Lenguaje(s, pref.get(s, null));
+				Language addedL = new Language(s, pref.get(s, null));
 				l.add(addedL);
 			}
 
 		}
 		return l;
 	}
-
-	public Lenguaje getLanguageAttributes() {
-		return obsLenguaje;
+	
+	/**
+	 * 
+	 * @return lenguage seleccionado
+	 */
+	public Language getLanguageAttributes() {
+		return language;
 	}
-
-	public void backMenuLeccion() {
-		changeView(new MenuLeccion(), null, 0, selectedLanguage, null);
+	
+	/**
+	 * Muestra el menu de lecciones
+	 */
+	public void backLessonsMenu() {
+		changeView(new LessonsMenu(), null, 0, selectedLanguage, null);
 		
 	}
 
-	
+	/**
+	 * Muestra el mensaje de fin de lecion
+	 */
 	public void finishedLesson() {
 		new EndLessonPane(this);
 		

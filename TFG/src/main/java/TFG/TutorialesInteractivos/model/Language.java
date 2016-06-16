@@ -3,22 +3,22 @@ package TFG.TutorialesInteractivos.model;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Lenguaje que se está utilizando actualmente
+ * Language que se está utilizando actualmente
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 
-public class Lenguaje {
+public class Language {
 	private final SimpleStringProperty language;
 	private final SimpleStringProperty path;
 
-	public Lenguaje() {
+	public Language() {
 		this.language = null;
 		this.path = null;
 	}
 
-	public Lenguaje(String language, String path) {
+	public Language(String language, String path) {
 		this.language = new SimpleStringProperty(language);
 		this.path = new SimpleStringProperty(path);
 	}

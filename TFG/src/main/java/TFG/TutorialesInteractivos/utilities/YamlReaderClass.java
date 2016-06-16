@@ -11,18 +11,18 @@ import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
 import TFG.TutorialesInteractivos.controller.Controller;
-import TFG.TutorialesInteractivos.model.Codigo;
-import TFG.TutorialesInteractivos.model.Elemento;
-import TFG.TutorialesInteractivos.model.Explicacion;
-import TFG.TutorialesInteractivos.model.Leccion;
-import TFG.TutorialesInteractivos.model.Opciones;
-import TFG.TutorialesInteractivos.model.Sintaxis;
-import TFG.TutorialesInteractivos.model.Tema;
+import TFG.TutorialesInteractivos.model.CodeQuestions;
+import TFG.TutorialesInteractivos.model.Element;
+import TFG.TutorialesInteractivos.model.Explanation;
+import TFG.TutorialesInteractivos.model.Lesson;
+import TFG.TutorialesInteractivos.model.OptionQuestions;
+import TFG.TutorialesInteractivos.model.SyntaxQuestions;
+import TFG.TutorialesInteractivos.model.Subject;
 
 /**
  * Clase que contiene las funciones de carga de un fichero yml
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 public final class YamlReaderClass {
@@ -30,14 +30,14 @@ public final class YamlReaderClass {
 	/**
 	 * Carga el tema seleccionado (con el que se trabajara)
 	 * 
-	 * @param cargar
+	 * @param load
 	 *            Nombre del archivo del tema
-	 * @return Tema seleccionado
+	 * @return Subject seleccionado
 	 */
-	public static Tema cargaTema(String language, String cargar) {
+	public static Subject cargaTema(String language, String load) {
 		Yaml yaml = new Yaml();
 
-		File file = new File(Controller.externalResourcesPath + "/" + language + "/" + cargar);
+		File file = new File(Controller.externalResourcesPath + "/" + language + "/" + load);
 		InputStream input = null;
 		try {
 			input = new FileInputStream(file);
@@ -46,39 +46,39 @@ public final class YamlReaderClass {
 			e1.printStackTrace();
 		}
 		@SuppressWarnings("unchecked")
-		Map<String, Object> mapaObjeto = (Map<String, Object>) yaml.load(input);
+		Map<String, Object> mapObjet = (Map<String, Object>) yaml.load(input);
 		// auxiliares
 		ArrayList<Map> l = new ArrayList<Map>();// lista de lecciones
 		ArrayList<Map> e = new ArrayList<Map>();// Lista de elementos
-		l = (ArrayList<Map>) mapaObjeto.get("Lecciones");
+		l = (ArrayList<Map>) mapObjet.get("Lecciones");
 
-		// Elementos para rellenar el objeto Tema
-		Integer nTema = (Integer) mapaObjeto.get("Tema");// numero del tema
-		String tTema = (String) mapaObjeto.get("Titulo");// Nombre del tema
-		String iTema = (String) mapaObjeto.get("Introduccion");// introduccion
+		// Elementos para rellenar el objeto Subject
+		Integer numberSubject = (Integer) mapObjet.get("Tema");// numero del tema
+		String tittleSubject = (String) mapObjet.get("Titulo");// Nombre del tema
+		String introSubject = (String) mapObjet.get("Introduccion");// introduccion
 																// del tema
-		String aTema = (String) mapaObjeto.get("Archivo");// Nombre del archivo
+		String fileSubject = (String) mapObjet.get("Archivo");// Nombre del archivo
 															// con las funciones
 															// de solucion
 
 		// objetos a rellenar para el tema
-		List<Elemento> elementos = new ArrayList<Elemento>();// lista de
+		List<Element> elements = new ArrayList<Element>();// lista de
 																// elementos
-		List<Leccion> lecciones = new ArrayList<Leccion>();// lista de lecciones
+		List<Lesson> lessons = new ArrayList<Lesson>();// lista de lecciones
 
-		for (Map leccion : l) // Recorremos la lista de lecciones y parseamos
+		for (Map lesson : l) // Recorremos la lista de lecciones y parseamos
 								// los elementos
 		{
-			elementos = new ArrayList<Elemento>();// Lista de elementos de una
+			elements = new ArrayList<Element>();// Lista de elementos de una
 													// leccion
-			e = (ArrayList<Map>) leccion.get("Elementos");// Vuelca los
+			e = (ArrayList<Map>) lesson.get("Elementos");// Vuelca los
 															// elementos en una
 															// Lista de Maps
 
 			for (Map pre : e)// Recorre los elementos de la leccion a cargar y
 								// los parsea
 			{
-				Elemento elem = new Explicacion(null); // Crea un nuevo elem
+				Element elem = new Explanation(null); // Crea un nuevo elem
 
 				if (pre.get("Elem").equals("pregunta"))// El elemento es de tipo
 														// pregunta
@@ -86,43 +86,43 @@ public final class YamlReaderClass {
 					// Elementos generales a todo tipo de preguntas
 					int num = (Integer) pre.get("Numero"); // Numero de la
 															// pregunta
-					String enunciado = (String) pre.get("Enunciado");// Enunciado
-					String pista = (String) pre.get("Pista");// Pista
+					String wording = (String) pre.get("Enunciado");// Enunciado
+					String clue = (String) pre.get("Pista");// Pista
 
-					if (pre.get("Tipo").equals("Codigo")) // Pregunta de tipo
+					if (pre.get("Tipo").equals("Codigo")) // Question de tipo
 															// codigo
 					{
-						String respuesta = (String) pre.get("Resultado");//
-						elem = new Codigo(num, enunciado, pista, respuesta);
+						String answer = (String) pre.get("Resultado");//
+						elem = new CodeQuestions(num, wording, clue, answer);
 
 					} else if (pre.get("Tipo").equals("Sintaxis")) {
-						String sintaxis = (String) pre.get("Gramatica");
-						String resultado = (String) pre.get("Resultado");
-						elem = new Sintaxis(num, enunciado, pista, sintaxis, resultado);
+						String sintax = (String) pre.get("Gramatica");
+						String result = (String) pre.get("Resultado");
+						elem = new SyntaxQuestions(num, wording, clue, sintax, result);
 					} else if (pre.get("Tipo").equals("Opciones")) {
 						Boolean is = false;
-						elem = new Opciones(num, enunciado, pista);
+						elem = new OptionQuestions(num, wording, clue);
 						if ((Boolean) pre.get("Multiple")) {
 							is = true;
 						}
-						String opcorrecta = (String) pre.get("Opcion_correcta");// Cogemos
+						String correctOpc = (String) pre.get("Opcion_correcta");// Cogemos
 																				// el
 																				// texto
 																				// de
 																				// las
 																				// correctas
-						String[] correctas = opcorrecta.split(","); // Separamos
+						String[] corrects = correctOpc.split(","); // Separamos
 																	// la cadena
 																	// en las
 																	// respuestas
-						ArrayList<Integer> correctasAux = StringToInt(correctas); // Camibia
+						ArrayList<Integer> correctsAux = StringToInt(corrects); // Camibia
 																					// el
 																					// tipo
 																					// de
 																					// respuesta
 																					// a
 																					// Integer
-						elem.setSolucion(correctasAux); // Añade las respuestas
+						elem.setSolution(correctsAux); // Añade las respuestas
 														// correctas a la lista
 														// de respuestas del
 														// objeto
@@ -133,41 +133,41 @@ public final class YamlReaderClass {
 						opc = (ArrayList<String>) pre.get("Opciones"); // Carga
 																		// las
 																		// opciones
-						elem.setOpciones(opc);// Las mete en el objeto
+						elem.setOptions(opc);// Las mete en el objeto
 						elem.setMulti(is);// Modifica el parametro de
 											// multirrespuesta
 					}
 				} else {
-					String explicacion = (String) pre.get("Contenido");// Carga
+					String explication = (String) pre.get("Contenido");// Carga
 																		// el
 																		// contenido
 																		// de la
 																		// explicación
-					elem.setTexto(explicacion);// Modifica el texto del elemento
+					elem.setText(explication);// Modifica el texto del elemento
 				}
-				elementos.add(elem);// Añade el elemento al array de elementos
-									// de Leccion
+				elements.add(elem);// Añade el elemento al array de elementos
+									// de Lesson
 
 			}
-			int nLeccion = (Integer) leccion.get("Leccion"); // numero de
+			int nLesson = (Integer) lesson.get("Leccion"); // numero de
 																// leccion
-			String tLeccion = (String) leccion.get("Titulo_Leccion");// titulo
+			String tLesson = (String) lesson.get("Titulo_Leccion");// titulo
 																		// de
 																		// leccion
-			String eLeccion = (String) leccion.get("Intro_leccion");// Introduccion
+			String eLesson = (String) lesson.get("Intro_leccion");// Introduccion
 																	// de la
 																	// leccion
-			Leccion lec = new Leccion(nLeccion, tLeccion, eLeccion);// Crea la
+			Lesson lec = new Lesson(nLesson, tLesson, eLesson);// Crea la
 																	// leccion
-			lec.setElementos(elementos);// Modifica el array de elementos de una
+			lec.setElements(elements);// Modifica el array de elementos de una
 										// leccion
-			lecciones.add(lec);// Añade la leccion al array de lecciones
+			lessons.add(lec);// Añade la leccion al array de lecciones
 		}
 		// rellenado de objetos final
-		Tema t = new Tema(nTema, tTema, iTema, aTema);// Crea el tema con todos
+		Subject t = new Subject(numberSubject, tittleSubject, introSubject, fileSubject);// Crea el tema con todos
 														// los elementos
 														// cargados
-		t.setLecciones(lecciones);// Modifica el Array de lecciones de Tema
+		t.setLessons(lessons);// Modifica el Array de lecciones de Subject
 		return t;
 	}
 

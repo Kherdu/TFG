@@ -9,7 +9,7 @@ import TFG.TutorialesInteractivos.controller.Controller;
 
 /**
  * Clase principal de la aplicación
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
 public class Main extends Application{

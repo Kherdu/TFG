@@ -1,10 +1,13 @@
 T__0=1
 T__1=2
 T__2=3
-NUMBER=4
-FORMULA=5
-WS=6
+NUMBER1=4
+NUMBER2=5
+FORMULA=6
+NUMBER3=7
 'h = '=1
 '\nb = '=2
 '\n'=3
-'a=h*b/2'=5
+'6'=4
+'10'=5
+'2'=7

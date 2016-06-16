@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 /**
  * Clase con el elemento Explicación
- * @author Carlos
+ * @author Carlos, Rafa
  *
  */
-public class Explicacion extends Elemento{
+public class Explanation extends Element{
 	
-	public Explicacion(String texto)
+	public Explanation(String text)
 	{
-		super(texto);
+		super(text);
 	}
 
 	@Override
-	public void setOpciones(ArrayList<String> opc) {
+	public void setOptions(ArrayList<String> opc) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -27,20 +27,22 @@ public class Explicacion extends Elemento{
 	}
 
 	@Override
-	public void setSolucion(ArrayList<Integer> correctasAux) {
+	public void setSolution(ArrayList<Integer> correctsAux) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setTexto(String explicacion) {
-		this.texto = explicacion;
+	public void setText(String explication) {
+		this.text = explication;
 		
 	}
 
 	@Override
-	public String getPista() {
+	public String getClue() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 }

@@ -7,19 +7,19 @@ import javafx.stage.Stage;
 /**
  * Muestra un FileChooser para seleccionar el path del compilador
  * 
- * @authors Carlos, Rafa
+ * @author Carlos, Rafa
  *
  */
-public class SelectedPath 
+public class PathChooser 
 {
 	private String path;
 	
-	public SelectedPath(Stage stage, String lenguaje){
+	public PathChooser(Stage stage, String lenguaje){
 		FileChooser fc = new FileChooser();
 		this.path = fc.showOpenDialog(stage).getAbsolutePath();
 	}
 	
-	public SelectedPath(Stage stage){
+	public PathChooser(Stage stage){
 		DirectoryChooser chooser = new DirectoryChooser();
 		this.path = chooser.showDialog(stage).getAbsolutePath();
 	}
